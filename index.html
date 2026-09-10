@@ -4101,5 +4101,26 @@
   renderSections();
 </script>
 
+<!-- отправка событий в GoatCounter: скачал PDF/Excel, создал смету (для отчёта в боте) -->
+<script>
+(function(){
+  function track(name, title){
+    try {
+      if (window.goatcounter && typeof window.goatcounter.count === "function"){
+        window.goatcounter.count({ path: name, title: title || name, event: true });
+      }
+    } catch(e){}
+  }
+  function on(id, name, title){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("click", function(){ track(name, title); });
+  }
+  on("pdfBtn",         "pdf-download",     "Скачан PDF");
+  on("shareBtn",       "pdf-share",        "Поделился PDF");
+  on("xlsxBtn",        "excel-download",   "Скачан Excel");
+  on("addEstimateBtn", "estimate-created", "Создана смета");
+})();
+</script>
+
 </body>
 </html>
