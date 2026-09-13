@@ -514,6 +514,115 @@
       padding-bottom:max(56px, env(safe-area-inset-bottom));
     }
   }
+  /* ---------- Мои объекты ---------- */
+  .obj-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:14px; }
+  .obj-card{ border:1px solid var(--line); border-radius:11px; background:var(--surface-2); padding:12px; }
+  .obj-card-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+  .obj-name{ font-size:14px; font-weight:700; color:var(--ink); }
+  .obj-name-input{
+    border:none; background:transparent; font-family:var(--font); font-size:14px; font-weight:700;
+    color:var(--ink); padding:2px; min-width:0; flex:1;
+  }
+  .obj-name-input:focus{ outline:none; border-bottom:1px dashed var(--accent); }
+  .obj-status-pill{
+    font-size:10.5px; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; padding:4px 9px;
+    border-radius:999px; border:1.5px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer;
+  }
+  .obj-status-pill[data-status="in_progress"].active{ background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .obj-status-pill[data-status="closed"].active{ background:var(--success); border-color:var(--success); color:#fff; }
+  .obj-meta{ font-size:12px; color:var(--muted); margin-top:6px; }
+  .obj-warranty-badge{
+    display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; border-radius:8px;
+    padding:6px 10px; margin-top:8px;
+  }
+  .obj-warranty-badge.ok{ background:rgba(47,143,91,0.12); color:var(--success); }
+  .obj-warranty-badge.warn{ background:var(--accent-soft); color:var(--accent); }
+  .obj-warranty-badge.expired{ background:var(--surface); color:var(--muted); border:1px dashed var(--line); }
+  .obj-actions{ display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+  .obj-actions button{
+    border:1.5px solid var(--line); background:var(--surface); color:var(--ink-soft); border-radius:8px;
+    padding:6px 10px; font-family:var(--font); font-size:11.5px; font-weight:700; cursor:pointer;
+  }
+  .obj-actions button:hover{ border-color:var(--accent); color:var(--accent); }
+  .obj-actions .obj-del{ margin-left:auto; color:var(--muted); border-color:transparent; background:none; }
+  .obj-actions .obj-del:hover{ color:#B4483A; }
+  .obj-est-chip{
+    display:inline-flex; align-items:center; gap:6px; font-size:11.5px; background:var(--surface);
+    border:1px solid var(--line); border-radius:7px; padding:4px 8px; margin:4px 6px 0 0;
+  }
+  .obj-photos-grid{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .obj-photo-thumb{ position:relative; width:64px; height:64px; border-radius:8px; overflow:hidden; border:1px solid var(--line); }
+  .obj-photo-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .obj-photo-del{
+    position:absolute; top:2px; right:2px; width:18px; height:18px; border-radius:50%; border:none;
+    background:rgba(26,26,26,0.65); color:#fff; font-size:11px; line-height:1; cursor:pointer;
+  }
+  .obj-photo-add{
+    width:64px; height:64px; border-radius:8px; border:1.5px dashed var(--line); background:none;
+    color:var(--muted); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .obj-photo-add:hover{ border-color:var(--accent); color:var(--accent); }
+  .obj-empty{ font-size:12.5px; color:var(--muted); }
+
+  /* ---------- Приёмка работ ---------- */
+  .accept-checklist{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+  .accept-item{ border:1px solid var(--line); border-radius:9px; background:var(--surface-2); padding:9px 11px; }
+  .accept-item-row{ display:flex; align-items:flex-start; gap:9px; }
+  .accept-item-row input[type="checkbox"]{ width:18px; height:18px; margin-top:1px; accent-color:var(--accent); flex-shrink:0; }
+  .accept-item-title{ font-size:13px; font-weight:600; color:var(--ink); }
+  .accept-item-tech{ font-size:11.5px; color:var(--muted); margin-top:3px; line-height:1.4; }
+  .accept-item-custom{ border-color:var(--accent); }
+  .accept-item-del{
+    border:none; background:transparent; color:var(--muted); font-size:13px; cursor:pointer; flex-shrink:0;
+    margin-left:auto; padding:0 2px;
+  }
+  .accept-item-del:hover{ color:#B4483A; }
+  .accept-add-row{ display:flex; flex-direction:column; gap:8px; margin-top:6px; margin-bottom:6px; }
+
+  /* ---------- Справочник видов работ ---------- */
+  .manual-list{ display:flex; flex-direction:column; gap:6px; }
+  .manual-item{ border:1px solid var(--line); border-radius:9px; background:var(--surface-2); }
+  .manual-item summary{ padding:9px 12px; font-size:13px; font-weight:600; color:var(--ink); cursor:pointer; list-style:none; }
+  .manual-item summary::-webkit-details-marker{ display:none; }
+  .manual-item summary::before{ content:"▸ "; color:var(--accent); }
+  .manual-item[open] summary::before{ content:"▾ "; }
+  .manual-item-body{ padding:0 12px 12px; font-size:12.5px; color:var(--ink-soft); line-height:1.5; }
+
+  /* ---------- График работ ---------- */
+  .sched-mode-row{ display:flex; gap:8px; margin-bottom:12px; }
+  .sched-mode-btn{
+    flex:1; border-radius:9px; padding:9px; font-family:var(--font); font-size:12.5px; font-weight:700;
+    cursor:pointer; border:1.5px solid var(--line); background:var(--surface); color:var(--ink-soft);
+  }
+  .sched-mode-btn.active{ background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .sched-stages-list{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+  .sched-stage-row{ border:1px solid var(--line); border-radius:9px; background:var(--surface-2); padding:10px 11px; }
+  .sched-stage-grid{ display:grid; grid-template-columns:1fr 90px; gap:8px; }
+  .sched-stage-grid .f-field--wide{ grid-column:1 / -1; }
+  .sched-stage-dates{ font-size:11px; color:var(--muted); margin-top:6px; }
+  .sched-stage-del{
+    float:right; border:none; background:transparent; color:var(--muted); font-size:13px; cursor:pointer;
+  }
+  .sched-stage-del:hover{ color:#B4483A; }
+  .sched-offset-field{ flex:0 0 90px; }
+
+  /* ---------- визуальный график (диаграмма Ганта) ---------- */
+  .gantt-chart{ display:flex; flex-direction:column; gap:10px; margin:12px 0; }
+  .gantt-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .gantt-label{ flex:0 0 130px; max-width:130px; font-size:11.5px; font-weight:600; color:var(--ink); line-height:1.25; }
+  .gantt-track{ flex:1 1 100px; min-width:80px; height:20px; background:var(--surface-2); border-radius:6px; position:relative; overflow:hidden; }
+  .gantt-bar{ position:absolute; top:2px; bottom:2px; border-radius:5px; min-width:6px; }
+  .gantt-dates{ flex:0 0 auto; font-size:10.5px; color:var(--muted); white-space:nowrap; }
+
+  /* ---------- клиентские инструменты + ландшафт ---------- */
+  .ct-hint{ font-size:12px; color:var(--muted); line-height:1.4; margin-bottom:8px; }
+  .manual-item .manual-copy-btn{
+    margin:0 12px 12px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink-soft);
+    border-radius:7px; padding:6px 10px; font-family:var(--font); font-size:11.5px; font-weight:700; cursor:pointer;
+  }
+  .manual-item .manual-copy-btn:hover{ border-color:var(--accent); color:var(--accent); }
+  .lc-calc-row{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .lc-calc-row .f-field{ flex:1 1 140px; }
 </style>
 </head>
 <body>
@@ -544,6 +653,20 @@
         <button type="button" id="addEstimateBtn" class="add-section-btn" style="margin-bottom:0;">
           <svg viewBox="0 0 24 24" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Новая смета
+        </button>
+      </div>
+    </details>
+
+    <details class="req-panel" id="objectsPanel">
+      <summary class="req-summary">
+        <span>Мои объекты</span>
+        <span class="req-summary-hint" id="objCountHint">0 объектов</span>
+      </summary>
+      <div class="req-body">
+        <div id="objList" class="obj-list"></div>
+        <button type="button" id="addObjectBtn" class="add-section-btn" style="margin-bottom:0;">
+          <svg viewBox="0 0 24 24" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Новый объект
         </button>
       </div>
     </details>
@@ -603,6 +726,140 @@
             <label class="f-field"><span class="f-label">График оплаты</span><input id="tmPayment" class="f-input" type="text" placeholder="например, 50% предоплата, 50% по завершении"></label>
             <label class="f-field"><span class="f-label">Гарантия</span><input id="tmWarranty" class="f-input" type="text" placeholder="например, 12 месяцев"></label>
           </div>
+        </div>
+        <div class="req-group">
+          <div class="req-group-title">«Как мы работаем» — приложение к смете</div>
+          <div class="req-grid">
+            <label class="f-field f-field--wide"><span class="f-label">Ответы на частые вопросы клиента (необязательно)</span><textarea id="howWeWork" class="f-input" rows="3" placeholder="Например: предоплата 30%, доп.работы согласовываем письменно, окончательный расчёт — после подписания акта"></textarea></label>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="req-panel" id="acceptancePanel">
+      <summary class="req-summary">
+        <span>Приёмка работ</span>
+        <span class="req-summary-hint">чек-лист · этапы и технология</span>
+      </summary>
+      <div class="req-body">
+        <label class="f-field f-field--wide">
+          <span class="f-label">Вид работ</span>
+          <select id="acceptCategorySelect" class="f-input"></select>
+        </label>
+        <div id="acceptChecklist" class="accept-checklist"></div>
+        <div class="accept-add-row">
+          <input id="acceptNewItemTitle" class="f-input" type="text" placeholder="Что проверить (например: «Розетки на кухне запитаны отдельной линией»)">
+          <input id="acceptNewItemTech" class="f-input" type="text" placeholder="На что обратить внимание / технология (необязательно)">
+          <button type="button" id="acceptAddItemBtn" class="add-section-btn" style="margin-bottom:0;">
+            <svg viewBox="0 0 24 24" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Добавить свой пункт проверки
+          </button>
+        </div>
+        <button type="button" id="acceptNewCategoryBtn" class="promo-link" style="margin-top:6px;">➕ Добавить свой вид работ</button>
+        <button type="button" id="acceptDelCategoryBtn" class="promo-link" style="margin-top:6px; display:none;">Удалить этот (пользовательский) вид работ</button>
+        <button type="button" id="acceptGeneratePdf" class="add-section-btn" style="margin-bottom:0; margin-top:10px;">
+          📋 Сформировать акт приёмки (PDF)
+        </button>
+      </div>
+    </details>
+
+    <details class="req-panel" id="manualPanel">
+      <summary class="req-summary">
+        <span>Справочник видов работ</span>
+        <span class="req-summary-hint">что это и зачем — по каждому разделу каталога</span>
+      </summary>
+      <div class="req-body">
+        <input id="manualSearch" class="f-input" type="text" placeholder="🔍 Найти вид работ…" style="margin-bottom:10px;" autocomplete="off">
+        <div id="manualList" class="manual-list"></div>
+      </div>
+    </details>
+
+    <details class="req-panel" id="schedulePanel">
+      <summary class="req-summary">
+        <span>График работ</span>
+        <span class="req-summary-hint">из сметы или с нуля · материалы по этапам</span>
+      </summary>
+      <div class="req-body">
+        <div class="sched-mode-row">
+          <button type="button" class="sched-mode-btn active" id="schedModeFromEstBtn" data-mode="fromEstimate">Из текущей сметы</button>
+          <button type="button" class="sched-mode-btn" id="schedModeManualBtn" data-mode="manual">С нуля</button>
+        </div>
+        <label class="f-field"><span class="f-label">Дата начала работ</span><input id="schedStartDate" class="f-input" type="date"></label>
+        <div class="req-group-title" style="margin-top:14px;">Наглядно — какие этапы идут смежно/параллельно</div>
+        <div id="schedGanttChart"></div>
+        <div class="req-group-title" style="margin-top:6px;">Список этапов — редактирование</div>
+        <div class="ct-hint">У каждого этапа есть «начало, день от старта» — если хотите, чтобы два этапа шли параллельно, поставьте им одинаковое начало.</div>
+        <div id="schedStagesList" class="sched-stages-list"></div>
+        <button type="button" id="schedAddStageBtn" class="add-section-btn" style="margin-bottom:0;" hidden>
+          <svg viewBox="0 0 24 24" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Добавить этап
+        </button>
+        <button type="button" id="schedGeneratePdf" class="add-section-btn" style="margin-bottom:0; margin-top:8px;">
+          📅 Скачать график работ (PDF)
+        </button>
+      </div>
+    </details>
+
+    <details class="req-panel" id="calcPanel">
+      <summary class="req-summary">
+        <span>Калькуляторы</span>
+        <span class="req-summary-hint">стяжка · бетон · розетки · кровля · лестница</span>
+      </summary>
+      <div class="req-body">
+        <label class="f-field f-field--wide"><span class="f-label">Что считаем</span>
+          <select id="calcType" class="f-input">
+            <option value="screed">Стяжка пола — объём и вес смеси</option>
+            <option value="concrete">Бетон — компоненты по марке на 1 м³</option>
+            <option value="sockets">Розетки — ориентировочное количество на комнату</option>
+            <option value="roof">Кровля — уклон, площадь ската и подходящий материал</option>
+            <option value="stairs">Лестница — количество ступеней по формуле удобства</option>
+          </select>
+        </label>
+        <div id="calcFields"></div>
+        <div id="calcResult" class="ct-hint" style="margin-top:8px;"></div>
+      </div>
+    </details>
+
+    <details class="req-panel" id="clientToolsPanel">
+      <summary class="req-summary">
+        <span>Инструменты для клиента</span>
+        <span class="req-summary-hint">бриф · скрипты для сложных разговоров</span>
+      </summary>
+      <div class="req-body">
+        <div class="req-group">
+          <div class="req-group-title">Бриф от заказчика</div>
+          <div class="ct-hint">Готовый список вопросов — отправьте клиенту в мессенджере до начала работ, чтобы не тратить время на звонки.</div>
+          <button type="button" id="briefCopyBtn" class="add-section-btn" style="margin-bottom:0;">📋 Скопировать бриф для заказчика</button>
+        </div>
+        <div class="req-group">
+          <div class="req-group-title">Скрипты для сложных разговоров</div>
+          <div id="scriptsList" class="manual-list"></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="req-panel" id="landscapePanel">
+      <summary class="req-summary">
+        <span>Ландшафт: сезонность и расчёт</span>
+        <span class="req-summary-hint">когда сажать · сколько нужно материала</span>
+      </summary>
+      <div class="req-body">
+        <div class="req-group">
+          <div class="req-group-title">Сезонность работ</div>
+          <div id="seasonList" class="manual-list"></div>
+        </div>
+        <div class="req-group">
+          <div class="req-group-title">Калькулятор газона и растений</div>
+          <label class="f-field"><span class="f-label">Что считаем</span>
+            <select id="lcCalcType" class="f-input">
+              <option value="lawn_seed">Газон посевной — норма семян</option>
+              <option value="lawn_roll">Газон рулонный — количество рулонов</option>
+              <option value="hedge">Живая изгородь в один ряд — количество растений</option>
+              <option value="trees">Деревья/кустарники по площади — количество растений</option>
+            </select>
+          </label>
+          <div id="lcCalcFields"></div>
+          <div id="lcCalcResult" class="ct-hint" style="margin-top:8px;"></div>
         </div>
       </div>
     </details>
@@ -679,6 +936,9 @@
           <option value="ks2">Документ: Акт КС-2</option>
           <option value="ks3">Документ: Справка КС-3</option>
           <option value="invoice">Документ: Счёт на оплату</option>
+          <option value="shopping">Документ: Лист закупки материалов</option>
+          <option value="warranty">Документ: Гарантийный талон</option>
+          <option value="passport">Документ: Паспорт объекта</option>
         </select>
       </div>
       <div class="action-row">
@@ -813,8 +1073,12 @@
   const LS_CLIENT_LEGACY = "smeta-client-v1";
   const LS_SECTIONS_LEGACY = "smeta-sections-v2";
   const LS_FREQUENT = "smeta-frequent-items-v1";
+  const LS_PROJECTS = "smeta-projects-v1";
+  const LS_SCHEDULES = "smeta-schedules-v1";
+  const LS_HOWWEWORK = "smeta-howweork-v1";
+  const LS_CUSTOM_ACCEPT = "smeta-custom-accept-v1";
 
-  const UNIT_LABELS = { m2: "м²", lm: "п.м.", m3: "м³", hr: "час", pcs: "шт", fix: "—" };
+  const UNIT_LABELS = { m2: "м²", lm: "п.м.", m3: "м³", hr: "час", day: "сутки", pcs: "шт", fix: "—" };
 
   const ANFAS_URL = "https://www.e-anfas.ru";
   const CURRENCY_SYMBOLS = { RUB: "₽", USD: "$", EUR: "€", KZT: "₸", BYN: "Br" };
@@ -2475,6 +2739,32 @@
   { name: "Проверка и наладка автоматики инженерных систем", unit: "hr", group: "Пусконаладка и комплексное опробование" }
 ] },
 
+  { title: "Спецификация мебели и декора (FF&E)", items: [
+    { name: "Диван — модель / артикул / поставщик указать в названии", unit: "pcs", group: "Мебель" },
+    { name: "Кресло — модель / артикул / поставщик указать в названии", unit: "pcs", group: "Мебель" },
+    { name: "Обеденный стол и стулья — модель / артикул / поставщик указать в названии", unit: "pcs", group: "Мебель" },
+    { name: "Люстра / потолочный светильник — артикул / поставщик указать в названии", unit: "pcs", group: "Освещение" },
+    { name: "Бра / настольная лампа — артикул / поставщик указать в названии", unit: "pcs", group: "Освещение" },
+    { name: "Ковёр — размер / артикул указать в названии", unit: "pcs", group: "Текстиль и декор" },
+    { name: "Готовые шторы / карниз — артикул указать в названии", unit: "pcs", group: "Текстиль и декор" },
+    { name: "Декор и аксессуары (вазы, картины, зеркала)", unit: "fix", group: "Текстиль и декор" },
+    { name: "Дизайнерский смеситель / сантехника — артикул указать в названии", unit: "pcs", group: "Сантехника и техника" },
+    { name: "Встраиваемая техника — модель указать в названии", unit: "pcs", group: "Сантехника и техника" }
+  ] },
+
+  { title: "Аренда техники и субподряд", items: [
+    { name: "Аренда экскаватора", unit: "hr", group: "Аренда техники" },
+    { name: "Аренда мини-погрузчика (бобкат)", unit: "hr", group: "Аренда техники" },
+    { name: "Аренда автовышки", unit: "hr", group: "Аренда техники" },
+    { name: "Аренда бетономешалки", unit: "day", group: "Аренда техники" },
+    { name: "Аренда вибротрамбовки / глубинного вибратора", unit: "day", group: "Аренда техники" },
+    { name: "Доставка и вывоз техники с объекта", unit: "fix", group: "Аренда техники" },
+    { name: "Привлечённая бригада — черновые работы", unit: "fix", group: "Субподряд" },
+    { name: "Привлечённая бригада — инженерные сети", unit: "fix", group: "Субподряд" },
+    { name: "Услуги геодезиста / инженерная разбивка", unit: "fix", group: "Субподряд" },
+    { name: "Вывоз строительного мусора манипулятором/самосвалом", unit: "fix", group: "Субподряд" }
+  ] },
+
   ];
 
   function uid(){ return "s" + Math.random().toString(36).slice(2, 9); }
@@ -2499,7 +2789,8 @@
       name: name || "Смета",
       client: { name: "", object: "", date: todayISO() },
       sections: defaultSections(),
-      terms: { duration: "", payment: "", warranty: "" },
+      terms: { duration: "", payment: "", warranty: "", howWeWork: "" },
+      projectId: null,
       materialMarkupPercent: 0,
       workDiscountPercent: 0,
       materialDiscountPercent: 0,
@@ -2525,6 +2816,8 @@
     if (!est.currency || !CURRENCY_SYMBOLS[est.currency]) est.currency = "RUB";
     if (!est.status) est.status = "none";
     if (!Array.isArray(est.history)) est.history = [];
+    if (est.terms.howWeWork == null) est.terms.howWeWork = "";
+    if (est.projectId === undefined) est.projectId = null;
     delete est.markupPercent;
     delete est.vatEnabled;
     return est;
@@ -2663,6 +2956,7 @@
   bindEstimateField("tmDuration", "terms", "duration");
   bindEstimateField("tmPayment", "terms", "payment");
   bindEstimateField("tmWarranty", "terms", "warranty");
+  bindEstimateField("howWeWork", "terms", "howWeWork");
 
   const materialMarkupInputEl = document.getElementById("materialMarkupInput");
   const workDiscountInputEl = document.getElementById("workDiscountInput");
@@ -2704,6 +2998,7 @@
     document.getElementById("tmDuration").value = est.terms.duration || "";
     document.getElementById("tmPayment").value = est.terms.payment || "";
     document.getElementById("tmWarranty").value = est.terms.warranty || "";
+    document.getElementById("howWeWork").value = est.terms.howWeWork || "";
     materialMarkupInputEl.value = est.materialMarkupPercent || "";
     workDiscountInputEl.value = est.workDiscountPercent || "";
     materialDiscountInputEl.value = est.materialDiscountPercent || "";
@@ -3648,18 +3943,26 @@
   const DOC_TITLES = {
     smeta: "СМЕТА", act: "АКТ ВЫПОЛНЕННЫХ РАБОТ",
     ks2: "АКТ О ПРИЁМКЕ ВЫПОЛНЕННЫХ РАБОТ (КС-2)", ks3: "СПРАВКА О СТОИМОСТИ ВЫПОЛНЕННЫХ РАБОТ И ЗАТРАТ (КС-3)",
-    invoice: "СЧЁТ НА ОПЛАТУ"
+    invoice: "СЧЁТ НА ОПЛАТУ",
+    shopping: "ЛИСТ ЗАКУПКИ МАТЕРИАЛОВ", warranty: "ГАРАНТИЙНЫЙ ТАЛОН", passport: "ПАСПОРТ ОБЪЕКТА",
+    acceptance: "АКТ ПРИЁМКИ РАБОТ", schedule: "ГРАФИК РАБОТ"
   };
   const DOC_GRAND_LABELS = {
     smeta: "ИТОГО ПО СМЕТЕ", act: "ИТОГО ПО АКТУ",
     ks2: "ИТОГО ПО АКТУ КС-2", ks3: "ИТОГО ПО СПРАВКЕ КС-3",
-    invoice: "К ОПЛАТЕ"
+    invoice: "К ОПЛАТЕ",
+    shopping: "ИТОГО ПО МАТЕРИАЛАМ", warranty: "СТОИМОСТЬ РАБОТ ПО ДОГОВОРУ", passport: "ИТОГО ПО СМЕТЕ"
   };
   // kinds that show the "работы выполнены в полном объёме" completion statement and use
   // the Сдал/Принял (handover) signature convention instead of Исполнитель/Заказчик
   const COMPLETION_STATEMENT_KINDS = ["act", "ks2"];
-  const HANDOVER_SIGNATURE_KINDS = ["ks2", "ks3"];
-  const NO_TERMS_KINDS = ["act", "ks2", "ks3"];
+  const HANDOVER_SIGNATURE_KINDS = ["ks2", "ks3", "warranty", "passport", "acceptance"];
+  const NO_TERMS_KINDS = ["act", "ks2", "ks3", "shopping", "acceptance", "schedule"];
+  // kinds that replace the standard items table in the print sheet with fully custom HTML
+  const CUSTOM_BODY_KINDS = ["shopping", "warranty", "passport"];
+  // kinds with no meaningful grand total to show (checklist / calendar documents)
+  const NO_GRAND_KINDS = ["acceptance", "schedule"];
+  const NO_SIGNATURE_KINDS = ["schedule", "shopping"];
 
   function psTable2ColHeaderHTML(nameLabel, sumLabel){
     return (
@@ -3712,7 +4015,27 @@
     document.getElementById("psMeta").innerHTML = metaLines.join(" &nbsp;·&nbsp; ");
 
     const visibleSections = est.sections.filter(s => s.items.length);
-    if (kind === "ks3"){
+    if (CUSTOM_BODY_KINDS.includes(kind)){
+      if (kind === "shopping"){
+        const items = aggregateMaterials(getObjectLinkedEstimates(est));
+        document.getElementById("psSections").innerHTML =
+          '<div class="ps-section">' +
+            psTable2ColHeaderHTML("Материал", "Кол-во · Сумма") +
+            (items.length ? items.map(it =>
+              '<div class="ps-table-row"><span class="ps-col-name">' + esc(it.name) + '</span>' +
+                '<span class="ps-col-sum">' + (it.qtyLabel ? esc(it.qtyLabel) + ' · ' : '') + fmtMoney(it.total, est.currency) + '</span></div>'
+            ).join("") : '<div class="ps-table-row"><span class="ps-col-name">В смете нет позиций с указанной стоимостью материалов</span></div>') +
+          '</div>';
+      } else if (kind === "warranty"){
+        document.getElementById("psSections").innerHTML = buildWarrantyBodyHTML(est);
+      } else if (kind === "passport"){
+        document.getElementById("psSections").innerHTML = buildPassportBodyHTML(est);
+      }
+    } else if (kind === "acceptance"){
+      document.getElementById("psSections").innerHTML = buildAcceptanceBodyHTML();
+    } else if (kind === "schedule"){
+      document.getElementById("psSections").innerHTML = buildScheduleBodyHTML();
+    } else if (kind === "ks3"){
       // КС-3 — справка о стоимости: сводка по разделам, без построчной детализации позиций
       document.getElementById("psSections").innerHTML =
         '<div class="ps-ks3-intro">Стоимость выполненных работ и затрат по состоянию на ' +
@@ -3735,15 +4058,31 @@
       )).join("");
     }
 
-    document.getElementById("psTotalsBlock").innerHTML = buildPricingRows(est, "ps-totals-row");
-    document.getElementById("psGrandValue").textContent = fmtMoney(estimateGrandTotal(est), est.currency);
-    document.getElementById("psTotalSplit").innerHTML = buildTotalSplitHTML(est);
+    const psGrandbarEl = document.querySelector(".ps-grandbar");
+    if (NO_GRAND_KINDS.includes(kind)){
+      psGrandbarEl.hidden = true;
+      document.getElementById("psTotalsBlock").innerHTML = "";
+      document.getElementById("psTotalSplit").innerHTML = "";
+    } else if (kind === "shopping"){
+      psGrandbarEl.hidden = false;
+      const items = aggregateMaterials(getObjectLinkedEstimates(est));
+      const shopTotal = items.reduce((s, it) => s + it.total, 0);
+      document.getElementById("psTotalsBlock").innerHTML = "";
+      document.getElementById("psGrandValue").textContent = fmtMoney(shopTotal, est.currency);
+      document.getElementById("psTotalSplit").innerHTML = "";
+    } else {
+      psGrandbarEl.hidden = false;
+      document.getElementById("psTotalsBlock").innerHTML = buildPricingRows(est, "ps-totals-row");
+      document.getElementById("psGrandValue").textContent = fmtMoney(estimateGrandTotal(est), est.currency);
+      document.getElementById("psTotalSplit").innerHTML = buildTotalSplitHTML(est);
+    }
 
     const termsRows = [];
     if (!NO_TERMS_KINDS.includes(kind)){
       if (est.terms.duration && kind !== "invoice") termsRows.push('<div class="ps-terms-row"><b>Срок выполнения:</b> ' + esc(est.terms.duration) + '</div>');
       if (est.terms.payment) termsRows.push('<div class="ps-terms-row"><b>График оплаты:</b> ' + esc(est.terms.payment) + '</div>');
       if (est.terms.warranty && kind !== "invoice") termsRows.push('<div class="ps-terms-row"><b>Гарантия:</b> ' + esc(est.terms.warranty) + '</div>');
+      if (est.terms.howWeWork && (kind === "smeta" || kind === "invoice")) termsRows.push('<div class="ps-terms-row"><b>Как мы работаем:</b> ' + esc(est.terms.howWeWork) + '</div>');
     }
     const psTermsEl = document.getElementById("psTerms");
     if (termsRows.length){
@@ -3756,6 +4095,7 @@
     document.getElementById("psActStatement").hidden = !COMPLETION_STATEMENT_KINDS.includes(kind);
 
     const psSignatureEl = document.getElementById("psSignature");
+    psSignatureEl.hidden = NO_SIGNATURE_KINDS.includes(kind);
     if (kind === "invoice"){
       psSignatureEl.innerHTML = '<div class="ps-sign-col">Руководитель<div class="ps-sign-line">подпись / расшифровка · М.П.</div></div>';
     } else if (HANDOVER_SIGNATURE_KINDS.includes(kind)){
@@ -3770,7 +4110,9 @@
   }
 
   const DOC_FILENAMES = {
-    smeta: "Смета", act: "Акт выполненных работ", ks2: "Акт КС-2", ks3: "Справка КС-3", invoice: "Счёт на оплату"
+    smeta: "Смета", act: "Акт выполненных работ", ks2: "Акт КС-2", ks3: "Справка КС-3", invoice: "Счёт на оплату",
+    shopping: "Лист закупки материалов", warranty: "Гарантийный талон", passport: "Паспорт объекта",
+    acceptance: "Акт приёмки работ", schedule: "График работ"
   };
 
   async function exportPDF(kind, mode){
@@ -4096,9 +4438,1040 @@
     notify("Excel-файл сформирован");
   });
 
+  /* =====================================================================
+     МОИ ОБЪЕКТЫ — группировка смет/актов/счетов по клиенту и адресу,
+     гарантийный трекер, фотоотчёт. Всё по-прежнему хранится в localStorage,
+     сервер не требуется.
+     ===================================================================== */
+  let projects = loadJSON(LS_PROJECTS, []);
+  if (!Array.isArray(projects)) projects = [];
+  function saveProjects(){ saveJSON(LS_PROJECTS, projects); }
+
+  function newProject(name){
+    return {
+      id: uid(),
+      name: name || "Новый объект",
+      status: "in_progress", // in_progress | closed
+      estimateIds: [],
+      closedAt: null,
+      warrantyMonths: null,
+      warrantyEnd: null,
+      photos: [] // { id, dataUrl, caption, date }
+    };
+  }
+  projects.forEach(p => {
+    if (!Array.isArray(p.estimateIds)) p.estimateIds = [];
+    if (!Array.isArray(p.photos)) p.photos = [];
+    if (!p.status) p.status = "in_progress";
+  });
+
+  function pluralObjects(n){
+    if (n % 10 === 1 && n % 100 !== 11) return n + " объект";
+    if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return n + " объекта";
+    return n + " объектов";
+  }
+
+  // materials aggregated across one or more estimates — the shared basis for
+  // "Лист закупки материалов" and "Паспорт объекта"
+  function aggregateMaterials(estArr){
+    const map = new Map();
+    estArr.forEach(est => {
+      est.sections.forEach(sec => {
+        sec.items.forEach(it => {
+          if (!it.name || !(it.priceMaterial > 0)) return;
+          const key = it.name.trim().toLowerCase() + "|" + (it.unit || "");
+          const qty = it.unit === "fix" ? 1 : (it.qty || 0);
+          const existing = map.get(key);
+          if (existing){
+            existing.qty += qty;
+            existing.total += itemMaterialAmount(it);
+          } else {
+            map.set(key, { name: it.name, unit: it.unit, qty, total: itemMaterialAmount(it) });
+          }
+        });
+      });
+    });
+    return Array.from(map.values()).map(it => ({
+      name: it.name,
+      total: it.total,
+      qtyLabel: (it.unit && it.unit !== "fix" && it.qty) ? (fmtNum(it.qty) + " " + (UNIT_LABELS[it.unit] || it.unit)) : ""
+    })).sort((a, b) => b.total - a.total);
+  }
+
+  function findProjectByEstimateId(estId){
+    return projects.find(p => p.estimateIds.includes(estId)) || null;
+  }
+  // all estimates that belong to the same object/project as `est` (falls back to just `est`)
+  function getObjectLinkedEstimates(est){
+    const proj = findProjectByEstimateId(est.id);
+    if (!proj) return [est];
+    const linked = estimates.filter(e => proj.estimateIds.includes(e.id));
+    return linked.length ? linked : [est];
+  }
+
+  function warrantyStatus(proj){
+    if (!proj.warrantyEnd) return null;
+    const end = new Date(proj.warrantyEnd);
+    const days = Math.ceil((end - new Date()) / 86400000);
+    if (days < 0) return { cls: "expired", text: "Гарантия закончилась " + formatDateRu(proj.warrantyEnd) };
+    if (days <= 30) return { cls: "warn", text: "Гарантия истекает через " + days + " дн. (" + formatDateRu(proj.warrantyEnd) + ") — свяжитесь с клиентом" };
+    return { cls: "ok", text: "Гарантия действует до " + formatDateRu(proj.warrantyEnd) };
+  }
+
+  function parseWarrantyMonths(text){
+    const m = String(text || "").match(/(\d+)/);
+    if (!m) return 12;
+    let n = parseInt(m[1], 10);
+    // a bare "1"/"2" in a warranty string almost always means years, not months
+    if (/год|лет/i.test(text) ) n = n * 12;
+    return n || 12;
+  }
+
+  function renderObjectsPanel(){
+    document.getElementById("objCountHint").textContent = pluralObjects(projects.length);
+    const wrap = document.getElementById("objList");
+    if (!projects.length){
+      wrap.innerHTML = '<div class="obj-empty">Пока нет ни одного объекта. Создайте объект и привяжите к нему смету — так вы сможете отслеживать статус, гарантию и фотоотчёт по каждому клиенту в одном месте.</div>';
+      return;
+    }
+    wrap.innerHTML = projects.map(renderObjectCardHTML).join("");
+  }
+
+  function renderObjectCardHTML(p){
+    const linkedEstimates = estimates.filter(e => p.estimateIds.includes(e.id));
+    const ws = warrantyStatus(p);
+    const chips = linkedEstimates.map(e =>
+      '<span class="obj-est-chip" data-open-est="' + e.id + '">' + esc(e.name) + ' · ' + fmtMoney(estimateGrandTotal(e), e.currency) + '</span>'
+    ).join("") || '<span class="obj-empty">Смет пока не привязано</span>';
+    const photosHTML = p.photos.map(ph =>
+      '<div class="obj-photo-thumb"><img src="' + ph.dataUrl + '" alt=""><button type="button" class="obj-photo-del" data-obj="' + p.id + '" data-photo="' + ph.id + '">✕</button></div>'
+    ).join("");
+    return (
+      '<div class="obj-card" data-id="' + p.id + '">' +
+        '<div class="obj-card-head">' +
+          '<input class="obj-name-input" data-id="' + p.id + '" type="text" value="' + escAttr(p.name) + '">' +
+          '<span class="obj-status-pill' + (p.status === "in_progress" ? " active" : "") + '" data-status="in_progress" data-id="' + p.id + '">В работе</span>' +
+          '<span class="obj-status-pill' + (p.status === "closed" ? " active" : "") + '" data-status="closed" data-id="' + p.id + '">Закрыт</span>' +
+        '</div>' +
+        '<div class="obj-meta">Привязанные сметы/акты:</div>' +
+        '<div>' + chips + '</div>' +
+        (ws ? '<div class="obj-warranty-badge ' + ws.cls + '">🛡 ' + esc(ws.text) + '</div>' : '') +
+        '<div class="obj-photos-grid">' + photosHTML +
+          '<button type="button" class="obj-photo-add" data-id="' + p.id + '" aria-label="Добавить фото">＋</button>' +
+        '</div>' +
+        '<div class="obj-actions">' +
+          '<button type="button" class="obj-link-est" data-id="' + p.id + '">🔗 Привязать текущую смету</button>' +
+          '<button type="button" class="obj-shopping" data-id="' + p.id + '">🧾 Лист закупки</button>' +
+          '<button type="button" class="obj-photoreport" data-id="' + p.id + '">📷 Фотоотчёт (PDF)</button>' +
+          '<button type="button" class="obj-del" data-id="' + p.id + '">Удалить объект</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  document.getElementById("addObjectBtn").addEventListener("click", () => {
+    const est = getActive();
+    const p = newProject((est.client.name || est.client.object) ? [est.client.name, est.client.object].filter(Boolean).join(" — ") : "Объект " + (projects.length + 1));
+    projects.push(p);
+    saveProjects();
+    renderObjectsPanel();
+    haptic("light");
+  });
+
+  const objListEl = document.getElementById("objList");
+  objListEl.addEventListener("input", e => {
+    if (e.target.classList.contains("obj-name-input")){
+      const p = projects.find(x => x.id === e.target.dataset.id);
+      if (p){ p.name = e.target.value; saveProjects(); }
+    }
+  });
+
+  objListEl.addEventListener("click", e => {
+    const statusBtn = e.target.closest(".obj-status-pill");
+    if (statusBtn){
+      const p = projects.find(x => x.id === statusBtn.dataset.id);
+      if (!p) return;
+      if (statusBtn.dataset.status === "closed" && p.status !== "closed"){
+        const est = getActive();
+        const months = parseWarrantyMonths(est.terms.warranty);
+        const input = prompt("Гарантийный срок в месяцах (по умолчанию из условий сметы):", String(months));
+        const finalMonths = parseInt(input, 10) || months;
+        p.status = "closed";
+        p.closedAt = todayISO();
+        p.warrantyMonths = finalMonths;
+        const end = new Date();
+        end.setMonth(end.getMonth() + finalMonths);
+        p.warrantyEnd = end.toISOString().slice(0, 10);
+        notify("Объект закрыт. Гарантия до " + formatDateRu(p.warrantyEnd));
+      } else if (statusBtn.dataset.status === "in_progress"){
+        p.status = "in_progress";
+        p.closedAt = null; p.warrantyEnd = null; p.warrantyMonths = null;
+      }
+      saveProjects();
+      renderObjectsPanel();
+      haptic("medium");
+      return;
+    }
+    const linkBtn = e.target.closest(".obj-link-est");
+    if (linkBtn){
+      const p = projects.find(x => x.id === linkBtn.dataset.id);
+      const est = getActive();
+      if (p && !p.estimateIds.includes(est.id)){
+        p.estimateIds.push(est.id);
+        est.projectId = p.id;
+        saveProjects(); saveEstimates();
+        renderObjectsPanel();
+        notify('Смета «' + est.name + '» привязана к объекту «' + p.name + '»');
+      }
+      return;
+    }
+    const shopBtn = e.target.closest(".obj-shopping");
+    if (shopBtn){
+      const p = projects.find(x => x.id === shopBtn.dataset.id);
+      const linked = estimates.filter(x => p.estimateIds.includes(x.id));
+      if (!linked.length){ notify("К объекту не привязано ни одной сметы"); return; }
+      const savedActive = activeId;
+      activeId = linked[0].id;
+      exportPDF("shopping", "download").then(() => { activeId = savedActive; });
+      return;
+    }
+    const photoBtn = e.target.closest(".obj-photo-add");
+    if (photoBtn){
+      pendingPhotoObjectId = photoBtn.dataset.id;
+      objPhotoFileInput.click();
+      return;
+    }
+    const photoDel = e.target.closest(".obj-photo-del");
+    if (photoDel){
+      const p = projects.find(x => x.id === photoDel.dataset.obj);
+      if (p){
+        p.photos = p.photos.filter(ph => ph.id !== photoDel.dataset.photo);
+        saveProjects();
+        renderObjectsPanel();
+      }
+      return;
+    }
+    const reportBtn = e.target.closest(".obj-photoreport");
+    if (reportBtn){
+      exportPhotoReportPDF(reportBtn.dataset.id);
+      return;
+    }
+    const delBtn = e.target.closest(".obj-del");
+    if (delBtn){
+      if (!confirm("Удалить объект? Привязанные сметы не удаляются.")) return;
+      projects = projects.filter(x => x.id !== delBtn.dataset.id);
+      saveProjects();
+      renderObjectsPanel();
+      return;
+    }
+    const chip = e.target.closest("[data-open-est]");
+    if (chip){
+      switchToEstimate(chip.dataset.openEst);
+      notify("Открыта смета «" + getActive().name + "»");
+    }
+  });
+
+  let pendingPhotoObjectId = null;
+  const objPhotoFileInput = document.createElement("input");
+  objPhotoFileInput.type = "file";
+  objPhotoFileInput.accept = "image/*";
+  objPhotoFileInput.multiple = true;
+  objPhotoFileInput.style.display = "none";
+  document.body.appendChild(objPhotoFileInput);
+
+  function resizeImageFile(file, maxW){
+    return new Promise((resolve) => {
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = () => {
+        img.onload = () => {
+          const scale = Math.min(1, maxW / img.width);
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL("image/jpeg", 0.62));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  objPhotoFileInput.addEventListener("change", async () => {
+    const p = projects.find(x => x.id === pendingPhotoObjectId);
+    if (!p || !objPhotoFileInput.files.length) return;
+    for (const file of Array.from(objPhotoFileInput.files)){
+      try {
+        const dataUrl = await resizeImageFile(file, 900);
+        p.photos.push({ id: uid(), dataUrl, caption: "", date: todayISO() });
+      } catch(e){ /* skip file that failed to read */ }
+    }
+    try {
+      saveProjects();
+    } catch(e){
+      notify("Не удалось сохранить фото — недостаточно места в браузере. Удалите старые фото и попробуйте снова.");
+      p.photos.pop();
+    }
+    renderObjectsPanel();
+    objPhotoFileInput.value = "";
+    haptic("light");
+  });
+
+  async function exportPhotoReportPDF(projectId){
+    const p = projects.find(x => x.id === projectId);
+    if (!p) return;
+    if (!p.photos.length){ notify("У объекта пока нет фото"); return; }
+    if (!(window.jspdf && window.jspdf.jsPDF)){
+      notify("Не удалось загрузить модуль PDF. Проверьте подключение к интернету.");
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const pageW = 210, margin = 14, gap = 4;
+    const cellW = (pageW - margin * 2 - gap) / 2;
+    const cellH = cellW * 0.75;
+    doc.setFont("helvetica", "bold"); doc.setFontSize(14);
+    doc.text("Фотоотчёт — " + p.name, margin, 16);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9);
+    let x = margin, y = 24, col = 0;
+    p.photos.forEach(ph => {
+      if (y + cellH > 285){ doc.addPage(); y = 20; }
+      try { doc.addImage(ph.dataUrl, "JPEG", x, y, cellW, cellH); } catch(e){}
+      doc.text(formatDateRu(ph.date), x, y + cellH + 4);
+      col++;
+      if (col === 2){ col = 0; x = margin; y += cellH + 10; }
+      else { x = margin + cellW + gap; }
+    });
+    doc.save(sanitizeFilename("Фотоотчёт — " + p.name) + ".pdf");
+    haptic("medium");
+    notify("Фотоотчёт сформирован");
+  }
+
+  function buildWarrantyBodyHTML(est){
+    const proj = findProjectByEstimateId(est.id);
+    const months = (proj && proj.warrantyMonths) ? proj.warrantyMonths : parseWarrantyMonths(est.terms.warranty);
+    const start = (proj && proj.closedAt) ? proj.closedAt : est.client.date;
+    const end = (proj && proj.warrantyEnd) ? proj.warrantyEnd : (() => { const d = new Date(start); d.setMonth(d.getMonth() + months); return d.toISOString().slice(0,10); })();
+    const sections = est.sections.filter(s => s.items.length).map(s => s.title);
+    return (
+      '<div class="ps-section">' +
+        '<div class="ps-terms-row"><b>Гарантийный срок:</b> ' + months + ' мес. — с ' + esc(formatDateRu(start)) + ' по ' + esc(formatDateRu(end)) + '</div>' +
+        '<div class="ps-terms-row"><b>Виды выполненных работ:</b> ' + esc(sections.join(", ") || "—") + '</div>' +
+        '<div class="ps-terms-row" style="margin-top:10px;">Гарантия распространяется на качество выполненных работ, указанных выше, при условии соблюдения условий эксплуатации. Гарантия не распространяется на повреждения, вызванные механическим воздействием третьих лиц, нарушением правил эксплуатации, а также на естественный износ материалов.</div>' +
+        '<div class="ps-terms-row" style="margin-top:10px;">По вопросам гарантийного обслуживания обращайтесь: ' + esc([company.phone, company.email].filter(Boolean).join(" · ") || "см. контакты исполнителя") + '</div>' +
+      '</div>'
+    );
+  }
+
+  function buildPassportBodyHTML(est){
+    const items = aggregateMaterials(getObjectLinkedEstimates(est));
+    const sections = est.sections.filter(s => s.items.length).map(s => s.title);
+    return (
+      '<div class="ps-section">' +
+        '<div class="ps-terms-row"><b>Что выполнено:</b> ' + esc(sections.join(", ") || "—") + '</div>' +
+        '<div class="ps-terms-row"><b>Дата сдачи:</b> ' + esc(formatDateRu(est.client.date)) + (est.terms.warranty ? '  ·  <b>Гарантия:</b> ' + esc(est.terms.warranty) : '') + '</div>' +
+      '</div>' +
+      '<div class="ps-section">' +
+        '<div class="ps-section-title">Использованные материалы</div>' +
+        psTable2ColHeaderHTML("Материал", "Количество") +
+        (items.length ? items.map(it =>
+          '<div class="ps-table-row"><span class="ps-col-name">' + esc(it.name) + '</span><span class="ps-col-sum">' + esc(it.qtyLabel || "—") + '</span></div>'
+        ).join("") : '<div class="ps-table-row"><span class="ps-col-name">Материалы не указаны</span></div>') +
+      '</div>' +
+      '<div class="ps-section"><div class="ps-terms-row">Этот документ сохраняет сведения о материалах и работах на объекте — пригодится при обслуживании или следующем ремонте. Контакты исполнителя: ' + esc([company.name, company.phone, company.email].filter(Boolean).join(" · ")) + '</div></div>'
+    );
+  }
+
+  /* =====================================================================
+     ПРИЁМКА РАБОТ — чек-листы с этапами и технологией по видам работ.
+     ===================================================================== */
+  const ACCEPT_DATA = {
+    "Черновая отделка (штукатурка, стяжка)": [
+      { title: "Стены оштукатурены по маякам", tech: "Отклонение по вертикали не более 2 мм на 1 м — проверяется правилом длиной 2 м." },
+      { title: "Стяжка пола ровная, без трещин и пустот", tech: "Пустоты проверяются простукиванием (глухой звук — норма); в мокрых зонах выдержан уклон к сливу." },
+      { title: "Углы ровные, без завалов", tech: "Выступающие внешние углы армированы перфоуглом." },
+      { title: "Технологический перерыв выдержан", tech: "Штукатурка — не менее 7 дней на см толщины перед покраской; стяжка — не менее 28 дней перед укладкой плитки." },
+      { title: "Скрытая разводка зафиксирована документально", tech: "Электро- и сантехразводка под стяжкой/штукатуркой сфотографирована и оформлена актом скрытых работ до заливки." }
+    ],
+    "Электрика": [
+      { title: "Розетки и выключатели по уровню", tech: "Высота установки соответствует дизайн-проекту/ТЗ, одна линия по горизонтали." },
+      { title: "Щит промаркирован по группам", tech: "УЗО/дифавтоматы установлены на группы санузлов и кухни; каждая группа подписана." },
+      { title: "Проверены полярность и заземление", tech: "Индикатор-отвёрткой или тестером в каждой розетке; нет искрения под нагрузкой." },
+      { title: "Сечение кабеля соответствует нагрузке", tech: "Как правило не менее 2,5 мм² на розеточные группы, 4–6 мм² на электроплиту." },
+      { title: "Передана исполнительная схема", tech: "Финальная схема электрики с реальным расположением линий передана заказчику." }
+    ],
+    "Сантехника": [
+      { title: "Опрессовка соединений выполнена", tech: "Нет течи в резьбовых и паяных соединениях под давлением." },
+      { title: "Уклон канализации выдержан", tech: "Ориентировочно 2 см на 1 погонный метр трубы, без обратных уклонов." },
+      { title: "Приборы закреплены без люфта", tech: "Смесители, полотенцесушитель, унитаз/раковина неподвижны." },
+      { title: "Гидроизоляция мокрых зон сплошная", tech: "Заход на стены не менее 20 см в душевой и вокруг ванны." },
+      { title: "Слив проверен на скорость", tech: "Нет застоя воды в раковине/ванне/душе после наполнения." }
+    ],
+    "Кровля": [
+      { title: "Стропильная система без дефектов", tech: "Нет прогибов и трещин, шаг стропил соответствует проекту и нагрузкам региона." },
+      { title: "Гидро- и пароизоляция уложены правильно", tech: "Нахлёст полотен не менее 15 см; пароизоляция изнутри, гидроизоляция снаружи утеплителя." },
+      { title: "Кровельное покрытие без зазоров и перекосов", tech: "Нахлёст листов/черепицы соответствует уклону скатов." },
+      { title: "Примыкания и водостоки герметичны", tech: "Узлы у труб, ендов и парапетов проклеены/промазаны; водостоки с уклоном к воронкам." },
+      { title: "Проверка на протечки выполнена", tech: "Осмотр чердака/мансарды после дождя или полива кровли водой." }
+    ],
+    "Окна и двери": [
+      { title: "Окна установлены по уровню", tech: "Отклонение не более 1,5 мм на 1 м; монтажный шов защищён паро- и гидролентой." },
+      { title: "Створки открываются без перекоса", tech: "Плавный ход, нет задевания рамы по периметру." },
+      { title: "Отливы и откосы без щелей", tech: "Подоконник закреплён без люфта и просветов." },
+      { title: "Дверные полотна не задевают пол и коробку", tech: "Фурнитура (петли, замок) работает без заеданий." }
+    ],
+    "Чистовая отделка (полы, стены, потолки)": [
+      { title: "Обои/панели без дефектов стыков", tech: "Рисунок совпадает, углы оклеены без пузырей и отслоений." },
+      { title: "Стены готовы под покраску", tech: "Проверка боковым светом (фонарик под углом) — не должно быть видно раковин и разводов." },
+      { title: "Напольное покрытие уложено с зазором", tech: "Технологический зазор от стен 8–10 мм, скрыт плинтусом." },
+      { title: "Потолок без провисаний и волн", tech: "Стыки у стен закрыты плинтусом/багетом ровно по периметру." }
+    ],
+    "Фундамент и гидроизоляция": [
+      { title: "Геометрия фундамента проверена", tech: "Расхождение диагоналей — не более 20 мм." },
+      { title: "Армирование по проекту", tech: "Защитный слой бетона до арматуры — не менее 40–50 мм." },
+      { title: "Гидроизоляция сплошная", tech: "Без разрывов, с заходом выше уровня отмостки." },
+      { title: "Обратная засыпка уплотнена", tech: "Послойно, дренаж (при наличии) не завален грунтом." }
+    ],
+    "Плитка": [
+      { title: "Швы ровные и одинаковой ширины", tech: "Плитка без пустот под собой — проверяется простукиванием." },
+      { title: "Линии не нарушены", tech: "Диагональная и горизонтальная раскладка проверена уровнем/правилом." },
+      { title: "Затирка выполнена без пропусков", tech: "Цвет соответствует согласованному с заказчиком образцу." },
+      { title: "Уклон в мокрых зонах выдержан", tech: "К трапу/сливу — нет застоя воды после полива." }
+    ],
+    "Скрытые работы (перед засыпкой/заливкой)": [
+      { title: "Армирование сфотографировано до заливки", tech: "Фото каждой захватки с привязкой к оси/помещению — прикладывается к акту как доказательство объёма и качества арматуры." },
+      { title: "Гидроизоляция сфотографирована до засыпки/закрытия", tech: "Особенно фундамент, мокрые зоны и кровельные примыкания — после засыпки/зашивки проверить это уже нельзя." },
+      { title: "Разводка электрики и сантехники сфотографирована до штукатурки/стяжки", tech: "Снимки делаются с масштабной линейкой или рулеткой в кадре, чтобы потом можно было найти трассу в стене." },
+      { title: "Утеплитель и пароизоляция сфотографированы до зашивки", tech: "Актуально для каркасных стен, кровли и полов по грунту." },
+      { title: "Акт подписан обеими сторонами до начала следующего этапа", tech: "Подпись заказчика на этом этапе снимает будущие споры о том, что именно и как было выполнено под чистовой отделкой." }
+    ],
+    "Гипсокартонные конструкции и перегородки": [
+      { title: "Каркас выставлен строго по уровню и отвесу", tech: "Отклонение стоек CD-профиля по вертикали проверяется отвесом или лазерным уровнем перед обшивкой — исправить потом, не разбирая конструкцию, нельзя." },
+      { title: "Шаг стоек и усиление проёмов выполнены по проекту", tech: "В проёмах дверей и под тяжёлые навесные предметы должны стоять усиленные профили или закладные." },
+      { title: "Швы между листами проклеены серпянкой и прошпаклёваны", tech: "Без армирующей ленты шов со временем растрескивается по линии стыка листов." },
+      { title: "Закладные под навесное оборудование подготовлены заранее", tech: "Для телевизора, полотенцесушителя, тяжёлых полок — брус или пластина внутри каркаса, иначе крепёж вырвет из гипсокартона." },
+      { title: "Проверена звукоизоляция межкомнатных перегородок", tech: "Пустотелая перегородка без минеральной ваты внутри пропускает заметно больше звука, чем ожидает заказчик." }
+    ],
+    "Отопление и вентиляция": [
+      { title: "Система опрессована под давлением", tech: "Нет падения давления по манометру за контрольное время — иначе есть скрытая течь в соединениях." },
+      { title: "Радиаторы/тёплые полы прогреваются равномерно", tech: "Холодные зоны на приборе говорят о завоздушивании или засоре — проверяется на ощупь по всей площади." },
+      { title: "Вентиляция создаёт тягу на всех решётках", tech: "Проверяется листом бумаги у решётки при закрытых окнах — отсутствие тяги в санузле/кухне говорит о засоре или неверном сечении канала." },
+      { title: "Балансировочные краны и термоголовки настроены", tech: "Без балансировки дальние по контуру радиаторы всегда холоднее ближних." },
+      { title: "Передана исполнительная схема разводки", tech: "Пригодится при обслуживании, чтобы не задеть трубу под стяжкой в будущем." }
+    ],
+    "Фасадные работы": [
+      { title: "Утеплитель приклеен по всей площади плиты", tech: "Отсутствие контакта клея по плоскости (простукивается) снижает теплоэффективность и повышает риск отслоения." },
+      { title: "Армирующая сетка без провисаний, нахлёст соблюдён", tech: "Нахлёст полотен сетки — не менее 10 см, иначе именно здесь появится трещина." },
+      { title: "Углы здания и откосы окон армированы усиленно", tech: "Угловые профили и диагональное армирование проёмов защищают от трещин при температурных подвижках." },
+      { title: "Цвет и фактура покрытия соответствуют согласованному образцу", tech: "Партии краски/штукатурки могут отличаться оттенком — образец должен быть утверждён заранее, а не «на глаз» по факту." },
+      { title: "Примыкания к окнам, отливам и цоколю герметичны", tech: "Это самые частые точки протечки в мокром фасаде." }
+    ],
+    "Ландшафт и благоустройство": [
+      { title: "Уклон отмостки/дорожек направлен от здания", tech: "Стоячая вода у отмостки со временем размывает основание — уклон должен отводить воду, а не собирать её." },
+      { title: "Основание под мощение уплотнено послойно", tech: "Щебень и песок трамбуются слоями по 10-15 см, иначе покрытие со временем просядет неравномерно." },
+      { title: "Дренаж и ливневая система проверены проливом до засыпки", tech: "После окончательной засыпки траншеи проверить уклоны уже нельзя." },
+      { title: "Посадочные ямы соответствуют размеру корневой системы", tech: "Слишком тесная яма — частая причина, почему саженец не приживается в первый год." },
+      { title: "Организован полив на первые недели после посадки/укладки газона", tech: "Рулонный газон и свежие посадки погибают без регулярного полива в первые 2-3 недели независимо от качества самих работ." }
+    ],
+    "Тёплый пол": [
+      { title: "Контур опрессован (водяной) или прозвонен (электрический) до заливки", tech: "После заливки стяжки исправить обрыв или течь можно только вскрытием пола." },
+      { title: "Шаг укладки контура соответствует проекту", tech: "У наружных стен и окон шаг обычно делают чаще из-за повышенной теплопотери." },
+      { title: "Демпферная лента установлена по периметру", tech: "Компенсирует температурное расширение стяжки — без неё стяжка может потрескаться." },
+      { title: "Толщина стяжки над контуром достаточна", tech: "Слишком тонкая стяжка над трубой/кабелем растрескивается и хуже держит тепло равномерно." },
+      { title: "Первый прогрев выполнен постепенно по регламенту производителя стяжки", tech: "Резкий вывод на полную мощность сразу после застывания стяжки может привести к растрескиванию." }
+    ],
+    "Лестницы": [
+      { title: "Высота и глубина ступеней одинаковы по всему маршу", tech: "Разница даже в 1-2 см между ступенями — частая причина запинания; проверяется рулеткой на каждой ступени." },
+      { title: "Поручень закреплён на комфортной высоте и не шатается", tech: "Ориентировочно около 90 см от края ступени, без люфта под нагрузкой." },
+      { title: "Ограждение выдерживает нагрузку без люфта", tech: "Особенно важно на маршах, которыми пользуются дети — проверяется приложением бокового усилия к стойкам." },
+      { title: "Ступени не скользят, в том числе во влажном состоянии", tech: "Актуально для камня и плитки на лестнице." },
+      { title: "Крепление косоура/тетивы к перекрытиям выполнено по проекту", tech: "Лестница — несущая конструкция с людьми на ней, самодеятельность в узлах крепления недопустима." }
+    ],
+    "Заборы и ограждения": [
+      { title: "Столбы забетонированы ниже глубины промерзания грунта", tech: "Иначе весной от пучения грунта столбы «поведёт» и линию забора перекосит." },
+      { title: "Заглубление и вертикальность столбов проверены по всей линии", tech: "Проверяется уровнем на каждом столбе — накопленная погрешность заметна на длинном пролёте." },
+      { title: "Ворота и калитка открываются без провисания полотна", tech: "Провисание говорит о недостаточном сечении каркаса или слабом креплении петель." },
+      { title: "Автоматика ворот (если есть) оснащена защитой от зажатия", tech: "Фотоэлементы или датчик усилия — обязательное требование безопасности, а не опция." },
+      { title: "Дренаж вдоль забора не нарушен бетонированием", tech: "Сплошной бетонный цоколь без водоотводных отверстий может задерживать воду на участке." }
+    ]
+  };
+  let currentAcceptance = { category: "", checks: {} };
+  let customAccept = loadJSON(LS_CUSTOM_ACCEPT, {});
+  if (!customAccept || typeof customAccept !== "object") customAccept = {};
+  function saveCustomAccept(){ saveJSON(LS_CUSTOM_ACCEPT, customAccept); }
+
+  // combined list of category titles — built-in + user-added, alphabetical
+  function allAcceptCategories(){
+    const set = new Set([...Object.keys(ACCEPT_DATA), ...Object.keys(customAccept)]);
+    return Array.from(set).sort((a, b) => a.localeCompare(b, "ru"));
+  }
+  // items for a category, tagged with a stable key so checkbox state survives re-renders
+  // even as custom items are added/removed (built-in items use their fixed index)
+  function acceptItemsFor(cat){
+    const builtin = (ACCEPT_DATA[cat] || []).map((it, i) => Object.assign({ key: "b" + i, custom: false }, it));
+    const custom = (customAccept[cat] || []).map(it => Object.assign({ custom: true }, it, { key: "c" + it.id }));
+    return builtin.concat(custom);
+  }
+
+  const acceptCategorySelectEl = document.getElementById("acceptCategorySelect");
+  function refreshAcceptCategorySelect(selectTitle){
+    const cats = allAcceptCategories();
+    acceptCategorySelectEl.innerHTML = cats.map(cat => '<option value="' + escAttr(cat) + '">' + esc(cat) + '</option>').join("");
+    if (selectTitle && cats.includes(selectTitle)) acceptCategorySelectEl.value = selectTitle;
+  }
+  refreshAcceptCategorySelect();
+
+  function renderAcceptChecklist(){
+    const cat = acceptCategorySelectEl.value;
+    currentAcceptance.category = cat;
+    const items = acceptItemsFor(cat);
+    document.getElementById("acceptChecklist").innerHTML = items.map(it => (
+      '<div class="accept-item' + (it.custom ? " accept-item-custom" : "") + '"><label class="accept-item-row">' +
+        '<input type="checkbox" data-key="' + it.key + '"' + (currentAcceptance.checks[it.key] ? " checked" : "") + '>' +
+        '<div style="flex:1;"><div class="accept-item-title">' + esc(it.title) + (it.custom ? ' <span style="color:var(--accent);font-weight:400;">· ваш пункт</span>' : '') + '</div>' +
+        (it.tech ? '<div class="accept-item-tech">' + esc(it.tech) + '</div>' : '') + '</div>' +
+        (it.custom ? '<button type="button" class="accept-item-del" data-id="' + escAttr(it.id) + '" title="Удалить пункт">✕</button>' : '') +
+      '</label></div>'
+    )).join("") || '<div class="obj-empty">В этой категории пока нет пунктов проверки — добавьте свой ниже.</div>';
+    document.getElementById("acceptDelCategoryBtn").style.display = ACCEPT_DATA[cat] ? "none" : "inline";
+  }
+  acceptCategorySelectEl.addEventListener("change", () => { currentAcceptance.checks = {}; renderAcceptChecklist(); });
+  document.getElementById("acceptChecklist").addEventListener("change", e => {
+    if (e.target.type === "checkbox") currentAcceptance.checks[e.target.dataset.key] = e.target.checked;
+  });
+  document.getElementById("acceptChecklist").addEventListener("click", e => {
+    const delBtn = e.target.closest(".accept-item-del");
+    if (!delBtn) return;
+    const cat = currentAcceptance.category;
+    if (customAccept[cat]) customAccept[cat] = customAccept[cat].filter(it => it.id !== delBtn.dataset.id);
+    saveCustomAccept();
+    renderAcceptChecklist();
+  });
+
+  document.getElementById("acceptAddItemBtn").addEventListener("click", () => {
+    const titleEl = document.getElementById("acceptNewItemTitle");
+    const techEl = document.getElementById("acceptNewItemTech");
+    const title = titleEl.value.trim();
+    if (!title){ notify("Опишите, что нужно проверить"); return; }
+    const cat = currentAcceptance.category;
+    if (!customAccept[cat]) customAccept[cat] = [];
+    customAccept[cat].push({ id: uid(), title, tech: techEl.value.trim() });
+    saveCustomAccept();
+    titleEl.value = ""; techEl.value = "";
+    renderAcceptChecklist();
+    haptic("light");
+  });
+
+  document.getElementById("acceptNewCategoryBtn").addEventListener("click", () => {
+    const name = (prompt("Название нового вида работ для проверки:") || "").trim();
+    if (!name) return;
+    if (!customAccept[name] && !ACCEPT_DATA[name]) customAccept[name] = [];
+    saveCustomAccept();
+    refreshAcceptCategorySelect(name);
+    currentAcceptance.checks = {};
+    renderAcceptChecklist();
+    notify('Раздел «' + name + '» добавлен');
+  });
+
+  document.getElementById("acceptDelCategoryBtn").addEventListener("click", () => {
+    const cat = currentAcceptance.category;
+    if (ACCEPT_DATA[cat]) return; // safety — never delete a built-in category
+    if (!confirm('Удалить весь раздел «' + cat + '» вместе с его пунктами?')) return;
+    delete customAccept[cat];
+    saveCustomAccept();
+    refreshAcceptCategorySelect();
+    currentAcceptance.checks = {};
+    renderAcceptChecklist();
+  });
+
+  function buildAcceptanceBodyHTML(){
+    const items = acceptItemsFor(currentAcceptance.category);
+    return (
+      '<div class="ps-section">' +
+        '<div class="ps-section-title">' + esc(currentAcceptance.category) + '</div>' +
+        (items.length ? items.map(it => (
+          '<div class="ps-table-row"><span class="ps-col-name">' +
+            (currentAcceptance.checks[it.key] ? "☑ " : "☐ ") + esc(it.title) +
+            (it.tech ? ' — <span style="color:#8A8A8A;">' + esc(it.tech) + '</span>' : '') +
+          '</span></div>'
+        )).join("") : '<div class="ps-table-row"><span class="ps-col-name">Пункты проверки не добавлены</span></div>') +
+      '</div>'
+    );
+  }
+
+  document.getElementById("acceptGeneratePdf").addEventListener("click", () => exportPDF("acceptance", "download"));
+
+  /* =====================================================================
+     СПРАВОЧНИК ВИДОВ РАБОТ — что это, зачем нужно, на что обратить внимание.
+     Ключи соответствуют названиям разделов каталога SECTION_TEMPLATES.
+     ===================================================================== */
+  const WORK_MANUAL = {
+    "Автоматика ворот и шлагбаумов": "Это установка приводов для откатных, распашных и секционных ворот, шлагбаумов, а также пультов управления, фотоэлементов и датчиков, которые останавливают створку при появлении препятствия. Если систему смонтировать без датчиков безопасности и концевых выключателей, тяжёлая откатная створка может травмировать человека или повредить машину, просто не остановившись вовремя — это не гипотетический, а реальный и частый случай. Также привод нужно подбирать по весу и парусности конкретных ворот и обязательно заземлять щит управления: без этого плата сгорает от перепадов напряжения в первую же грозу. Заказчику стоит уточнить, заложены ли в проект фотоэлементы или инфракрасная защита от зажатия — это не опция «для комфорта», а базовое требование безопасности.",
+    "Антикоррозийная защита и промышленные покрытия": "Это защита металлических конструкций — балок, ёмкостей, ограждений, каркасов — от ржавления и износа: подготовка поверхности (очистка от старой ржавчины, обезжиривание), затем грунт и финишное покрытие (эпоксидное, полиуретановое, цинконаполненное), а также промышленные покрытия для полов и стен, работающих в агрессивной среде. Если покрытие наносится на плохо подготовленную поверхность — с остатками ржавчины, пыли или влаги, — оно отслаивается уже через год, а коррозия продолжается под ним незаметно, ослабляя несущий металл. Именно подготовка поверхности, а не марка краски, определяет реальный срок службы покрытия. Стоит спросить, до какой степени была очищена поверхность перед покраской — это тот параметр, который сложно проверить глазами после окончания работ, но именно он решает всё.",
+    "Аренда техники и субподряд": "Это организационная часть стройки, а не отдельная специальность: аренда техники — экскаваторов, кранов, подъёмников, бетононасосов — с оператором или без, а также привлечение субподрядчиков на отдельные виды работ, которые генподрядчик не выполняет своими силами. Плохо спланированный график техники и субподрядчиков оборачивается простоями арендованной машины (за которые всё равно приходится платить) или тем, что бригады мешают друг другу на объекте — и то и другое незаметно раздувает смету, пока не всплывёт в итоговом счёте. Отдельный риск — размытая ответственность: если в договоре не прописано, кто отвечает за технику безопасности и повреждения на площадке, при инциденте виноватых не найти. Заказчику стоит прямо спросить у генподрядчика, кто именно отвечает за координацию арендованной техники и субподрядчиков и кто платит за простои по чужой вине.",
+    "Архитектурное проектирование и градостроительство": "Архитектурное проектирование определяет общую концепцию здания, планировку, фасады и то, как объект вписывается в участок с точки зрения градостроительных ограничений — отступов от границ, предельной высоты, разрешённого использования земли. Если эти ограничения не проверить на этапе проекта, дом, построенный слишком близко к границе участка или выше разрешённой высоты, может получить проблемы при регистрации или вовсе попасть под предписание о демонтаже части конструкции. Здесь же согласуются инженерные ограничения — грунты, проходящие сети, нормы инсоляции соседних построек, — и исправить ошибку на бумаге всегда на порядок дешевле, чем в кирпиче. Заказчику стоит убедиться, что проект учитывает данные ГПЗУ (градостроительного плана земельного участка) — именно этот документ фиксирует, что на участке вообще разрешено строить.",
+    "Аудио-видео и мультимедиа системы (домашний кинотеатр)": "Это проектирование и монтаж домашнего кинотеатра и мультирум-систем: расчёт акустики помещения, размещение колонок и сабвуфера, прокладка кабельных трасс (обычно ещё на этапе черновых работ, скрыто в стенах), установка проектора или экрана и объединение всех устройств единым управлением. Если кабельные трассы не заложить заранее, добавить систему после отделки можно только с открытыми проводами или новым вскрытием стен — и то и другое портит и вид, и бюджет. Кроме того, необработанная акустически комната (голые твёрдые поверхности) сводит на нет качество звука даже самой дорогой аппаратуры. Слаботочную разводку под мультимедиа нужно планировать вместе с электриком на этапе черновых работ, а не после того, как стены уже готовы.",
+    "Балкон и лоджия": "Сюда входит остекление балкона или лоджии, гидроизоляция плиты, утепление, отделка стен, пола и потолка, а нередко и усиление или расширение самой плиты. Балкон без правильной гидроизоляции и уклона плиты для стока воды со временем протекает к соседям снизу и разрушает арматуру в бетоне плиты — это дорогой конструктивный ремонт, а не косметический. Важно помнить, что плита балкона изначально не рассчитана как утеплённая жилая конструкция, поэтому дополнительная нагрузка от тяжёлой отделки или отопления требует проверки её несущей способности. Перед началом работ стоит выяснить у подрядчика, законно ли планируемое изменение парапета или расширение плиты — в России это часто регулируется отдельно и без согласования может создать проблемы при продаже квартиры.",
+    "Бассейны, бани и сауны": "Это строительство бассейнов (гидроизоляция чаши, система фильтрации и водоподготовки) и бань/саун (жаростойкие материалы, вентиляция, пароизоляция, рассчитанная именно на высокую температуру и влажность, а не на обычные условия). Если пароизоляцию в бане смонтировать неправильной стороной или с зазорами, конденсат скапливается внутри конструкции стены и за пару сезонов незаметно превращает древесину в труху — обнаруживается это, только когда стену уже вскрывают. У бассейнов похожая логика с другим знаком: ошибки гидроизоляции чаши проявляются как протечки в подвал или трещины от давления грунтовых вод. Непрофессионалу стоит убедиться, что для бани или сауны применяется именно специализированная схема пароизоляции, а не обычный утеплительный «пирог» из жилого строительства — это принципиально разные вещи.",
+    "Биозащита и антисептическая обработка": "Это обработка древесины, кирпича, бетона антисептическими и антигрибковыми составами против плесени, гнили, жуков-точильщиков и водорослей — особенно важно там, где материал контактирует с влагой или землёй: фундаменты, каркасы, чердаки. Необработанная древесина во влажных условиях может потерять несущую прочность из-за гнили буквально за пару сезонов, причём внешне это долго остаётся незаметным, а плесень к тому же вредна для здоровья жильцов. У разных составов разное назначение — для внутренних помещений, для контакта с грунтом, для повышенной влажности, — и универсальный антисептик там, где нужна глубокая пропитка, даёт лишь иллюзию защиты. Стоит спросить, от какого именно риска защищает выбранный состав (гниль, насекомые, плесень) и требует ли он периодического повторного нанесения.",
+    "Благоустройство территории": "Это обустройство участка вокруг здания: планировка рельефа и дренаж, мощение дорожек и площадок, подпорные стенки, наружное освещение, посадка растений и устройство газона. Без правильного отвода поверхностной воды от здания — самая частая причина подтопления фундамента, отсыревания цоколя и морозного пучения грунта вокруг дома зимой. Благоустройство разумно планировать вместе с фундаментом и инженерными сетями, а не как финальный штрих: уклоны дорожек и террас должны уводить воду от стен, а не к ним. Стоит попросить показать в проекте отметки итогового рельефа и направление стока воды, а не только декоративную часть — рельеф решает больше, чем растения.",
+    "Ванная комната и санузел": "Это полный ремонт санузла: гидроизоляция пола и стен мокрой зоны, разводка сантехники и канализации, устройство уклона пола к трапу, укладка плитки и монтаж приборов — технически самое насыщенное помещение в квартире, поскольку в нём на маленькой площади пересекается сразу несколько специальностей. Санузел без сплошной гидроизоляции под плиткой, особенно в местах стыка стены с полом и вокруг проходов труб, протекает к соседям или в соседние комнаты — это одна из самых частых претензий после ремонта. Пол также требует продуманного уклона к трапу: без него вода застаивается вместо того, чтобы уходить. Стоит попросить показать нанесённую и просохшую гидроизоляционную мембрану до укладки плитки, а не верить на слово, что «всё сделано под плиткой».",
+    "Витражи и художественное остекление": "Это крупноформатное остекление (витражные фасадные системы) и декоративная художественная работа со стеклом — витражи, пескоструйные и ламинированные панели, часто изготавливаемые под конкретный проект. Неправильный расчёт ветровой и температурной нагрузки на большие стеклопакеты или некачественная герметизация рамы приводят к запотеванию между стёклами, разгерметизации шва, а в худшем случае — к растрескиванию стекла от собственного веса или перепада температур. Поскольку такие конструкции сочетают несущий каркас и декоративное стекло, расчёт нагрузок здесь так же важен, как и дизайн. Стоит уточнить, какой тип стекла (закалённое, триплекс, стеклопакет) заложен для каждой панели и почему — у пола и в больших пролётах безопасное стекло не опция, а необходимость.",
+    "Генеральный подряд и управление строительством": "Это координация всех бригад и подрядчиков, последовательности работ, закупок и контроля качества, а также общая ответственность за сроки и бюджет проекта — функция, объединяющая разрозненные виды работ в единый процесс. Без единого ответственного за координацию бригады работают не в той последовательности (например, укладывают пол до окончания мокрых работ), из-за чего приходится всё переделывать, а на стыке зон ответственности разных подрядчиков дефекты «теряются» — каждый кивает на соседа. Хороший генподрядчик также берёт на себя «невидимые» риски — согласования, подключение сетей, вывоз мусора, — о которых заказчик обычно даже не задумывается, пока они не срывают график. При найме стоит проверить, прописана ли в договоре прямая ответственность генподрядчика за устранение дефектов на стыке работ разных бригад, а не только за собственные работы.",
+    "Гидроизоляция": "Это защита фундаментов, подвалов, кровель, мокрых помещений и подземных конструкций от проникновения воды с помощью мембран, обмазочных составов или инъекционных систем в стыках и трещинах бетона и кладки. Экономия на гидроизоляции — одна из самых дорогих ошибок в строительстве, потому что последствия воды (гниль, коррозия арматуры, плесень, разрушение от циклов замерзания-оттаивания) часто незаметны до тех пор, пока не понадобится капитальный ремонт конструкции. Разные зоны требуют разных решений — стена подвала против грунтовых вод и пол душевой защищаются принципиально по-разному, — поэтому «универсальное» решение на все случаи должно настораживать. Стоит отдельно спросить, как гидроизоляция продолжается в стыках, углах и местах прохода труб — именно там, а не на ровных участках, чаще всего и начинаются протечки.",
+    "Гипсокартоновые работы": "Это монтаж каркаса из металлического или деревянного профиля, обшивка гипсокартоном и последующая шпаклёвка швов — так строятся перегородки, подвесные потолки, ниши и декоративные элементы. Некачественная заделка швов (стыков листов, мест саморезов) проявляется позже как трещины или бугорки на окрашенной стене, особенно при боковом освещении — дефект дешёвый в исправлении на этом этапе и очень неприятный после финишной отделки. Каркас перегородки также нужно усиливать закладными в тех местах, где потом повесят тяжёлые предметы — шкафы, телевизор, поручни, — и планировать это нужно до обшивки, а не после. Перед приёмкой стоит посветить на стену фонариком под острым углом — именно так видны все неровности, скрытые при обычном освещении.",
+    "Демонтаж и утилизация опасных материалов": "Это удаление и законная утилизация опасных строительных материалов — прежде всего асбестосодержащих (старый шифер, некоторые виды утеплителя), свинцовых красок или загрязнённого грунта, — что требует специальных мер по герметизации и защите от попадания пыли и волокон в воздух. Если асбестосодержащий материал ломают или демонтируют без герметизации помещения и средств защиты органов дыхания, волокна попадают в воздух и создают долгосрочный риск для дыхательной системы всех, кто находится рядом, причём последствия проявляются не сразу. Такие работы нельзя вести как обычный демонтаж — процедура герметизации и утилизации регулируется отдельно и физически, и юридически. Если в доме есть старые материалы (кровля, плитка, утеплитель советского периода), стоит настоять на их проверке до начала демонтажа, а не выбрасывать как обычный строительный мусор.",
+    "Демонтажные работы": "Это снос существующих конструкций, стен, старой отделки, сантехники и электрики перед новым строительством, с обязательной проверкой, какие стены являются несущими, до начала работ. Демонтаж стены, которая «на вид» не несущая, может нарушить распределение нагрузок в здании или повредить скрытые внутри неё коммуникации, вызывая трещины или просадку в других частях дома — в многоквартирных домах снос несущих и даже некоторых ненесущих стен, как правило, требует официального согласования. Демонтаж также образует много пыли и мусора, вывоз и защиту остающихся конструкций и систем нужно планировать заранее. Перед сносом любой стены стоит уточнить по техническому паспорту здания или у инженера-конструктора, является ли она несущей.",
+    "Дизайн-проект": "Это разработка визуальной и функциональной концепции интерьера — планировок, расстановки мебели, материалов, освещения, цветовых решений, — обычно в виде визуализаций и рабочих чертежей до начала строительных работ. Без проработанного дизайн-проекта решения по ремонту принимаются на ходу, что часто оборачивается несочетающимися материалами, забытыми инженерными точками (например, розетка окажется за будущим шкафом) и дорогими переделками в процессе. Хороший дизайн-проект также служит технической основой для инженерных чертежей — электрики, сантехники, — чтобы бригадам не приходилось додумывать самим. Принимая дизайн-проект, стоит проверить, что в нём есть не только красивые визуализации, но и рабочие чертежи с реальными размерами и спецификацией материалов.",
+    "Заборы, ворота и ограждения": "Это строительство периметральных заборов, ворот и ограждений: фундаменты под столбы, каркас, заполнение (профлист, дерево, кирпич, сетка) и монтаж ворот, с учётом ветровой нагрузки на сплошные полотна. Забор с неглубоким или незаанкеренным фундаментом под столбы за пару зим «поведёт» из-за промерзания и оттаивания грунта — это одна из самых частых причин перекошенных заборов именно в российском климате. Высокий сплошной забор к тому же работает как парус: недостаточный фундамент может просто вырвать порывом ветра. Стоит спросить, на какую глубину заложены фундаменты столбов относительно глубины промерзания грунта в вашем регионе — именно этот параметр определяет, простоит ли забор ровно десятилетия или нет.",
+    "Земляные и бетонные работы": "Это выемка грунта, устройство траншей, обратная засыпка с уплотнением, а затем опалубка, армирование и заливка бетона для фундаментов, плит и других конструкций. Плохо уплотнённая обратная засыпка под плитой или вокруг фундамента со временем неравномерно проседает и тянет за собой трещины в бетоне сверху — дефект, который часто проявляется лишь спустя месяцы или годы, когда исправить его уже гораздо сложнее. Качество самого бетона тоже сильно зависит от правильных пропорций, условий твердения (температуры, влажности) и сроков распалубки, а не только от факта заливки. Стоит спросить, как проверялось уплотнение засыпки (послойно, а не «засыпали и оставили») и как бетон защищали при твердении, особенно в жару или холод.",
+    "Инженерные изыскания и геодезия": "Это геодезическая съёмка участка (точные отметки рельефа, границы, существующие постройки и сети) в сочетании с инженерно-геологическими изысканиями (бурение скважин, определение уровня грунтовых вод, несущей способности грунта), которые должны выполняться до начала проектирования. Без этих изысканий фундамент проектируется по предположениям, а не по реальным данным о грунте — это одна из главных причин неравномерной осадки и трещин в стенах, которые обнаруживаются уже после того, как дом построен. Данные геодезической съёмки также служат основой для размещения здания, дренажа и подключения коммуникаций. Для любого серьёзного строительства стоит требовать геологический отчёт именно по своему участку — состояние грунта может заметно отличаться даже у соседних участков.",
+    "Инженерный консалтинг, энергоаудит и автоматизация зданий": "Это инженерный консалтинг (проверка и оптимизация проектных решений по инженерным системам), энергоаудит (тепловизионное обследование и выявление, где здание теряет тепло или расходует энергию впустую) и автоматизация зданий (объединённое управление отоплением, вентиляцией и освещением ради комфорта и экономии). Без энергоаудита деньги часто вкладываются в дорогую отделку, пока дом продолжает терять тепло через легко устранимую слабую точку — неутеплённый чердачный люк, непроложенную трубу, щели у оконных рам, — которую недорогая тепловизионная съёмка выявила бы сразу. Автоматизацию зданий тоже нужно закладывать заранее вместе с электриком и инженером по отоплению, потому что встроить «умное» управление в уже готовые системы обходится значительно дороже. Полезный первый шаг для любого ремонта — базовое тепловизионное обследование: оно недорого и сразу указывает на реальную проблему, а не заставляет гадать.",
+    "Каминные и печные работы": "Это строительство каминов и печей: топка, дымовые каналы, дымоход с обязательными отступами от горючих конструкций и, как правило, декоративная облицовка. Печь или камин, построенные с недостаточным отступом от деревянных перекрытий или конструкций, либо с неверно рассчитанным и негерметичным дымоходом, создают реальную опасность пожара и отравления угарным газом — это одна из немногих специальностей в ремонте, где ошибка может стоить жизни, а не только денег. Расчёт тяги дымохода (высота, диаметр относительно размера топки) также определяет, будет ли печь нормально вытягивать дым или начнёт «дымить» в помещение. Стоит убедиться, что печник может объяснить расчёт тяги дымохода и соблюдённые противопожарные отступы, а не только показать, как красиво выглядит облицовка.",
+    "Кладочные работы": "Это кладка кирпича, газобетонных и керамических блоков или природного камня для стен с контролем перевязки швов, толщины раствора и вертикальности-горизонтальности ряда; для газобетона отдельно важен тонкослойный клей вместо обычного толстого шва раствора, чтобы не создавать мостики холода. Кладка без регулярной проверки уровня и отвеса накапливает мелкие отклонения в заметный завал или волну стены, исправить которую после отделки уже дорого. Использование обычного толстого раствора вместо специального тонкослойного клея на газобетонных блоках создаёт мостики холода в каждом шве, сводя на нет главное теплотехническое преимущество материала. Проверить кладку несложно самому: уровень и натянутый вдоль стены шнур сразу покажут постоянные выпуклости или волны, если качество хромает.",
+    "Клининг после ремонта": "Это удаление строительной пыли, остатков клея и краски, защитной плёнки с окон и сантехники и глубокая уборка поверхностей перед заселением — работа заметно более интенсивная, чем обычная бытовая уборка. Строительная пыль очень мелкая и оседает в каждой щели, вентиляционном канале и светильнике; обычная уборка её просто не берёт, и оставшаяся пыль ещё неделями циркулирует по квартире, раздражая аллергиков и пачкая свежую отделку. Это также этап, на котором нужно снять оставшуюся защитную плёнку и наклейки, пока они не «приварились» к стеклу или пластику под солнцем. Стоит уточнить, входит ли в уборку чистка вентиляционных решёток и каналов, а не только видимых поверхностей — именно там скапливается основная масса мелкой строительной пыли.",
+    "Кровля: покрытие (черепица, профнастил, фальц, мембрана)": "Это устройство внешнего кровельного покрытия — керамической или металлочерепицы, профнастила, фальцевой кровли (металлические листы с механическим фальцевым замком вместо сквозного крепежа) или мембраны для плоских крыш, — у каждого из которых своя технология крепления, обработки швов и допустимый диапазон уклонов. Если выбрать материал, не подходящий по уклону конкретной крыши (например, материал для скатной кровли использовать на почти плоской), протечки в пониженных точках неизбежны при любом качестве монтажа, потому что вся логика водоотведения материала рассчитана именно на уклон. Металлическое покрытие также требует аккуратного обращения при монтаже: царапина на защитном слое становится точкой, с которой через несколько лет начинается коррозия. Перед выбором материала стоит сверить минимальный уклон, заявленный производителем, с реальным уклоном вашей крыши.",
+    "Кровля: стропильная система и обрешётка": "Это несущий каркас крыши — стропила, коньковый прогон — и обрешётка, набиваемая поверх стропил с шагом, зависящим от конкретного кровельного покрытия, к которой это покрытие крепится. Заниженное сечение стропил или слишком большой шаг между ними может привести к их прогибу под снеговой нагрузкой со временем — в российском климате накопленный вес снега является серьёзной, а не гипотетической нагрузкой. Шаг обрешётки тоже должен соответствовать выбранному покрытию: обрешётка под черепицу не подойдёт под металлический лист, поэтому этот этап по-настоящему нельзя закрыть, пока не выбран финишный материал. Стоит спросить, рассчитано ли сечение стропил именно на снеговую нагрузку вашего региона, а не взято из типового проекта «на глаз».",
+    "Кровля: утепление, водостоки и доборные элементы": "Это утепление кровли (между стропилами или поверх них, с правильной последовательностью пароизоляции и вентиляционного зазора), а также водосточная система и доборные элементы — коньки, планки примыкания, капельники, — герметизирующие края и стыки кровли. Кровля, утеплённая без работающего вентиляционного зазора между утеплителем и покрытием, накапливает влагу — она конденсируется, пропитывает утеплитель и может сгноить стропила изнутри, и часто это обнаруживают, лишь когда на потолке уже появились пятна. Неверно рассчитанные или плохо смонтированные водостоки переполняются в сильный дождь и льют воду по фасаду вместо отвода от здания, сводя на нет даже хорошую гидроизоляцию в других местах. Стоит отдельно спросить, как обеспечен вентиляционный зазор кровли (продухи в свесе, коньковая вентиляция) — сам по себе утеплитель проблему влаги не решает, если нарушен воздухообмен.",
+    "Кузнечные и художественные металлоконструкции": "Это кованые и художественные металлические изделия — индивидуальные перила, ворота, ограждения, лестницы и декоративные элементы, выполненные ковкой или в сочетании со сваркой, — работа, требующая одновременно кузнечного мастерства и понимания несущих конструкций для нагруженных изделий вроде лестничных перил. Декоративное на вид ограждение, которое не было рассчитано на реальную нагрузку от веса и бокового упора человека, представляет собой настоящую опасность, а не только эстетическую проблему — это легко упустить, выбирая мастера только по портфолио фотографий. Кованые элементы на улице также нуждаются в антикоррозийной защите именно в местах сварных швов — это первые точки, где начинается ржавчина. Заказывая кованые перила или лестницу, стоит спросить о расчёте нагрузки и антикоррозийной обработке, а не только об узоре ковки.",
+    "Кухня": "Это установка кухонной мебели, столешницы и увязка сантехнических (мойка, посудомоечная машина) и электрических точек (розетки под технику, вытяжка, освещение), которые нужно спланировать до окончания отделки, поскольку кухня концентрирует больше инженерных подключений на квадратный метр, чем почти любое другое помещение. Кухня без достаточного числа отдельных электрических линий под мощную технику (духовка, варочная поверхность, посудомоечная машина) на одной линии может выбивать автомат, а в худшем случае — годами перегревать проводку. Маршрут воздуховода вытяжки тоже нужно продумывать заранее: прокладка его позже через готовые стены или потолок неудобна и часто даёт неэффективную трассу с лишними изгибами. Прежде чем заказывать мебель, стоит окончательно согласовать расположение розеток и трассу воздуховода вытяжки — размеры техники и точки подключения должны совпасть без компромиссов.",
+    "Ландшафтный дизайн и озеленение": "Это проектирование зелёных зон участка: подбор растений с учётом почвы и климата, устройство системы полива и общая композиция деревьев, кустарников, газона и цветников. Растения, выбранные без учёта конкретной климатической зоны и условий почвы и дренажа на участке, либо гибнут, либо требуют постоянного вмешательства — это частый и легко предотвратимый лишний расход. Полив тоже нужно планировать вместе с посадками, поскольку разным растениям требуется разный режим полива, а прокладывать линии полива после посадки — занятие разрушительное для уже высаженного. Стоит спросить, учитывает ли подбор растений реальную климатическую зону и условия конкретного участка (освещённость, дренаж почвы), а не только визуальную композицию.",
+    "Лестницы и перила": "Это проектирование и изготовление лестниц (деревянных, металлических, бетонных, комбинированных) и перил к ним, где размеры — соотношение высоты и глубины ступени, высота перил, запас по высоте над головой — напрямую определяют безопасность и удобство каждый день. Лестница с неодинаковой высотой ступеней (даже разница в пару сантиметров) — это реальная опасность споткнуться, с которой люди сталкиваются ежедневно, а не мелкий косметический дефект: это одна из самых частых ошибок при индивидуальном изготовлении лестниц. Перила также должны выдерживать реальную боковую нагрузку, а не просто выглядеть закреплёнными — это особенно важно там, где лестницей будут пользоваться дети или пожилые люди. Перед приёмкой стоит самостоятельно измерить рулеткой несколько ступеней — все подступенки должны совпадать с точностью до нескольких миллиметров.",
+    "Лифты и подъёмное оборудование": "Это монтаж, замена или обслуживание лифтов и подъёмного оборудования (пассажирских и грузовых лифтов, подъёмных платформ для маломобильных групп), включая шахту, механизмы, системы безопасности (ограничители скорости, блокировки дверей) и их периодическое техническое освидетельствование — регулируемое оборудование, а не рядовая отделочная работа. Лифт с неправильно смонтированной или неотлаженной системой блокировки дверей или ограничителя скорости — это серьёзный риск для жизни, именно поэтому монтаж и освидетельствование лифтов регулируются отдельно от обычного строительства. Даже в частном доме добавление небольшого лифта позже обычно требует переделки проёма шахты и несущих конструкций, поэтому это гораздо разумнее заложить на этапе проекта, чем встраивать потом. Стоит убедиться, что установленный лифт имеет действующую регистрацию и договор на регулярное техническое обслуживание — это оборудование требует постоянного профессионального сопровождения, а не разовой установки.",
+    "Малярные работы": "Это подготовка поверхности (шпаклёвка, шлифовка, грунтование) и нанесение краски или декоративных покрытий на стены, потолки и деревянные элементы — при этом основная часть реального качества закладывается именно на этапе подготовки, а не в момент нанесения краски. Краска, нанесённая на плохо подготовленную поверхность — с незашпаклёванными трещинами, недостаточной грунтовкой, остатками пыли, — проявляет все нижележащие дефекты и может преждевременно отслаиваться или трескаться, особенно на стыках гипсокартона или поверх несовместимой старой краски. Краске также нужно правильное время просушки между слоями и подходящие условия (температура, влажность, вентиляция) — спешка здесь даёт видимые полосы от кисти, неравномерный блеск или вздутия. Перед покраской стоит осмотреть стену под боковым светом от фонарика — большинство дефектов, которые потом проявятся под краской, видны именно на этом этапе.",
+    "Мансардные конструкции и кровельные окна": "Это переоборудование чердачного пространства в жилое (с соответствующим утеплением и конструктивными решениями) и установка мансардных окон, которые впускают свет в скат крыши, — оба вида работ требуют особо тщательной гидроизоляции, поскольку прерывают сплошную поверхность кровли. Мансардное окно, установленное без герметичного примыкающего оклада (специального комплекта гидроизоляционных элементов под конкретную модель окна), — одна из самых частых причин протечек кровли именно потому, что это намеренно вырезанное отверстие в изначально сплошной водонепроницаемой поверхности. При переоборудовании мансарды также важно сохранить вентиляцию кровли вокруг нового утеплённого участка, иначе влага задерживается между утеплителем и покрытием именно там, где её сложнее всего потом обнаружить. Стоит убедиться, что используется фирменный оклад именно под установленную марку окна и тип кровельного покрытия, а не универсальный герметик.",
+    "Мебель и декор": "Это поставка и установка мебели и декоративных предметов в уже готовое помещение — как готовых изделий, так и мебели на заказ, — а также финальные штрихи вроде штор, картин и аксессуаров, завершающие интерьер. Мебель, заказанная без точных финальных замеров помещения (которые могут немного отличаться от чертежей проекта после того, как стены реально отделаны), рискует не встать на место — особенно встроенные и мебель по индивидуальным размерам. Тяжёлую мебель и настенные предметы (полки, тумбы под телевизор) также нужно крепить в реальные несущие точки, а не просто в гипсокартон, а это нужно было продумать ещё на этапе черновых работ. Перед заказом встроенной мебели стоит обязательно перемерить помещение уже после завершения отделки, а не полагаться только на исходные чертежи дизайн-проекта.",
+    "Наружные инженерные сети": "Это водопровод, канализация, ливневая канализация, газ, электричество и линии связи, проложенные между зданием и городской сетью или собственными скважиной и септик, включая глубину траншеи (ниже глубины промерзания) и согласования на подключение с ресурсоснабжающими организациями. Сеть, проложенная выше глубины промерзания грунта в регионе, зимой замерзает, перекрывая водоснабжение или разрывая трубу, — совершенно предотвратимая авария, которую сложно и дорого исправлять, когда земля уже промёрзла, а траншея засыпана и благоустроена сверху. Технические условия и согласования на подключение к сетям тоже нужно получать заранее: переделывать точку подключения после мощения и озеленения участка — занятие крайне разрушительное. Перед засыпкой траншей стоит попросить схему с глубиной залегания каждой сети относительно глубины промерзания в вашем регионе — проверить это после закрытия траншеи уже невозможно.",
+    "Обследование и техническая экспертиза зданий": "Техническое обследование оценивает реальное физическое состояние здания или конструкции — несущих стен, фундамента, кровли — визуальными и инструментальными методами, чтобы установить категорию технического состояния, а техническая экспертиза — смежная, но иная услуга, которая отвечает на конкретные формальные вопросы (например, о причине дефекта или о пригодности к дальнейшей эксплуатации), обычно нужные для суда, страховой компании или получения разрешения на реконструкцию. Без обследования перед капитальным ремонтом или реконструкцией старого здания скрытые дефекты — корродированная арматура, трещины в несущих стенах, неравномерная осадка фундамента — могут остаться незамеченными до тех пор, пока не проявятся уже в ходе самих работ. Это же обязательный первый шаг перед изменением несущих конструкций, надстройкой этажей или сменой назначения здания, поскольку разрешительные органы обычно требуют документально подтверждённое исходное состояние. Прежде чем проектировать новое строительство на старом здании или рядом с ним, стоит уточнить, есть ли уже отчёт о техническом обследовании — от него зависит, какие проектные решения вообще возможны.",
+    "Огнезащитная обработка конструкций": "Это нанесение на деревянные (пропитки, покрытия) и стальные (вспучивающиеся краски, огнезащитные плиты) конструкции составов, замедляющих потерю прочности при пожаре и распространение огня — цель не «не гореть вообще», а выиграть время на эвакуацию и тушение. Необработанная стальная конструкция быстро теряет несущую способность при реальной температуре пожара, а необработанное дерево воспламеняется и распространяет огонь заметно быстрее — для общественных и многих коммерческих зданий такая обработка обязательна по нормам, а не просто желательна. Эффективность защиты со временем снижается, поэтому состав требует периодической проверки и повторного нанесения согласно сроку службы, указанному производителем. Стоит запросить документ, подтверждающий, к какой группе огнезащитной эффективности отнесено именно выполненное покрытие — при недостаточной толщине или неполном покрытии заявленная на банке защита попросту не достигается.",
+    "Окна и двери": "Это поставка и монтаж окон и дверей, где ключевая деталь — герметизация зазора между рамой и проёмом (обычно многослойными лентами и пеной, а не одной только монтажной пеной) и правильное положение рамы относительно слоя утепления стены. Окно, установленное без правильной герметизации и пароизоляции по периметру рамы, со временем даёт сквозняки, конденсат и плесень на стыке рамы со стеной — одна из самых частых претензий после ремонта, причём незаметная до первого холодного сезона. Раму также нужно выставить и закрепить строго по уровню и отвесу, иначе створки перестают нормально закрываться, а фурнитура быстро изнашивается. Стоит спросить, применяется ли трёхслойная схема герметизации шва (пароизоляция изнутри, утеплитель в середине, влаго- и ветрозащита снаружи), а не только монтажная пена сама по себе.",
+    "Отделка полов": "Это укладка финишного напольного покрытия — ламината, паркета, инженерной доски, винила, плитки в сухих помещениях — на предварительно подготовленное и выровненное основание (стяжка, наливной пол, подложка). Покрытие, уложенное на недостаточно ровное или недостаточно просохшее основание, начинает скрипеть, расходиться швами или коробиться уже через несколько месяцев, особенно материалы на основе дерева, чувствительные к влаге и неровностям. Многие напольные покрытия также требуют акклиматизации в реальных условиях помещения перед укладкой, и если этим пренебречь, доски после укладки «гуляют» от расширения или усадки. Стоит уточнить, была ли фактически измерена ровность основания (правилом или уровнем) перед укладкой и прошло ли покрытие акклиматизацию в помещении заранее.",
+    "Отделка потолков": "Это выравнивание и финишная отделка потолка либо устройство подвесных и натяжных систем (гипсокартон, натяжной потолок), которые скрывают коммуникации и исправляют неровности базового потолка. Плохо выровненный окрашенный потолок показывает все неровности при любом направленном свете — от лампы, от окна, — и именно боковой свет, а не взгляд прямо снизу, является настоящей проверкой качества такой отделки. Подвесные и натяжные потолки требуют заранее учитывать уменьшение высоты помещения и точное расположение встраиваемых светильников и вентиляционных решёток — это решается до монтажа, а не после. Перед приёмкой окрашенного потолка стоит поднести фонарик близко к поверхности под острым углом — так дефекты видны сразу.",
+    "Отделка стен": "Это выравнивание (штукатурка, шпаклёвка) и финишная отделка стен краской, обоями, декоративной штукатуркой или панелями — этап, по которому визуально судят о качестве ремонта в целом больше, чем по любому другому. Стены, отделанные поверх неровной штукатурки, «просвечивают» каждой выпуклостью и впадиной после покраски или поклейки обоев, особенно матовой светлой краской или тонкими обоями, которые не скрывают неровности. Материал отделки также должен соответствовать влажностному режиму помещения: обычные обои или краска не для влажных помещений в ванной вздуются и отслоятся. Перед финишной отделкой стоит провести рукой и посветить фонариком вдоль оштукатуренной стены — большинство дефектов стены гораздо легче заметить и исправить на этапе штукатурки, чем после нанесения краски или обоев.",
+    "Отопление и вентиляция": "Это система отопления (источник тепла, радиаторы или контуры тёплого пола, трубопроводы) и вентиляция, обеспечивающая приток свежего воздуха — принудительная или естественная, — что особенно критично в современных хорошо утеплённых и герметичных зданиях, где естественный приток воздуха через щели больше не работает. Дом с хорошим утеплением и герметичными окнами, но без продуманной вентиляции накапливает влажность и углекислый газ, что приводит к конденсату, плесени и духоте — очень частая проблема именно в недавно отремонтированных квартирах, где старые естественные пути притока воздуха заделали, не добавив замену. Систему отопления тоже нужно рассчитывать по фактическим теплопотерям конкретного здания, а не копировать «с похожего дома», иначе часть комнат будет мёрзнуть, а часть — перегреваться впустую. Стоит спросить, продумана ли вентиляция вместе с утеплением и заменой окон, а не отдельно от них — герметизация здания без решения вопроса воздухообмена остаётся самой частой ошибкой ремонтов.",
+    "Плитка: полы": "Это укладка керамогранита, керамической плитки или натурального камня на пол, включая выравнивание основания, гидроизоляцию там, где она нужна (санузлы, балконы), подбор клея под конкретный размер и тип плитки и устройство уклона к трапу во влажных помещениях. Крупноформатный керамогранит требует особой техники укладки (нанесение клея и на плитку, и на основание, зубчатый шпатель большего размера) — укладка «как для мелкой плитки» оставляет пустоты под ней, которые потом трескаются от нагрузки мебели или шагов. Напольная плитка во влажных помещениях полностью зависит от гидроизоляции и уклона под ней, которые невозможно увидеть после укладки, — можно получить идеально уложенную плитку с застаивающейся под ней водой из-за неверного уклона. Стоит простучать готовый плиточный пол — глухой «барабанный» звук в отдельных местах говорит о том, что плитка там не приклеена к основанию полностью.",
+    "Плитка: стены, мозаика и декор": "Это облицовка вертикальных поверхностей (кухни, санузлы) плиткой, а также укладка мозаики и декоративных вставок — работа с иной логикой раскладки и приклеивания, чем напольная плитка: мозаичные сетки особенно требовательны к аккуратной затирке, чтобы не оставить воздушных пустот и неровных швов. Стеновая плитка, уложенная без предварительной проверки стены на вертикаль и горизонталь, даёт визуально сходящиеся или расходящиеся к потолку и углам швы — в небольшой ванной такой дефект бросается в глаза сразу. Плитка вокруг сантехнических приборов и ниш также требует точной резки и герметизации в местах проходов — именно эти стыки чаще всего становятся местом протечки за внешне безупречной стеной. Стоит проверить лазерным уровнем, что ряды плитки уложены строго горизонтально, а не «на глаз», особенно в небольших санузлах, где любой перекос сразу заметен.",
+    "Пожарная безопасность и сигнализация": "Это проектирование и монтаж систем пожарной сигнализации и обнаружения, систем пожаротушения (спринклеры, газовое тушение), дымоудаления и указателей путей эвакуации, подбираемых по типу и площади помещения. Сигнализация с неверным зонированием или неудачным расположением датчиков (слишком близко к кухне — ложные срабатывания, либо слишком редко — не успевает вовремя обнаружить возгорание) либо не предупреждает вовремя, либо раздражает жильцов ложными тревогами настолько, что её отключают — оба варианта сводят её на нет. Это одна из областей, наиболее жёстко регулируемых пожарными нормами для общественных и многоквартирных зданий, и несоответствие может заблокировать ввод здания в эксплуатацию. Даже в частном доме стоит уточнить, объединены ли дымовые извещатели между собой (срабатывание одного включает сигнал у всех), а не установлены как отдельные автономные приборы — именно это даёт реальное раннее предупреждение по всему дому.",
+    "Проектная документация": "Это формальные инженерные чертежи и спецификации (архитектурный, конструктивный, электротехнический, сантехнический разделы), по которым реально строится здание и которые проверяют разрешительные органы, — в отличие от дизайн-проекта с визуализациями, именно проектная документация содержит уровень детализации, нужный подрядчику для правильного и последовательного строительства. Строительство без полной проектной документации, только по визуализациям дизайнера, вынуждает подрядчиков додумывать инженерные решения на месте — именно так возникают несостыковки систем, нарушенные отступы и нарушения норм. Полная документация также защищает заказчика в спорах: если построенный результат не совпадает с утверждёнными чертежами, есть чёткий эталон для сравнения. Перед началом строительства стоит уточнить, какой именно комплект документации существует — визуализация концепции и утверждённые рабочие чертежи, по которым можно строить без домыслов, это совершенно разные вещи.",
+    "Промышленные и наливные полы": "Это промышленные и наливные (полимерные) полы — эпоксидные, полиуретановые составы, заливаемые на подготовленное бетонное основание, — используются там, где нужна бесшовная, химически и износостойкая, легко моющаяся поверхность: склады, гаражи, мастерские, а в последнее время и некоторые жилые пространства ради современного вида. Влажность основания и качество его подготовки (механическая шлифовка, грунтовка) почти полностью определяют, приклеится ли наливной пол правильно, — заливка по слишком влажному или плохо подготовленному основанию вызывает отслоение (вздутия, шелушение) спустя месяцы, причём сразу на больших площадях, поскольку это одна сплошная поверхность. Такие полы также нужно подбирать под конкретные условия эксплуатации (химическая нагрузка, пешеходный или транспортный трафик, температура) — декоративный состав, использованный в мастерской с маслами и растворителями, быстро разрушится. Стоит спросить, проводился ли замер влажности бетонного основания перед заливкой — именно эта проверка предсказывает большинство будущих проблем с наливным полом.",
+    "Промышленный альпинизм и высотные работы": "Это доступ и выполнение работ с использованием верёвочных систем и страховочного снаряжения промышленного альпинизма на фасадах, кровлях, вышках и других труднодоступных высотных объектах — ремонт фасадов, мытьё окон и остекления, окраска, удаление сосулек и наледи, монтаж или осмотр наружного оборудования там, где строительство лесов нецелесообразно или слишком дорого. Метод целиком зависит от правильно организованных точек анкеровки и сертифицированного снаряжения: неверно выбранная или непроверенная точка крепления — смертельный риск для самого работника, а падающие инструменты или лёд с высоты — реальная опасность для прохожих, поэтому зону под работами обязательно ограждают. Этот способ действительно незаменим там, куда леса добраться не могут или это неоправданно дорого, но он не заменяет леса там, где нужен длительный устойчивый доступ к большой площади фасада. При найме стоит проверить у исполнителей действующие удостоверения по промышленному альпинизму и убедиться, что зона под рабочим участком ограждена, — это работа, связанная с риском для жизни, а не просто необычный способ добраться до высоты.",
+    "Работы с натуральным и искусственным камнем": "Это изготовление и монтаж изделий из натурального камня (гранит, мрамор, травертин) и искусственного/инженерного камня (кварцевый агломерат, акрил) — столешниц, полов, облицовки, декоративных элементов, — с раскроем, полировкой кромки и стыковкой швов, специфичными для каждого материала. Натуральный камень пористый и требует пропитки для защиты от пятен, а некоторые породы (например, мрамор) вступают в реакцию с кислотами — если не предупредить заказчика об этом заранее, первое же пятно от вина или лимонного сока станет неприятным сюрпризом. Швы между плитами камня (неизбежные на больших столешницах) нужно тщательно располагать и обрабатывать, поскольку плохо подобранный или слишком заметный шов — одна из самых частых претензий к каменным столешницам. Стоит спросить, нужна ли выбранному камню пропитка и к чему именно он уязвим (кислоты, нагрев, царапины) — это заметно различается между натуральным камнем и инженерными композитами.",
+    "Реставрационные и художественные работы": "Это восстановление или воссоздание исторических архитектурных деталей — лепнины, резьбы по дереву, расписных потолков, позолоты — с использованием техник и материалов, максимально соответствующих оригинальной постройке, часто на объектах культурного наследия со своими регуляторными требованиями. Реставрация старого здания с применением современных материалов, несовместимых с исходной конструкцией (например, цементная штукатурка поверх исторической известковой), может задерживать влагу внутри и ускорять разрушение оригинальной кладки вместо её сохранения — ошибка из соображений удобства, наносящая порой необратимый вред. Работы на официально охраняемых объектах наследия также обычно требуют отдельного лицензирования и согласования методики ещё до начала работ, а не только мастерства исполнителя. Стоит спросить, есть ли у реставратора опыт именно с конкретной исторической техникой и материалом, а не только с декоративными работами в целом, а для охраняемых зданий — получены ли необходимые согласования.",
+    "Сантехника: водоснабжение и разводка": "Это разводка и монтаж труб (металл, полипропилен, PEX), подающих холодную и горячую воду от общего ввода до каждого прибора, с обязательным опрессовочным испытанием на герметичность до закрытия стен. Трубы, смонтированные без опрессовки перед закрытием стен или пола, при протечке в любом стыке протекают незаметно месяцами, пока вода не пропитает конструкции и не проявится как порча отделки или плесень — один из самых дорогих в диагностике дефектов после завершения ремонта. У разных материалов труб также разные способы соединения (пайка, сварка раструбом, пресс-фитинги) со своими типичными ошибками при неправильном исполнении, так что важен реальный опыт монтажника именно с использованным материалом. Стоит настоять на документированной опрессовке готовой системы водоснабжения до закрытия стен или пола — это единственная проверка, которая выявляет скрытые протечки, пока их ещё дёшево устранить.",
+    "Сантехника: канализация, приборы и оборудование": "Это разводка канализационных труб с правильным уклоном к стояку, вентиляция канализационной системы (чтобы не срывало гидрозатворы и не проникал запах канализационных газов) и установка приборов — унитазов, раковин, водонагревателей, стиральных машин — и их подключений. Канализационные трубы, проложенные с недостаточным уклоном или без вентиляции, дают медленный слив, бульканье или запах канализации в помещении, даже если внешне всё смонтировано аккуратно, — проблема здесь именно в уклоне и воздухообмене, а не в видимой сантехнике. Установку приборов тоже нужно привязывать к точным размерам конкретных выбранных моделей, поэтому модели сантехники стоит определить до чернового монтажа, а не после. Если после установки канализация булькает или пахнет, это обычно указывает на проблему с вентиляцией системы, а не на брак самого прибора — стоит обсудить это с сантехником, а не мириться с запахом.",
+    "Свайно-винтовые и буронабивные работы": "Это устройство свайных фундаментов — винтовых (стальные сваи с лопастями, вкручиваемые в грунт) или буронабивных (пробуренная и заполненная армированным бетоном скважина) — применяемых на слабых, переувлажнённых или неровных грунтах, где обычный ленточный или плитный фундамент был бы ненадёжен или потребовал бы большой дополнительной подготовки. Выбор типа и глубины свай без реальных изысканий по конкретному участку — частая экономия, которая приводит к тому, что сваи опираются не на тот слой грунта, вызывая неравномерную осадку сооружения спустя годы после стройки, когда исправление означает усиление уже готового фундамента. Винтовые сваи также быстрее корродируют в агрессивных (кислых, переувлажнённых) грунтах без надлежащего защитного покрытия, сокращая срок службы ниже расчётного. Стоит уточнить, выбраны ли тип и глубина свай по данным реальных геологических изысканий на вашем участке, а не по «стандартной глубине, которая обычно работает в этом районе».",
+    "Сварочные работы и металлоконструкции": "Это сварка и изготовление стальных каркасов, балок, лестниц и других несущих или полунесущих металлических элементов, требующие правильного типа и провара шва и последующей обработки (зачистка, грунтовка) в соответствии с нагрузкой, которую будет нести конструкция. Шов, который визуально выглядит аккуратным, может иметь недостаточный провар или скрытую пористость, заметно снижающие его реальную прочность, — именно поэтому сварные швы на несущих конструкциях часто требуют инструментального или визуального контроля, а не приёмки «на глаз». Сварные соединения на улице также требуют антикоррозийной защиты именно в зоне шва: тепло от сварки выжигает прежнее покрытие как раз там, где новая защита особенно нужна. Для любой несущей сварной конструкции (лестницы, каркасы балконов, опоры) стоит спросить, проверялись ли швы и какая антикоррозийная обработка выполнена после сварки, а не только как выглядит готовое изделие.",
+    "Слаботочные системы и умный дом": "Это структурированная кабельная сеть для интернета, телефонии, видеонаблюдения, контроля доступа и автоматизации умного дома (сценарии освещения, климат, безопасность) — в отличие от силовой («сильноточной») электропроводки, слаботочка обычно прокладывается одновременно с электрическими черновыми работами. Прокладка сетевых кабелей или проводки умного дома после завершения отделки обычно вынуждает выбирать между проводами поверх стены (некрасиво) или новым вскрытием готовых стен, поэтому это нужно планировать на этапе электропроекта, а не как отдельное решение позже. Реальная надёжность умного дома также зависит в первую очередь от качества сетевой инфраструктуры (кабель, расположение роутера, покрытие Wi-Fi), а не от конкретных «умных» устройств — именно на этом чаще всего экономят напрасно. Потребности в слаботочной разводке (точки сети, расположение камер, датчиков) стоит определить до или во время электромонтажных черновых работ — это тот момент, вернуться к которому позже будет дорого.",
+    "Спецификация мебели и декора (FF&E)": "Это детальная закупочная документация (FF&E — furniture, fixtures & equipment), в которой перечислена каждая единица мебели, светильника и декора проекта — модель, поставщик, количество, цена, срок поставки, — используется в основном в крупных жилых и коммерческих проектах для координации закупок и бюджета. Без согласованной FF&E-спецификации закупки происходят разрозненно, и позиции с долгим сроком изготовления (мебель на заказ, импортные светильники) обнаруживаются слишком поздно, задерживая сдачу всего проекта или вынуждая на скорую руку менять их на несоответствующие проекту аналоги. Это также документ, который отслеживает фактические расходы по каждой позиции — легко потерять контроль над бюджетом, когда покупки идут отдельными поездками у разных поставщиков. Стоит попросить показать FF&E-список со сроками поставки уже на раннем этапе проекта — позиции с долгим сроком изготовления нужно заказывать задолго до готовности помещения их принять.",
+    "Стекольные работы и стеклянные конструкции": "Это изготовление и монтаж стеклянных перегородок, душевых ограждений, стеклянных перил, столешниц и других конструктивных или полуконструктивных элементов из стекла с подбором правильного типа стекла (закалённое, триплекс) и обработкой кромки под конкретную нагрузку. Использование обычного отожжённого стекла вместо закалённого или триплекса там, где это необходимо (перила, душевые двери, окна у пола), создаёт реальную опасность травмы при разрушении стекла: безопасное стекло специально рассчитано на то, чтобы рассыпаться на мелкие тупые осколки или не разлетаться вовсе, а не на осколки с острыми краями. Стеклянные конструктивные элементы, такие как перила, также требуют, чтобы крепёжная фурнитура была рассчитана именно под нагрузку, а не только подобрана по внешнему виду. Стоит прямо спросить, какой тип безопасного стекла (закалённое или триплекс) используется для любого стекла у пола, в душевой или в качестве перил, — это законный вопрос безопасности, а не просто эстетическое предпочтение.",
+    "Столярные и плотницкие работы": "Это столярные работы (изготовление встроенной мебели, дверей, лестниц, панелей на заказ) и плотницкие работы (силовые деревянные конструкции — стропильные системы, каркасные стены), причём обе требуют древесины с правильной влажностью, соответствующей условиям конкретного помещения. Древесина, установленная с завышенной влажностью, усыхает уже в отапливаемом готовом помещении, давая щели, коробление или трещины в столярных изделиях спустя месяцы после монтажа — очень частый и вполне предотвратимый дефект, который проявляется только после того, как изделие «привыкло» к новым условиям. Силовые деревянные конструкции также требуют правильных узлов соединения и понимания путей передачи нагрузки: декоративно выглядящее соединение, не рассчитанное как несущее, разрушится под реальной нагрузкой. Стоит спросить, при какой влажности устанавливалась древесина и соответствует ли она условиям будущего помещения — особенно сухой воздух от отопления способен заметно усушить недостаточно просушенное дерево.",
+    "Тентовые, мембранные и модульные конструкции": "Это тентовые и мембранные конструкции (ткань или ПВХ/PTFE-мембрана, натянутая на каркас, — навесы, шатры для мероприятий, большепролётные покрытия) и модульные сооружения (контейнерные или панельные конструкции, собираемые на месте) — применяются для временных, сезонных или быстровозводимых объектов: складов, спортивных сооружений, площадок для мероприятий, дополнительных построек на участке. Мембранные конструкции полностью зависят от правильного натяжения и анкеровки, рассчитанных на реальную ветровую и снеговую нагрузку конкретного региона: недостаточно натянутая или плохо закреплённая мембрана может разрушительно хлопать на ветру или сорваться и стать опасной, а скопление снега на плоском участке мембраны способно её обрушить, если это не заложено в расчёт. Поскольку такие конструкции часто воспринимаются как «временные», их фундаменты и анкеровка иногда получают меньше инженерного внимания, чем реально нужно при таких нагрузках, — ошибка, которая становится очевидной при первой же серьёзной непогоде. Стоит спросить, на какую ветровую и снеговую нагрузку рассчитана конкретная тентовая или модульная конструкция и соответствует ли это вашим реальным региональным условиям, особенно если сооружение простоит дольше одного сезона.",
+    "Тёплый пол (водяной и электрический)": "Это водяной (циркуляция подогретой воды по контурам труб в стяжке) или электрический (нагревательный кабель или мат) тёплый пол под финишным покрытием, каждый со своими требованиями к толщине стяжки, утеплению под контурами и совместимому терморегулятору или коллектору. Водяной тёплый пол обязательно нужно опрессовать до заливки стяжки поверх контуров — любая протечка после заливки оказывается под полом, и её устранение крайне разрушительно; эту проверку нельзя пропускать ради экономии времени. Недостаточное утепление под контурами также «съедает» заметную часть тепла вниз, в конструкцию, вместо помещения — незаметно, но постоянно увеличивая расходы на отопление на весь срок службы системы. Стоит настоять на документации (фотографиях, акте опрессовки) контуров тёплого пола до заливки стяжки — после того как их закроют, проверить монтаж без разрушения пола практически невозможно.",
+    "Утепление и теплоизоляция": "Это добавление теплоизоляционного материала в стены, кровлю, полы и фундаменты для снижения теплопотерь, с обязательным вниманием к паропроницаемости материала и правильной последовательности слоёв (утеплитель, пароизоляция, вентиляционный зазор), подходящей именно к конкретной конструкции стены или кровли. Утепление с плохо загерметизированной или неправильно расположенной пароизоляцией задерживает влагу внутри конструкции стены или кровли вместо того, чтобы не пускать её туда, — со временем это вызывает конденсат, плесень и даже гниение конструкции, которая внешне выглядит нормально с обеих сторон, и такая скрытая проблема может проявиться лишь спустя годы. Утепление, выполненное без устранения мостиков холода (неутеплённые балконы, оконные откосы, конструктивные примыкания), также оставляет реальные теплопотери здания заметно выше, чем предполагает паспортная характеристика утеплителя, поскольку тепло непропорционально уходит именно через эти слабые точки. Стоит спросить, учитывает ли проект утепления расположение пароизоляции и мостики холода отдельно, а не только «толщину» утеплителя, — сама по себе толщина не гарантирует реального результата.",
+    "Фасад: вентилируемый и навесные системы": "Это навесные вентилируемые фасадные системы: подконструкция (металлический или деревянный каркас), закреплённая на стене, утеплитель за ней и облицовка (композитные панели, HPL, керамогранит, дерево, металл), смонтированная с воздушным зазором, который выпускает влагу и вентилирует пространство за облицовкой, — применяются как для нового строительства, так и для переоблицовки старых зданий. Весь смысл системы — именно в воздушном зазоре; если он перекрыт (неправильным монтажом утеплителя или строительным мусором) или слишком узкий, влага задерживается ровно там, откуда система должна была её выводить, — и внешне это долго остаётся незаметным. Крепление подконструкции к самой стене (бетон, кирпич, газобетон — под каждый нужен свой крепёж) определяет, удержится ли вся облицовка на месте: крепёж, не рассчитанный на конкретный материал стены, со временем расшатывается, особенно под ветровой нагрузкой на верхних этажах. Стоит спросить, какой крепёж заложен именно под материал стен вашего здания, и убедиться, что вентиляционный зазор не пережат при монтаже, а не только оценивать внешний вид облицовки.",
+    "Фасад: мокрый (штукатурный) с утеплением": "Это «мокрая» штукатурная система утепления фасада: плиты утеплителя приклеиваются и механически крепятся прямо к стене, затем покрываются армированным базовым слоем со стеклосеткой и декоративной штукатуркой сверху — сплошная, напрямую приклеенная система в отличие от навесного вентилируемого фасада с воздушным зазором. Всё держится на том, насколько полно и равномерно плиты утеплителя приклеены к стене (а не только зафиксированы по углам с пустотами внутри) и насколько правильно армирующая сетка утоплена в базовый слой — именно в местах пустот и недостаточного армирования появляются трещины на готовой штукатурке, часто повторяющие рисунок швов между плитами. Система также чувствительна к погоде при нанесении: штукатурка, нанесённая под прямым солнцем, в дождь или при температуре вне рекомендованного диапазона, схватывается неправильно и может растрескаться или отслоиться уже в первый год. Стоит спросить, полностью ли приклеены плиты утеплителя к стене (а не только точечно) и выполнено ли усиление углов у оконных и дверных проёмов — именно там штукатурные фасады чаще всего трескаются в первую очередь.",
+    "Фундаментные работы": "Это устройство ленточного, плитного или свайно-ростверкового фундамента — несущей основы здания, включая армирование, опалубку, гидроизоляцию и, что особенно важно, глубину заложения, соответствующую грунту и климату участка, поскольку фундамент — это тот элемент, который практически невозможно полноценно исправить после того, как над ним уже построено здание. Фундамент, заложенный мельче глубины промерзания грунта для местного климата, может быть сдвинут и растрескан сезонным пучением грунта — медленно развивающаяся проблема, которая проявляется трещинами в стенах спустя годы после стройки, когда исправить это уже далеко не дёшево. Гидроизоляцию и дренаж вокруг фундамента также нужно делать именно на этом этапе, поскольку добавлять гидроизоляцию к уже засыпанной фундаментной стене гораздо более разрушительно и дорого, чем сделать правильно с самого начала. Стоит уточнить, основан ли проект фундамента на реальных геологических изысканиях вашего участка и конкретной глубине промерзания в регионе, а не на типовом решении, взятом «с другого объекта».",
+    "Черновые работы": "Это структурный и инженерный «каркас» ремонта — стены, основания пола и потолка, черновая электрика и сантехника, — выполняемый до того, как появится любой видимый отделочный материал, то есть всё то, что впоследствии окажется скрытым и недоступным без вскрытия. Поскольку этот этап становится невидимым после начала отделки, любая ошибка здесь — неверно проложенная электролиния, недостаточно гидроизолированная влажная зона, неровное основание стены — либо просто окажется замурованной как скрытый дефект, либо потребует вскрытия готовой отделки для исправления, поэтому черновые работы заслуживают не меньшего внимания, чем видимая отделка, хотя проверять их куда менее приятно. Именно на этом этапе окончательно фиксируются проектные решения — расположение розеток, точек сантехники, — и менять их позже означает переделывать уже готовую работу. Перед началом отделки стоит пройтись по всем помещениям и сфотографировать черновую электрику и сантехнику, пока они ещё видны, — этот архив бесценен, если позже возникнет вопрос о том, что именно находится внутри стен.",
+    "Шумоизоляция и акустика": "Это снижение передачи звука между помещениями или с улицы (за счёт массы, развязки конструкций и герметизации щелей) и, отдельно, работа с акустикой самого помещения (звукопоглощение и рассеивание для контроля эха и гулкости) — две смежные, но разные задачи, которые часто путают друг с другом. Частая и дорогая ошибка — установка мягкого звукопоглощающего материала в расчёте, что он «остановит» шум от соседей: поглощение улучшает акустику именно этой комнаты, но почти не мешает передаче звука через стены и перекрытия, для которой нужны совсем другие решения — масса и развязка конструкций, — так что выбор неверного решения под реальную проблему тратит весь бюджет впустую. Шумоизоляцию также легко свести на нет мелкими негерметичными щелями (вокруг труб, подрозетников, дверных коробок) — звук проникает даже через крошечные отверстия почти так, будто стены вовсе нет. Прежде чем выбирать решение, стоит чётко определить, какая именно проблема стоит — шум извне или гулкость самого помещения, — материалы и методы для этих двух задач разные.",
+    "Электромонтаж: кабельные линии и разводка": "Это прокладка и монтаж кабельной сети по всему зданию — от щита до каждой розетки, выключателя и точки подключения светильника, — с сечением кабеля и трассой, рассчитанными по нагрузке конкретной линии, проложенной по заранее составленной схеме до начала отделки. Заниженное сечение кабеля под реальную нагрузку линии (частая экономия) заставляет провод перегреваться при длительной нагрузке — это настоящий риск пожара, скрытый внутри готовой стены и незаметный до тех пор, пока не произойдёт авария. Трассы проводки также должны идти по задокументированной схеме (желательно строго горизонтально или вертикально на стандартной высоте), чтобы при последующем ремонте — сверлении отверстия, забивании гвоздя — случайно не попасть в кабель под напряжением. По окончании черновых электромонтажных работ стоит запросить исполнительную схему разводки — она необходима и для безопасности при любых будущих работах, и для поиска неисправностей в дальнейшем.",
+    "Электромонтаж: щиты, автоматика и электроустановочные изделия": "Это сборка распределительного щита с автоматическими выключателями и УЗО (устройствами защитного отключения, которые обесточивают линию при утечке тока — например, при контакте прибора с водой), а также монтаж видимых электроустановочных изделий — розеток, выключателей, диммеров. Щит без правильно подобранных УЗО и автоматов на каждую линию (особенно в ванной, на кухне и на улице) не защищает от удара током именно там, где риск выше всего, — это не та деталь, на которой стоит экономить. Компоновка и маркировка щита тоже имеют прямое практическое значение: правильно подписанный щит позволяет быстро найти и отключить нужную линию в экстренной ситуации, а немаркированный превращает простое отключение в угадывание под давлением. Стоит попросить показать схему щита (какой автомат или УЗО отвечает за какую зону) и убедиться, что УЗО установлены отдельно на линии ванной, кухни и улицы — это самая важная проверка безопасности в любой электромонтажной работе."
+  };
+  function getManualEntry(title){
+    return WORK_MANUAL[title] || ("Раздел каталога «" + title + "». Подробное описание технологии этого вида работ будет добавлено в одном из следующих обновлений справочника — пока ориентируйтесь на состав позиций в самой смете.");
+  }
+  function renderManualPanel(filter){
+    const q = (filter || "").trim().toLowerCase();
+    const titles = SECTION_TEMPLATES.map(s => s.title)
+      .filter(t => !q || t.toLowerCase().includes(q))
+      .sort((a, b) => a.localeCompare(b, "ru"));
+    document.getElementById("manualList").innerHTML = titles.map(t => (
+      '<details class="manual-item"><summary>' + esc(t) + '</summary><div class="manual-item-body">' + esc(getManualEntry(t)) + '</div></details>'
+    )).join("") || '<div class="obj-empty">Ничего не найдено</div>';
+  }
+  document.getElementById("manualSearch").addEventListener("input", e => renderManualPanel(e.target.value));
+
+  /* =====================================================================
+     ГРАФИК РАБОТ — из текущей сметы или с нуля, с материалами по этапам.
+     ===================================================================== */
+  let scheduleMode = "fromEstimate";
+  let currentSchedule = { stages: [] }; // { title, days, materials, startOffset }
+
+  // каждый этап хранит явное «начало, день от старта» (startOffset) вместо жёсткой
+  // последовательной цепочки — так можно поставить двум этапам одинаковое начало,
+  // чтобы показать, что они идут параллельно/смежно
+  function computeScheduleDates(){
+    const start = document.getElementById("schedStartDate").value || todayISO();
+    const startDate = new Date(start);
+    return currentSchedule.stages.map(st => {
+      const offset = Math.max(0, parseInt(st.startOffset, 10) || 0);
+      const days = Math.max(1, parseInt(st.days, 10) || 1);
+      const from = new Date(startDate); from.setDate(from.getDate() + offset);
+      const to = new Date(from); to.setDate(to.getDate() + days - 1);
+      return Object.assign({}, st, { offset, days, from: from.toISOString().slice(0,10), to: to.toISOString().slice(0,10) });
+    });
+  }
+
+  function buildStagesFromActiveEstimate(){
+    const est = getActive();
+    let cursor = 0;
+    currentSchedule.stages = est.sections.filter(s => s.items.length).map(sec => {
+      const days = Math.max(1, Math.round(sec.items.length * 1.5));
+      const stage = {
+        title: sec.title,
+        days,
+        startOffset: cursor,
+        materials: sec.items.filter(it => it.priceMaterial > 0).map(it => it.name).join(", ")
+      };
+      cursor += days;
+      return stage;
+    });
+    if (!document.getElementById("schedStartDate").value) document.getElementById("schedStartDate").value = est.client.date || todayISO();
+  }
+
+  // общая отрисовка диаграммы — используется и на экране (цвета через var(--...)),
+  // и в PDF (передаются обычные hex-цвета, т.к. print-sheet не завязан на тему)
+  function renderGanttHTML(dated, colors){
+    if (!dated.length) return '<div class="obj-empty">Добавьте хотя бы один этап работ</div>';
+    const minOffset = Math.min(...dated.map(s => s.offset));
+    const maxEnd = Math.max(...dated.map(s => s.offset + s.days));
+    const span = Math.max(1, maxEnd - minOffset);
+    const rows = dated.map(s => {
+      const leftPct = (s.offset - minOffset) / span * 100;
+      const widthPct = Math.max(3, s.days / span * 100);
+      return (
+        '<div class="gantt-row">' +
+          '<div class="gantt-label" style="color:' + colors.label + ';">' + esc(s.title) + '</div>' +
+          '<div class="gantt-track" style="background:' + colors.track + ';">' +
+            '<div class="gantt-bar" style="left:' + leftPct.toFixed(2) + '%;width:' + widthPct.toFixed(2) + '%;background:' + colors.bar + ';"></div>' +
+          '</div>' +
+          '<div class="gantt-dates" style="color:' + colors.muted + ';">' + esc(formatDateRu(s.from)) + ' – ' + esc(formatDateRu(s.to)) + '</div>' +
+        '</div>'
+      );
+    }).join("");
+    return '<div class="gantt-chart">' + rows + '</div>';
+  }
+  function renderScreenGantt(dated){
+    document.getElementById("schedGanttChart").innerHTML = renderGanttHTML(dated, {
+      label: "var(--ink)", track: "var(--surface-2)", bar: "var(--accent)", muted: "var(--muted)"
+    });
+  }
+
+  function renderSchedulePanel(){
+    const dated = computeScheduleDates();
+    renderScreenGantt(dated);
+    const addBtn = document.getElementById("schedAddStageBtn");
+    addBtn.hidden = scheduleMode !== "manual";
+    document.getElementById("schedStagesList").innerHTML = dated.map((st, i) => (
+      '<div class="sched-stage-row" data-idx="' + i + '">' +
+        (scheduleMode === "manual" ? '<button type="button" class="sched-stage-del" data-idx="' + i + '">✕ убрать</button>' : '') +
+        '<div class="sched-stage-grid">' +
+          '<label class="f-field f-field--wide"><span class="f-label">Этап / вид работ</span><input class="f-input sched-title" data-idx="' + i + '" type="text" value="' + escAttr(st.title) + '"' + (scheduleMode !== "manual" ? " disabled" : "") + '></label>' +
+          '<label class="f-field sched-offset-field"><span class="f-label">Начало, день от старта</span><input class="f-input sched-offset" data-idx="' + i + '" type="number" min="0" value="' + (st.offset || 0) + '"></label>' +
+          '<label class="f-field"><span class="f-label">Дней</span><input class="f-input sched-days" data-idx="' + i + '" type="number" min="1" value="' + (st.days || 1) + '"></label>' +
+          '<label class="f-field f-field--wide"><span class="f-label">Материалы на этот этап</span><input class="f-input sched-materials" data-idx="' + i + '" type="text" value="' + escAttr(st.materials || "") + '" placeholder="какие материалы нужны к началу этапа"></label>' +
+        '</div>' +
+        '<div class="sched-stage-dates">' + formatDateRu(st.from) + ' — ' + formatDateRu(st.to) + '</div>' +
+      '</div>'
+    )).join("") || '<div class="obj-empty">Добавьте этап работ</div>';
+  }
+
+  function switchScheduleMode(mode){
+    scheduleMode = mode;
+    document.getElementById("schedModeFromEstBtn").classList.toggle("active", mode === "fromEstimate");
+    document.getElementById("schedModeManualBtn").classList.toggle("active", mode === "manual");
+    if (mode === "fromEstimate"){ buildStagesFromActiveEstimate(); }
+    else if (!currentSchedule.stages.length){ currentSchedule.stages = [{ title: "Новый этап", days: 3, startOffset: 0, materials: "" }]; }
+    renderSchedulePanel();
+  }
+  document.getElementById("schedModeFromEstBtn").addEventListener("click", () => switchScheduleMode("fromEstimate"));
+  document.getElementById("schedModeManualBtn").addEventListener("click", () => switchScheduleMode("manual"));
+  document.getElementById("schedStartDate").addEventListener("change", renderSchedulePanel);
+  document.getElementById("schedAddStageBtn").addEventListener("click", () => {
+    const lastEnd = currentSchedule.stages.reduce((m, st) => Math.max(m, (st.startOffset || 0) + (st.days || 1)), 0);
+    currentSchedule.stages.push({ title: "Новый этап", days: 3, startOffset: lastEnd, materials: "" });
+    renderSchedulePanel();
+  });
+  document.getElementById("schedStagesList").addEventListener("input", e => {
+    const idx = e.target.dataset.idx;
+    if (idx == null) return;
+    const st = currentSchedule.stages[idx];
+    if (!st) return;
+    if (e.target.classList.contains("sched-title")) st.title = e.target.value;
+    if (e.target.classList.contains("sched-days")) st.days = parseInt(e.target.value, 10) || 1;
+    if (e.target.classList.contains("sched-offset")) st.startOffset = Math.max(0, parseInt(e.target.value, 10) || 0);
+    if (e.target.classList.contains("sched-materials")) st.materials = e.target.value;
+    renderSchedulePanel();
+  });
+  document.getElementById("schedStagesList").addEventListener("click", e => {
+    const delBtn = e.target.closest(".sched-stage-del");
+    if (delBtn){
+      currentSchedule.stages.splice(parseInt(delBtn.dataset.idx, 10), 1);
+      renderSchedulePanel();
+    }
+  });
+
+  function buildScheduleBodyHTML(){
+    const dated = computeScheduleDates();
+    const ganttHTML = renderGanttHTML(dated, { label: "#1A1A1A", track: "#EFEFEF", bar: "#E8890C", muted: "#8A8A8A" });
+    return (
+      '<div class="ps-section">' + ganttHTML + '</div>' +
+      '<div class="ps-section">' +
+        psTable2ColHeaderHTML("Этап / вид работ", "Сроки") +
+        dated.map(st => (
+          '<div class="ps-table-row"><span class="ps-col-name">' + esc(st.title) + (st.materials ? '<br><span style="font-size:10.5px;color:#8A8A8A;">Материалы: ' + esc(st.materials) + '</span>' : '') + '</span>' +
+            '<span class="ps-col-sum">' + esc(formatDateRu(st.from)) + ' — ' + esc(formatDateRu(st.to)) + '</span></div>'
+        )).join("") +
+      '</div>'
+    );
+  }
+  document.getElementById("schedGeneratePdf").addEventListener("click", () => exportPDF("schedule", "download"));
+
+  /* =====================================================================
+     ИНСТРУМЕНТЫ ДЛЯ КЛИЕНТА — бриф перед стартом, скрипты для сложных
+     разговоров. Текстовые шаблоны, копируются в буфер обмена — ответы
+     клиента приходят обычным сообщением, отдельной формы/сервера нет.
+     ===================================================================== */
+  const CLIENT_BRIEF_TEXT =
+    "Бриф перед началом работ — несколько вопросов, чтобы точнее посчитать смету и не тратить ваше время на уточнения по телефону:\n\n" +
+    "1. Какой стиль вам нравится (или пришлите 2-3 фото-примера)?\n" +
+    "2. Примерный бюджет — есть ли верхняя граница?\n" +
+    "3. К какой дате хотите закончить работы?\n" +
+    "4. Кто будет пользоваться помещением (взрослые, дети, животные) — влияет на выбор материалов.\n" +
+    "5. Что для вас особенно важно (тишина, освещение, хранение и т.п.)?\n" +
+    "6. Есть ли готовый дизайн-проект или начинаем с нуля?\n" +
+    "7. Как удобнее быть на связи и как часто присылать отчёты о ходе работ?\n\n" +
+    "Спасибо! Как только ответите — пришлю предварительный расчёт.";
+
+  document.getElementById("briefCopyBtn").addEventListener("click", async () => {
+    haptic("light");
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(CLIENT_BRIEF_TEXT).then(() => notify("Бриф скопирован — вставьте его в чат с клиентом")).catch(() => notify("Не удалось скопировать — скопируйте текст вручную"));
+    } else {
+      notify("Ваш браузер не поддерживает копирование в буфер обмена");
+    }
+  });
+
+  // Принцип всех скриптов ниже: сначала контекст/причина (человек соглашается охотнее,
+  // когда понимает «почему»), затем два варианта на выбор — не ультиматум, а решение,
+  // которое клиент принимает сам, — и в конце открытый вопрос, а не требование.
+  const CLIENT_SCRIPTS = [
+    { title: "Материалы подорожали с момента сметы", text:
+      "Иван Иванович, хочу обсудить с вами один момент сразу, чтобы не было сюрпризов позже. С момента, когда мы считали смету, [материал] подорожал — это видно по прайсам у всех поставщиков в городе, не только у нас, при желании можете сверить сами. Смотрите, у нас есть два пути: первый — фиксирую разницу в цене и мы двигаемся по плану дальше; второй — я уже присмотрел пару аналогов того же качества по прежней цене, можем на них посмотреть. Как вам удобнее — фиксируем текущую цену или посмотрим альтернативу?" },
+    { title: "Обнаружены доп. работы, которых не было в смете", text:
+      "Смотрите, что мы обнаружили сегодня при [что вскрылось]: [конкретное описание]. Это было невозможно увидеть на этапе осмотра — вскрылось только сейчас, когда уже начали работы. Тут по-честному два варианта: можно закрыть вопрос по-простому — [вариант А], это дешевле, но [в чём ограничение]; либо сделать основательно — [вариант Б], дороже на [сумма], зато не придётся возвращаться к этому через пару лет. Что вам ближе — решить вопрос сейчас подешевле или сделать так, чтобы не думать об этом в будущем? Выбор в любом случае за вами, я просто хочу, чтобы он был осознанным." },
+    { title: "Как попросить предоплату", text:
+      "Чтобы уложиться в сроки, о которых мы договорились, материалы нужно закупить заранее — если ждать до последнего, именно ожидание поставки может сдвинуть весь график, а не сами работы. На этом этапе обычно беру предоплату [X]% — это позволяет закупить всё сразу по сегодняшним ценам. Как вам удобнее внести — всей суммой сразу или разбить на два платежа в течение недели?" },
+    { title: "Нужно сообщить о переносе сроков", text:
+      "Хочу предупредить вас заранее, а не по факту: из-за [причина — задержка поставки/погодные условия/и т.п.] срок сдвигается примерно на [N] дней. Понимаю, что новость не самая приятная, поэтому предлагаю на выбор: либо в это время я займусь [другим этапом, чтобы не терять темп на объекте в целом], либо сдвигаем финальную дату целиком — тогда со своей стороны [небольшая компенсация, например: бесплатно доделаю мелкий пункт]. Какой вариант вам ближе?" },
+    { title: "Финальный расчёт и закрытие объекта", text:
+      "Работы завершены в полном объёме, как договаривались по смете. Предлагаю на этой неделе вместе провести приёмку — пройдёмся по чек-листу, вы сами всё проверите и скажете, что устраивает, и уже после этого подпишем акт. Заодно передам вам паспорт объекта — там зафиксировано, какие материалы использованы и где, пригодится при следующем ремонте или обслуживании, плюс гарантия на [срок]. Когда вам удобнее — в будни вечером или в выходные?" },
+    { title: "Клиент просит «сделайте подешевле»", text:
+      "Понимаю, хочется уложиться в бюджет — это нормальное желание. Смотрите, у нас есть два реальных пути сэкономить: первый — материал попроще в местах, которые не видно и от которых не зависит долговечность, например [пример], это снизит смету примерно на [сумма]; второй — сократить объём работ, например [что именно]. А вот по позициям вроде [гидроизоляция/электрика/то, что нельзя переделать без вскрытия отделки] снижать сейчас честно не советую — переделка потом обойдётся в разы дороже, чем сэкономленное сегодня. Какой из первых двух вариантов вам ближе?" },
+    { title: "Клиент задерживает оплату по этапу", text:
+      "Смотрите, у нас подошёл этап оплаты, который мы согласовали в смете — по состоянию на сегодня она ещё не поступила, возможно, просто вылетело из графика, бывает. Чтобы не тормозить бригаду и не сдвигать общий срок, подскажите, пожалуйста, когда сможете провести оплату — сегодня-завтра или нужно ещё пару дней? Я подстрою график работ под это, лишь бы понимать сроки заранее." },
+    { title: "Клиент хочет изменить решение в процессе работ", text:
+      "Понимаю, вживую всегда виднее, чем на бумаге, и часто хочется что-то поменять по ходу — это нормальная история, почти у всех так. По изменению [что именно] есть два варианта: если [условие — например, материал ещё не закуплен или этап не начат], можем поменять почти без потерь, я просто пересчитаю позицию в смете; а если [материал уже куплен/этап уже начат] — переделка потребует времени и доплаты за [что именно]. Что для вас важнее в этой ситуации — сохранить текущий срок и бюджет как есть или всё же поменять, даже с доплатой?" }
+  ];
+  document.getElementById("scriptsList").innerHTML = CLIENT_SCRIPTS.map((s, i) => (
+    '<details class="manual-item"><summary>' + esc(s.title) + '</summary><div class="manual-item-body">' + esc(s.text) +
+      '<br><button type="button" class="manual-copy-btn" data-idx="' + i + '">📋 Скопировать</button></div></details>'
+  )).join("");
+  document.getElementById("scriptsList").addEventListener("click", e => {
+    const btn = e.target.closest(".manual-copy-btn");
+    if (!btn) return;
+    const text = CLIENT_SCRIPTS[btn.dataset.idx].text;
+    haptic("light");
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(() => notify("Текст скопирован")).catch(() => notify("Не удалось скопировать"));
+    }
+  });
+
+  /* =====================================================================
+     ПРОФЕССИОНАЛЬНЫЕ КАЛЬКУЛЯТОРЫ — стяжка, бетон, розетки, кровля, лестница.
+     Числовые ориентиры отмечены как приблизительные и опираются на
+     распространённые отраслевые таблицы/практические правила, а не на
+     конкретный ГОСТ/СНиП пункт — везде, где это важно, дана оговорка
+     свериться с документацией конкретного материала/проекта.
+     ===================================================================== */
+  const CALC_FIELDS = {
+    screed:
+      '<div class="lc-calc-row">' +
+        '<label class="f-field"><span class="f-label">Площадь пола, м²</span><input id="calcArea" class="f-input" type="number" min="0" step="0.1"></label>' +
+        '<label class="f-field"><span class="f-label">Толщина стяжки, мм</span><input id="calcThickness" class="f-input" type="number" min="0" step="1" value="50"></label>' +
+      '</div>',
+    concrete:
+      '<div class="lc-calc-row">' +
+        '<label class="f-field"><span class="f-label">Объём бетона, м³</span><input id="calcVolume" class="f-input" type="number" min="0" step="0.1"></label>' +
+        '<label class="f-field"><span class="f-label">Марка бетona</span><select id="calcGrade" class="f-input">' +
+          '<option value="M100">М100</option><option value="M200" selected>М200</option><option value="M300">М300</option><option value="M400">М400</option>' +
+        '</select></label>' +
+      '</div>',
+    sockets:
+      '<div class="lc-calc-row">' +
+        '<label class="f-field"><span class="f-label">Тип помещения</span><select id="calcRoomType" class="f-input">' +
+          '<option value="living">Жилая комната / кабинет</option><option value="corridor">Коридор / прихожая</option><option value="kitchen">Кухня</option>' +
+        '</select></label>' +
+        '<label class="f-field"><span class="f-label">Периметр стен, м</span><input id="calcPerimeter" class="f-input" type="number" min="0" step="0.1"></label>' +
+        '<label class="f-field"><span class="f-label">Площадь, м²</span><input id="calcArea2" class="f-input" type="number" min="0" step="0.1"></label>' +
+      '</div>',
+    roof:
+      '<div class="lc-calc-row">' +
+        '<label class="f-field"><span class="f-label">Длина здания (конёк), м</span><input id="calcRoofLen" class="f-input" type="number" min="0" step="0.1"></label>' +
+        '<label class="f-field"><span class="f-label">Ширина ската (проекция), м</span><input id="calcRoofRun" class="f-input" type="number" min="0" step="0.1"></label>' +
+        '<label class="f-field"><span class="f-label">Высота подъёма конька, м</span><input id="calcRoofRise" class="f-input" type="number" min="0" step="0.1"></label>' +
+      '</div>',
+    stairs:
+      '<div class="lc-calc-row">' +
+        '<label class="f-field"><span class="f-label">Высота этажа (пол-пол), см</span><input id="calcFloorHeight" class="f-input" type="number" min="0" step="1"></label>' +
+      '</div>'
+  };
+  // ориентировочные минимальные уклоны кровельных материалов (градусы) — сверяться
+  // с инструкцией конкретного производителя обязательно, диапазоны специально широкие
+  const ROOF_MIN_SLOPE = [
+    { name: "мягкая (наплавляемая/рулонная) кровля", min: 2 },
+    { name: "фальцевая металлическая кровля", min: 7 },
+    { name: "профнастил", min: 10 },
+    { name: "металлочерепица", min: 14 },
+    { name: "шифер", min: 20 },
+    { name: "керамическая/цементно-песчаная черепица", min: 22 }
+  ];
+  const calcTypeEl = document.getElementById("calcType");
+  function renderCalcFields(){
+    const fieldsEl = document.getElementById("calcFields");
+    fieldsEl.innerHTML = CALC_FIELDS[calcTypeEl.value];
+    document.getElementById("calcResult").textContent = "";
+    // .oninput/.onchange (не addEventListener) — чтобы при каждой перерисовке
+    // заменять обработчик, а не копить дубликаты на одном и том же контейнере
+    fieldsEl.oninput = computeCalc;
+    fieldsEl.onchange = computeCalc;
+  }
+  function computeCalc(){
+    const type = calcTypeEl.value;
+    const resEl = document.getElementById("calcResult");
+    const num = id => parseFloat(document.getElementById(id) && document.getElementById(id).value) || 0;
+    const str = id => { const el = document.getElementById(id); return el ? el.value : ""; };
+    if (type === "screed"){
+      const area = num("calcArea"), thickness = num("calcThickness");
+      if (!area || !thickness){ resEl.textContent = ""; return; }
+      const volume = area * thickness / 1000;
+      const weightKg = volume * 1800; // ориентировочная плотность цементно-песчаной стяжки
+      resEl.textContent = "Объём смеси: примерно " + fmtNum(volume) + " м³ (≈ " + Math.round(weightKg) + " кг, около " + Math.ceil(weightKg / 25) + " мешков по 25 кг при плотности ~1800 кг/м³). Точный расход смотрите на упаковке конкретной смеси — он отличается у разных производителей.";
+    } else if (type === "concrete"){
+      const volume = num("calcVolume");
+      const grade = str("calcGrade");
+      if (!volume || !grade){ resEl.textContent = ""; return; }
+      // ориентировочные кг/м³ на цементе М400, среднее по распространённым таблицам замеса
+      const MIX = {
+        M100: { cement: 210, sand: 800, stone: 1170 },
+        M200: { cement: 257, sand: 750, stone: 1185 },
+        M300: { cement: 337, sand: 685, stone: 1185 },
+        M400: { cement: 412, sand: 615, stone: 1175 }
+      };
+      const m = MIX[grade];
+      resEl.textContent = "На " + fmtNum(volume) + " м³ бетона " + grade + " ориентировочно нужно: цемент М400 — " + Math.round(m.cement*volume) + " кг (" + Math.ceil(m.cement*volume/50) + " мешков по 50 кг), песок — " + Math.round(m.sand*volume) + " кг, щебень — " + Math.round(m.stone*volume) + " кг. Значения приблизительные (лабораторные пропорции), реальный расход зависит от фракции щебня и влажности песка.";
+    } else if (type === "sockets"){
+      const roomType = str("calcRoomType");
+      const perimeter = num("calcPerimeter"), area = num("calcArea2");
+      if (!roomType){ resEl.textContent = ""; return; }
+      if (roomType === "kitchen"){
+        resEl.textContent = "На кухне независимо от площади закладывают не менее 4 розеток под технику (сверх обычных — под варочную панель, духовку, вытяжку и т.п. считаются отдельно). Это распространённая практическая норма, не жёсткий норматив.";
+      } else if (roomType === "corridor"){
+        if (!area){ resEl.textContent = ""; return; }
+        resEl.textContent = "В коридоре/прихожей — примерно " + Math.max(1, Math.ceil(area / 10)) + " розетка(и) (правило: не менее одной на каждые 10 м²).";
+      } else {
+        if (!perimeter){ resEl.textContent = ""; return; }
+        resEl.textContent = "В жилой комнате — примерно " + Math.max(2, Math.ceil(perimeter / 3)) + " розетки (правило: не менее одной на каждые 3 м периметра стен), плюс отдельно под телевизор/технику по месту.";
+      }
+    } else if (type === "roof"){
+      const len = num("calcRoofLen"), run = num("calcRoofRun"), rise = num("calcRoofRise");
+      if (!len || !run || !rise){ resEl.textContent = ""; return; }
+      const angleDeg = Math.atan(rise / run) * 180 / Math.PI;
+      const slopeLength = Math.sqrt(run*run + rise*rise);
+      const slopeArea = len * slopeLength;
+      const suitable = ROOF_MIN_SLOPE.filter(m => angleDeg >= m.min).map(m => m.name);
+      resEl.textContent = "Уклон ската: примерно " + fmtNum(angleDeg) + "° (" + fmtNum(rise/run*100) + "%). Длина ската: " + fmtNum(slopeLength) + " м, площадь ската: " + fmtNum(slopeArea) + " м². Подходящие по уклону материалы (ориентировочно): " + (suitable.length ? suitable.join(", ") : "при таком уклоне подойдёт только мягкая наплавляемая кровля, и то с усиленной гидроизоляцией") + " — обязательно сверьтесь с минимальным уклоном у конкретного производителя.";
+    } else if (type === "stairs"){
+      const height = num("calcFloorHeight");
+      if (!height){ resEl.textContent = ""; return; }
+      let steps = Math.round(height / 17);
+      if (steps < 1) steps = 1;
+      const riser = height / steps;
+      const tread = 63 - 2 * riser; // формула удобства лестницы (формула Блонделя): 2×подступенок + проступь ≈ 60–64 см
+      resEl.textContent = "Ступеней: " + steps + ", высота подступенка: " + fmtNum(riser) + " см, рекомендуемая глубина проступи: " + fmtNum(Math.max(tread, 25)) + " см (по формуле удобства лестницы 2×подступенок + проступь ≈ 60–64 см). Комфортный подступенок — 15–18 см; если получилось больше, лестница будет крутой.";
+    }
+  }
+  calcTypeEl.addEventListener("change", renderCalcFields);
+  renderCalcFields();
+
+  /* =====================================================================
+     ЛАНДШАФТ — сезонность работ + калькулятор газона и растений.
+     ===================================================================== */
+  const MONTH_NAMES = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+  const SEASONAL_INFO = [
+    { title: "Посадка деревьев и кустарников", months: [3,4,9,10,11], note: "Лучшее время — ранняя весна до распускания почек или осень после листопада, когда риск для растения минимален." },
+    { title: "Посев газона", months: [4,5,8,9], note: "Весной или в конце лета — начале осени, чтобы всходы окрепли до жары или до заморозков." },
+    { title: "Укладка рулонного газона", months: [4,5,6,7,8,9,10], note: "Почти весь тёплый сезон при условии регулярного полива первые 2-3 недели после укладки." },
+    { title: "Мощение дорожек и площадок", months: [4,5,6,7,8,9,10], note: "Вне периода промерзания грунта — основание из щебня/песка должно уплотняться на талой земле." },
+    { title: "Бетонирование столбов забора/опор", months: [4,5,6,7,8,9,10], note: "Бетон набирает прочность правильно только при плюсовой температуре без сильных заморозков." },
+    { title: "Санитарная обрезка деревьев и кустарников", months: [3,10,11], note: "До начала сокодвижения ранней весной или после листопада — минимальный стресс для растения." }
+  ];
+  function renderSeasonalList(){
+    const curMonth = new Date().getMonth() + 1;
+    document.getElementById("seasonList").innerHTML = SEASONAL_INFO.map(s => {
+      const inSeason = s.months.includes(curMonth);
+      const badge = inSeason ? "✅ сейчас подходящее время" : "⏳ сейчас не сезон";
+      return '<details class="manual-item"><summary>' + esc(s.title) + ' — ' + badge + '</summary><div class="manual-item-body">' + esc(s.note) + '</div></details>';
+    }).join("");
+  }
+  renderSeasonalList();
+
+  const LC_CALC_FIELDS = {
+    lawn_seed: '<div class="lc-calc-row"><label class="f-field"><span class="f-label">Площадь газона, м²</span><input id="lcArea" class="f-input" type="number" min="0" step="0.1"></label></div>',
+    lawn_roll: '<div class="lc-calc-row"><label class="f-field"><span class="f-label">Площадь газона, м²</span><input id="lcArea" class="f-input" type="number" min="0" step="0.1"></label></div>',
+    hedge: '<div class="lc-calc-row"><label class="f-field"><span class="f-label">Длина ряда, м</span><input id="lcLength" class="f-input" type="number" min="0" step="0.1"></label><label class="f-field"><span class="f-label">Шаг посадки, м</span><input id="lcSpacing" class="f-input" type="number" min="0.1" step="0.1" value="0.4"></label></div>',
+    trees: '<div class="lc-calc-row"><label class="f-field"><span class="f-label">Площадь посадки, м²</span><input id="lcArea" class="f-input" type="number" min="0" step="0.1"></label><label class="f-field"><span class="f-label">Схема посадки, м между растениями</span><input id="lcSpacing" class="f-input" type="number" min="0.1" step="0.1" value="3"></label></div>'
+  };
+  const lcCalcTypeEl = document.getElementById("lcCalcType");
+  function renderLcCalcFields(){
+    const fieldsEl = document.getElementById("lcCalcFields");
+    fieldsEl.innerHTML = LC_CALC_FIELDS[lcCalcTypeEl.value];
+    document.getElementById("lcCalcResult").textContent = "";
+    fieldsEl.oninput = computeLcCalc;
+  }
+  function computeLcCalc(){
+    const type = lcCalcTypeEl.value;
+    const resEl = document.getElementById("lcCalcResult");
+    const area = parseFloat(document.getElementById("lcArea") && document.getElementById("lcArea").value) || 0;
+    const length = parseFloat(document.getElementById("lcLength") && document.getElementById("lcLength").value) || 0;
+    const spacing = parseFloat(document.getElementById("lcSpacing") && document.getElementById("lcSpacing").value) || 0;
+    if (type === "lawn_seed"){
+      if (!area){ resEl.textContent = ""; return; }
+      const kg = area * 35 / 1000; // ориентировочная норма высева ~35 г/м² для газонных травосмесей
+      resEl.textContent = "Нужно семян: примерно " + fmtNum(kg) + " кг (норма ~35 г/м² — уточните по конкретной травосмеси на упаковке).";
+    } else if (type === "lawn_roll"){
+      if (!area){ resEl.textContent = ""; return; }
+      resEl.textContent = "Нужно рулонов: примерно " + Math.ceil(area) + " (1 рулон ≈ 1 м², берите с запасом ~5-10% на подрезку).";
+    } else if (type === "hedge"){
+      if (!length || !spacing){ resEl.textContent = ""; return; }
+      resEl.textContent = "Нужно растений: примерно " + Math.ceil(length / spacing) + " шт. в один ряд при шаге " + fmtNum(spacing) + " м.";
+    } else if (type === "trees"){
+      if (!area || !spacing){ resEl.textContent = ""; return; }
+      resEl.textContent = "Нужно растений: примерно " + Math.ceil(area / (spacing * spacing)) + " шт. по схеме " + fmtNum(spacing) + "×" + fmtNum(spacing) + " м.";
+    }
+  }
+  lcCalcTypeEl.addEventListener("change", renderLcCalcFields);
+  renderLcCalcFields();
+
   renderEstimatesPanel();
   fillEstimateFieldsFromActive();
   renderSections();
+  renderObjectsPanel();
+  renderAcceptChecklist();
+  renderManualPanel("");
+  buildStagesFromActiveEstimate();
+  renderSchedulePanel();
 </script>
 
 <!-- отправка событий в GoatCounter: скачал PDF/Excel, создал смету (для отчёта в боте) -->
