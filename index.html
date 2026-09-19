@@ -25,7 +25,7 @@
     --accent-soft:#FBE7CC;
     --success:#2F8F5B;
     --shadow: 0 18px 40px -22px rgba(26,26,26,0.28);
-    --font:'Arial','Helvetica Neue',Helvetica,sans-serif;
+    --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -156,10 +156,73 @@
      gives way to a stacked layout (see the media query at the bottom of
      this block) so nothing ever needs to scroll sideways on a phone. */
   .items-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
-  .item-header-row, .item-row, .item-add-row{
-    display:grid;
-    grid-template-columns: 16px minmax(140px,1fr) 26px 60px 62px 26px 66px 70px 58px 22px 20px;
-    align-items:center; column-gap:6px;
+  /* ---------- позиция сметы = карточка (на любом экране) ---------- */
+  .item-header-row{ display:none; }
+  .item-row, .item-add-row{
+    display:block; background:var(--surface); border:1px solid var(--line); border-radius:13px;
+    padding:12px 14px 11px; margin-bottom:10px;
+  }
+  .item-row{ position:relative; }
+  .item-row.tier-add{ opacity:1; border-style:dashed; }
+  .ir-head{ display:flex; align-items:center; gap:10px; }
+  .item-row .item-edit-name, .item-add-row .item-add-name{
+    flex:1; min-width:0; border:none; background:transparent; padding:3px 0;
+    font-size:15px; font-weight:600; line-height:1.3; color:var(--ink); border-radius:0;
+  }
+  .item-row .item-edit-name:focus, .item-add-row .item-add-name:focus{
+    outline:none; border-bottom:1.5px solid var(--accent);
+  }
+  .item-edit-sum{
+    font-size:17px; font-weight:700; white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--ink);
+    margin-right:4px;
+  }
+  .item-row.tier-add .item-edit-sum{ color:var(--muted); }
+  .ir-fields{ display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:8px 10px; margin-top:10px; }
+  .ir-f{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .ir-f > span{
+    font-size:9.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); font-weight:700;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .ir-f .f-input{ font-size:14px; padding:8px 9px; width:100%; }
+  .ir-f--cost{ display:none; }
+  body.pro-mode .ir-f--cost{ display:flex; }
+  .ir-actions{
+    display:flex; align-items:center; gap:6px; margin-top:11px; padding-top:9px;
+    border-top:1px dashed var(--line);
+  }
+  .ir-actions .ir-spacer{ flex:1; }
+  .item-row .item-drag-handle{ color:var(--muted); font-size:13px; cursor:grab; }
+  .item-add-row{ border-style:dashed; }
+  .ir-add-actions{ display:flex; align-items:center; gap:8px; margin-top:11px; }
+  .item-add-row .item-add-btn{
+    width:auto; flex:1; height:40px; gap:7px; font-family:var(--font); font-size:13.5px; font-weight:700;
+    border-radius:10px;
+  }
+
+  /* ---------- типографская иерархия ---------- */
+  .section-card{ padding:16px 16px 18px; margin-bottom:0; }
+  .sections-list{ gap:16px; }
+  .section-title{ font-size:17px; font-weight:700; }
+  .sections-head span{ font-size:11px; letter-spacing:0.08em; }
+  .section-subtotal{ font-size:13px; margin-top:12px; padding-top:12px; }
+  .section-subtotal span{ font-size:15px; }
+  .req-summary{ font-size:15px; padding:15px 18px; }
+  .total-label{ font-size:11.5px; letter-spacing:0.07em; }
+  .total-value{ font-size:28px; }
+  .item-group-header{ font-size:10.5px; margin:16px 0 8px; }
+
+  /* ---------- действия: одна главная кнопка ---------- */
+  .action-row{ display:flex; gap:8px; align-items:stretch; flex-wrap:nowrap; }
+  .action-row .btn-primary{ flex:1 1 auto; min-width:0; padding:15px 14px; font-size:15px; font-weight:700; border-radius:12px; }
+  .more-btn{
+    flex:0 0 auto; border:1px solid var(--line); background:var(--surface); color:var(--ink-soft);
+    border-radius:12px; padding:0 16px; font-family:var(--font); font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .more-btn:hover{ border-color:var(--accent); color:var(--ink); }
+  .more-actions{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+  .more-actions .btn{ width:100%; }
+  body.pro-mode .item-header-row, body.pro-mode .item-row, body.pro-mode .item-add-row{
+    grid-template-columns: 16px minmax(120px,1fr) 24px 54px 56px 24px 60px 64px 64px 56px 26px 22px 20px;
   }
   .item-row{ padding:8px 0; border-bottom:1px dashed var(--line); }
   .item-edit-name, .item-add-name{ font-weight:600; font-size:13px; min-width:0; }
@@ -206,10 +269,7 @@
      keep the compact single-line grid above. ---------- */
   @media (max-width:720px){
     .item-header-row{ display:none; }
-    .item-row, .item-add-row{
-      display:flex; flex-wrap:wrap; align-items:center; gap:8px;
-      padding:10px 0;
-    }
+    .item-row, .item-add-row{ display:block; padding:12px 14px 11px; }
     /* name always comes first and takes the full line, whatever its DOM position —
        order:-1 puts it ahead of every other child (all left at the default order:0) */
     .item-row > .item-edit-name, .item-add-row > .item-add-name{
@@ -227,9 +287,7 @@
     .item-add-row > .voice-btn, .item-add-row > .qty-calc-btn{ flex:0 0 auto; }
     .item-row > .item-edit-sum{ flex:1 1 auto; margin-left:auto; text-align:right; font-size:14px; }
     .item-row > .item-dup, .item-row > .item-del{ flex:0 0 auto; }
-    .item-add-row > .item-add-btn{
-      flex:0 0 auto; width:38px; height:38px; margin-left:auto;
-    }
+    .item-add-row .item-add-btn{ width:auto; height:40px; }
   }
 
   .section-subtotal{
@@ -289,6 +347,201 @@
   body.tg-app .foot-legal{ display:none; }
 
   /* ---------- toast ---------- */
+  /* ---------- Волна 1: пакеты, опции, сложность, проверка, мастер объекта ---------- */
+  .item-edit-cost, .item-add-cost, .item-header-cost{ display:none; }
+  body.pro-mode .item-edit-cost, body.pro-mode .item-add-cost{ display:block; }
+  body.pro-mode .item-header-cost{ display:inline; }
+  .tier-btn{
+    width:26px; height:22px; border-radius:6px; border:1px solid var(--line); background:var(--surface-2);
+    color:var(--muted); font-family:var(--font); font-size:11px; font-weight:700; cursor:pointer; padding:0;
+    line-height:1; flex-shrink:0;
+  }
+  .tier-btn:hover{ border-color:var(--accent); }
+  .tier-btn[data-tier="opt"]{ background:#E4EBF1; border-color:#3E5C76; color:#2C4A63; }
+  .tier-btn[data-tier="prem"]{ background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .tier-btn[data-tier="add"]{ background:#E2F0E7; border-color:#2F7D55; color:#20623F; }
+  .item-row.tier-add{ opacity:0.82; }
+
+  .pk-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:14px;
+  }
+  .pk-title{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; font-weight:700; color:var(--accent); margin-bottom:10px; }
+  .pk-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .pk-col{ background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:10px; text-align:center; }
+  .pk-col.is-best{ border-color:var(--accent); background:var(--accent-soft); }
+  .pk-col span{ display:block; font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; }
+  .pk-col b{ display:block; font-size:15px; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .pk-add{ margin-top:10px; font-size:12.5px; color:var(--ink-soft); }
+  .pk-add b{ font-variant-numeric:tabular-nums; }
+  .pk-hint{ font-size:11.5px; color:var(--muted); margin-top:8px; line-height:1.45; }
+
+  /* ---------- карточки выбора: условия на объекте и типы объектов ---------- */
+  .pick-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(152px,1fr)); gap:10px; margin-top:10px; }
+  .pick-card{
+    position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+    background:var(--surface); border:1.5px solid var(--line); border-radius:14px; padding:13px 13px 12px;
+    font-family:var(--font); text-align:left; cursor:pointer; color:var(--ink);
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .pick-card:hover{ border-color:var(--accent); }
+  .pick-ico{
+    width:34px; height:34px; border-radius:10px; background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .pick-ico svg{ width:19px; height:19px; stroke:var(--muted); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .pick-title{ font-size:13.5px; font-weight:600; line-height:1.28; }
+  .pick-meta{ font-size:11.5px; color:var(--muted); line-height:1.3; }
+  .pick-badge{
+    position:absolute; top:11px; right:11px; font-size:11px; font-weight:700; color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .pick-card.on{ border-color:var(--accent); background:var(--accent-soft); }
+  .pick-card.on .pick-ico{ background:var(--accent); }
+  .pick-card.on .pick-ico svg{ stroke:#fff; }
+  .pick-card.on .pick-badge{ color:var(--ink); }
+  .pick-card.on .pick-check{
+    position:absolute; top:10px; right:10px; width:18px; height:18px; border-radius:50%;
+    background:var(--accent); display:flex; align-items:center; justify-content:center;
+  }
+  .pick-card.on .pick-check::after{
+    content:""; width:4px; height:8px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg); margin-top:-2px;
+  }
+  .pick-card.on .pick-badge.with-check{ right:34px; }
+  .pick-check{ display:none; }
+  .pick-card--new{ border-style:dashed; align-items:center; justify-content:center; text-align:center; color:var(--accent); }
+  .pick-card--new .pick-ico{ background:var(--accent-soft); }
+  .pick-card--new .pick-ico svg{ stroke:var(--accent); }
+  .pick-card--mine .pick-meta::before{ content:"свой набор · "; color:var(--accent); }
+
+  /* ---------- расход материалов ---------- */
+  .mat-grid{ display:flex; flex-direction:column; gap:8px; margin-top:12px; }
+  .mat-card{
+    display:flex; align-items:flex-start; gap:12px;
+    background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px;
+  }
+  .mat-main{ flex:1; min-width:0; }
+  .mat-name{ font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.3; }
+  .mat-src{ font-size:11.5px; color:var(--muted); line-height:1.4; margin-top:3px; }
+  .mat-qty{ text-align:right; flex-shrink:0; }
+  .mat-qty b{ display:block; font-size:16px; font-variant-numeric:tabular-nums; color:var(--ink); }
+  .mat-qty span{ display:block; font-size:11px; color:var(--accent); font-weight:600; margin-top:2px; white-space:nowrap; }
+  .mat-params{ display:grid; grid-template-columns:repeat(auto-fit,minmax(104px,1fr)); gap:10px; margin-top:10px; }
+  .mat-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .mat-empty{ font-size:13px; color:var(--muted); line-height:1.5; margin-top:12px; }
+
+  /* липкая плашка итога на вкладке «Смета» */
+  .total-bar{ position:sticky; bottom:calc(74px + env(safe-area-inset-bottom, 0px)); z-index:6; box-shadow:0 10px 28px -16px rgba(0,0,0,0.55); }
+
+  .wz-param input::placeholder{ color:var(--muted); font-weight:500; font-size:15px; }
+  .cx-del{
+    position:absolute; bottom:9px; right:9px; width:22px; height:22px; border-radius:7px;
+    border:none; background:var(--surface-2); color:var(--muted); font-size:13px; line-height:1;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .cx-del:hover{ background:var(--accent-soft); color:var(--ink); }
+  .pick-card.on .cx-del{ background:rgba(255,255,255,0.55); }
+  .cx-editor{
+    border:1px dashed var(--accent); border-radius:12px; padding:14px; margin-top:10px; background:var(--surface);
+  }
+  .cx-editor-grid{ display:grid; grid-template-columns:1fr 92px; gap:10px; }
+  .cx-editor-grid .cx-wide{ grid-column:1 / -1; }
+  .cx-seg{ display:flex; gap:6px; margin-top:10px; }
+  .cx-seg button{
+    flex:1; border:1px solid var(--line); background:var(--surface-2); color:var(--ink-soft); border-radius:9px;
+    padding:9px; font-family:var(--font); font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .cx-seg button.on{ background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .cx-editor-actions{ display:flex; gap:8px; margin-top:12px; }
+  .cx-sum{
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-top:12px;
+    padding-top:10px; border-top:1px dashed var(--line); font-size:12.5px; color:var(--muted);
+  }
+  .cx-sum b{ font-size:15px; color:var(--ink); font-variant-numeric:tabular-nums; }
+
+  .addon-card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:14px; }
+  .addon-row{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    padding:8px 0; border-bottom:1px dashed var(--line-2, var(--line));
+  }
+  .addon-row:last-of-type{ border-bottom:none; }
+  .addon-row span{ font-size:13px; color:var(--ink); }
+  .addon-row b{ font-size:13px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .addon-total{ display:flex; justify-content:space-between; gap:10px; margin-top:10px; padding-top:10px; border-top:1px solid var(--line); font-size:13px; }
+  .addon-total b{ color:var(--accent); font-variant-numeric:tabular-nums; }
+
+  .wz-param{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 12px;
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .wz-param span{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); font-weight:700; }
+  .wz-param input{
+    border:none; background:transparent; color:var(--ink); font-family:var(--font); font-size:17px;
+    font-weight:700; padding:0; width:100%; font-variant-numeric:tabular-nums;
+  }
+  .wz-param input:focus{ outline:none; }
+  .wz-param:focus-within{ border-color:var(--accent); }
+  .w1-field{ display:flex; flex-direction:column; gap:5px; margin-top:12px; }
+  .w1-field > span{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); font-weight:700; }
+  .w1-switch{ display:flex; align-items:center; gap:9px; margin-top:12px; font-size:13px; color:var(--ink-soft); cursor:pointer; }
+  .w1-switch input{ width:17px; height:17px; accent-color:var(--accent); }
+
+  .chk-btn{
+    display:flex; align-items:center; justify-content:center; gap:7px; width:100%;
+    background:var(--surface); border:1.5px solid var(--accent); color:var(--ink); border-radius:11px;
+    padding:12px; font-family:var(--font); font-size:13.5px; font-weight:700; cursor:pointer; margin-bottom:12px;
+  }
+  .chk-btn:hover{ background:var(--accent-soft); }
+  .chk-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+  .chk-item{
+    background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:10px; padding:11px 13px;
+  }
+  .chk-item.ok{ border-left-color:#2F7D55; }
+  .chk-item h4{ margin:0 0 3px; font-size:13.5px; font-weight:700; color:var(--ink); }
+  .chk-item p{ margin:0; font-size:12.5px; color:var(--muted); line-height:1.45; }
+  .chk-item button{
+    margin-top:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink-soft);
+    border-radius:8px; padding:6px 11px; font-family:var(--font); font-size:12px; font-weight:600; cursor:pointer;
+  }
+  .chk-item button:hover{ border-color:var(--accent); color:var(--ink); }
+
+  .wz-card{ background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:16px; }
+  .wz-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; }
+  .wz-types{ display:grid; grid-template-columns:repeat(auto-fit,minmax(152px,1fr)); gap:10px; margin-bottom:14px; }
+  .wz-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer; }
+  .wz-toggle{
+    border:none; background:none; color:var(--accent); font-family:var(--font); font-size:12.5px;
+    font-weight:600; cursor:pointer; padding:4px 2px; white-space:nowrap;
+  }
+  .wz-body[hidden]{ display:none; }
+  .wz-editor{ border-top:1px dashed var(--line); margin-top:14px; padding-top:14px; }
+  .wz-picklist{
+    max-height:240px; overflow-y:auto; border:1px solid var(--line); border-radius:10px;
+    background:var(--surface); padding:8px 10px; margin-top:8px;
+  }
+  .wz-pick{ display:flex; align-items:flex-start; gap:8px; padding:5px 0; font-size:13px; color:var(--ink); cursor:pointer; }
+  .wz-pick input{ width:16px; height:16px; accent-color:var(--accent); flex-shrink:0; margin-top:2px; }
+  .wz-editor-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .wz-btn{
+    border:1px solid var(--line); background:var(--surface); color:var(--ink-soft); border-radius:9px;
+    padding:9px 13px; font-family:var(--font); font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .wz-btn:hover{ border-color:var(--accent); color:var(--ink); }
+  .wz-btn--primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .wz-btn--primary:hover{ filter:brightness(1.06); color:#fff; }
+  .wz-saved{ margin-top:12px; display:flex; flex-direction:column; gap:6px; }
+  .wz-saved-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:8px 11px; font-size:12.5px;
+  }
+  .wz-saved-row span{ color:var(--ink); }
+  .wz-saved-row small{ display:block; color:var(--muted); font-size:11px; margin-top:2px; }
+  .wz-del{
+    border:none; background:var(--surface-2); color:var(--muted); border-radius:7px; width:26px; height:26px;
+    cursor:pointer; font-size:14px; line-height:1; flex-shrink:0;
+  }
+  .wz-del:hover{ background:var(--accent-soft); color:var(--ink); }
+
   .toast{
     position:fixed; left:50%; bottom:24px; transform:translate(-50%, 12px);
     background:var(--ink); color:#fff; padding:11px 18px; border-radius:10px; font-size:13px;
@@ -605,7 +858,82 @@
     cursor:pointer; border:1.5px solid var(--line); background:var(--surface); color:var(--ink-soft);
   }
   .sched-mode-btn.active{ background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
-  .sched-stages-list{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+  .sched-stages-list{ display:flex; flex-direction:column; gap:10px; margin:12px 0; }
+
+  /* ---------- график работ v2 ---------- */
+  .gx-settings{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:14px; }
+  .gx-seg{ display:flex; gap:6px; }
+  .gx-seg button{
+    flex:1; border:1px solid var(--line); background:var(--surface); color:var(--ink-soft); border-radius:9px;
+    padding:9px 6px; font-family:var(--font); font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .gx-seg button.on{ background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .gx-check{ display:flex; align-items:center; gap:9px; font-size:13px; color:var(--ink-soft); cursor:pointer; }
+  .gx-check input{ width:17px; height:17px; accent-color:var(--accent); }
+
+  .gx-summary{ display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:10px; margin-bottom:14px; }
+  .gx-stat{ background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:10px 12px; }
+  .gx-stat b{ display:block; font-size:16px; font-variant-numeric:tabular-nums; color:var(--ink); }
+  .gx-stat span{ font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; }
+  .gx-warn{
+    background:#FBEAD2; border:1px solid var(--accent); border-radius:11px; padding:11px 13px;
+    font-size:12.5px; color:var(--ink); line-height:1.45; margin-bottom:12px;
+  }
+
+  .gx-chart{ border:1px solid var(--line); border-radius:12px; background:var(--surface); padding:12px 12px 8px; overflow:hidden; }
+  .gx-axis{ position:relative; height:20px; margin-left:118px; border-bottom:1px solid var(--line); }
+  .gx-tick{ position:absolute; top:0; bottom:0; border-left:1px dashed var(--line); padding-left:4px; }
+  .gx-tick:last-child{ padding-left:0; }
+  .gx-tick span{ font-size:9.5px; color:var(--muted); white-space:nowrap; }
+  .gx-rows{ position:relative; margin-top:6px; }
+  .gx-row{ display:flex; align-items:center; gap:8px; padding:4px 0; }
+  .gx-label{
+    flex:0 0 110px; max-width:110px; font-size:11.5px; font-weight:600; color:var(--ink); line-height:1.25;
+    overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  }
+  .gx-track{ position:relative; flex:1; height:22px; background:var(--surface-2); border-radius:6px; overflow:hidden; }
+  .gx-bar{ position:absolute; top:3px; bottom:3px; border-radius:5px; background:#8FA8BD; min-width:5px; }
+  .gx-bar.is-critical{ background:var(--accent); }
+  .gx-bar.is-late{ background:#C0574A; }
+  .gx-bar i{ position:absolute; left:0; top:0; bottom:0; background:rgba(0,0,0,0.28); border-radius:5px 0 0 5px; }
+  .gx-ms{ position:absolute; top:4px; width:14px; height:14px; background:var(--ink); transform:rotate(45deg); border-radius:2px; }
+  .gx-today{ position:absolute; top:0; bottom:0; width:2px; background:#C0574A; z-index:2; }
+  .gx-legend{ display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; font-size:11px; color:var(--muted); }
+  .gx-legend i{ display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:5px; vertical-align:-1px; }
+
+  .sc-card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .sc-card.is-critical{ border-left:3px solid var(--accent); }
+  .sc-card.is-ms{ border-style:dashed; }
+  .sc-head{ display:flex; align-items:center; gap:10px; }
+  .sc-title{
+    flex:1; min-width:0; border:none; background:transparent; font-family:var(--font);
+    font-size:14.5px; font-weight:600; color:var(--ink); padding:3px 0;
+  }
+  .sc-title:focus{ outline:none; border-bottom:1.5px solid var(--accent); }
+  .sc-dates{ font-size:11.5px; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .sc-fields{ display:grid; grid-template-columns:repeat(auto-fit,minmax(108px,1fr)); gap:8px 10px; margin-top:10px; }
+  .sc-f{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .sc-f > span{ font-size:9.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .sc-f .f-input{ font-size:13.5px; padding:8px 9px; }
+  .sc-f--wide{ grid-column:1 / -1; }
+  .sc-foot{ display:flex; align-items:center; gap:8px; margin-top:10px; padding-top:9px; border-top:1px dashed var(--line); flex-wrap:wrap; }
+  .sc-badge{ font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--accent-soft); color:var(--ink); }
+  .sc-badge--late{ background:#F6DCD7; color:#8C2F22; }
+  .sc-badge--soft{ background:var(--surface-2); color:var(--muted); font-weight:600; }
+  .sc-extra{ margin-top:8px; padding-top:10px; border-top:1px dashed var(--line); }
+  .sc-extra[hidden]{ display:none; }
+  .sc-spacer{ flex:1; }
+  .sc-btn{
+    border:1px solid var(--line); background:var(--surface-2); color:var(--ink-soft); border-radius:8px;
+    padding:6px 10px; font-family:var(--font); font-size:12px; font-weight:600; cursor:pointer;
+  }
+  .sc-btn:hover{ border-color:var(--accent); color:var(--ink); }
+  /* в печатном бланке display:flex перебивал атрибут hidden — итоговая
+     плашка и подписи лезли в PDF графика и в акт приёмки */
+  .print-sheet [hidden]{ display:none !important; }
+  .gx-keydates{ display:flex; flex-direction:column; gap:7px; margin-top:6px; }
+  .gx-key{ display:flex; justify-content:space-between; gap:10px; font-size:12.5px; padding:8px 11px; background:var(--surface-2); border-radius:9px; }
+  .gx-key b{ white-space:nowrap; font-variant-numeric:tabular-nums; }
 
   /* ---------- автоматический график под срок ---------- */
   .sched-fit{
@@ -1007,17 +1335,35 @@
           <div id="schedFitSummary" class="sched-fit-summary"></div>
           <div class="ct-hint" style="margin-top:8px;">Длительность каждого этапа считается по объёмам из сметы и средним нормам выработки (ЕНиР и практика) с учётом размера бригады, а между зависимыми этапами добавляются технологические перерывы — сушка штукатурки и стяжки, набор прочности бетона, опрессовка. Перерывы нельзя ускорить бригадой: если срок задан слишком жёстко, приложение скажет, сколько людей реально нужно. После расчёта любой этап можно поправить вручную.</div>
         </div>
-        <div class="req-group-title" style="margin-top:14px;">Наглядно — какие этапы идут смежно/параллельно</div>
-        <div id="schedGanttChart"></div>
-        <div class="req-group-title" style="margin-top:6px;">Список этапов — редактирование</div>
-        <div class="ct-hint">У каждого этапа есть «начало, день от старта» — если хотите, чтобы два этапа шли параллельно, поставьте им одинаковое начало.</div>
+        <div class="req-group-title" style="margin-top:16px;">Календарь работ</div>
+        <div class="gx-settings">
+          <div class="gx-seg" id="gxWeekSeg">
+            <button type="button" data-week="5" class="on">5 дней</button>
+            <button type="button" data-week="6">6 дней</button>
+            <button type="button" data-week="7">7 дней</button>
+          </div>
+          <label class="gx-check"><input type="checkbox" id="gxHolidays" checked> Учитывать праздники РФ</label>
+        </div>
+        <div id="gxSummary" class="gx-summary"></div>
+        <div id="gxWarn"></div>
+        <div id="schedGanttChart" class="gx-chart"></div>
+        <div class="req-group-title" style="margin-top:16px;">Ключевые даты — вехи и завоз материалов</div>
+        <div id="gxKeyDates" class="gx-keydates"></div>
+        <div class="req-group-title" style="margin-top:16px;">Этапы работ</div>
+        <div class="ct-hint">Длительность — в рабочих днях. «После этапа» связывает этапы: сдвинули один — поехали все следующие. «Перерыв» — технологическая пауза (сушка, набор прочности), она идёт календарными днями.</div>
         <div id="schedStagesList" class="sched-stages-list"></div>
-        <button type="button" id="schedAddStageBtn" class="add-section-btn" style="margin-bottom:0;" hidden>
+        <button type="button" id="schedAddStageBtn" class="add-section-btn" style="margin-bottom:0;">
           <svg viewBox="0 0 24 24" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Добавить этап
         </button>
+        <button type="button" id="schedAddMilestoneBtn" class="add-section-btn" style="margin-bottom:0; margin-top:8px;">
+          ◆ Добавить веху (контрольную точку)
+        </button>
         <button type="button" id="schedGeneratePdf" class="add-section-btn" style="margin-bottom:0; margin-top:8px;">
           📅 Скачать график работ (PDF)
+        </button>
+        <button type="button" id="schedGenerateXlsx" class="add-section-btn" style="margin-bottom:0; margin-top:8px;">
+          📊 Скачать график в Excel
         </button>
       </div>
     </details>
@@ -3038,6 +3384,8 @@
       vatRate: 0,
       currency: "RUB",
       status: "none",
+      complexity: [],
+      validDays: 0,
       history: []
     };
   }
@@ -3125,6 +3473,12 @@
     // total for the item and is NOT multiplied by quantity/area
     return itemWorkAmount(it) + itemMaterialAmount(it);
   }
+  var TIER_LABEL = { base: "Б", opt: "О", prem: "П", add: "+" };
+  var TIER_NAME = { base: "Базовый", opt: "Оптимальный", prem: "Премиум", add: "Опция для заказчика" };
+  var TIER_ORDER = ["base", "opt", "prem", "add"];
+  var TIER_TITLE = "Пакет позиции: Б — базовый, О — оптимальный, П — премиум, + — опция, которую заказчик может добавить. Нажимайте, чтобы переключить.";
+  function itemTier(it){ return (it && it.tier && TIER_LABEL[it.tier]) ? it.tier : "base"; }
+  function isAddOn(it){ return itemTier(it) === "add"; }
   function sectionTotal(sec){ return sec.items.reduce((s, it) => s + itemSum(it), 0); }
   function estimateSubtotal(est){ return est.sections.reduce((s, sec) => s + sectionTotal(sec), 0); }
   function estimateWorkSubtotal(est){
@@ -3383,6 +3737,7 @@
     renderEstimatesPanel();
     fillEstimateFieldsFromActive();
     renderSections();
+    try { initSchedule(); } catch(e){}
   }
 
   const estListEl = document.getElementById("estList");
@@ -3723,7 +4078,9 @@
         '<span></span>' +
         '<span class="item-header-price">Работа/ед.</span>' +
         '<span class="item-header-material">Материал</span>' +
+        '<span class="item-header-cost">Себест-ть</span>' +
         '<span class="item-header-sum">Сумма</span>' +
+        '<span></span>' +
         '<span></span>' +
         '<span></span>' +
       '</div>'
@@ -3747,17 +4104,24 @@
           itemHeaderRowHTML() +
           '<div class="section-items">' + itemsHTML + '</div>' +
           '<div class="item-add-row">' +
-            '<span></span>' +
-            '<input class="f-input item-add-name" data-sid="' + sec.id + '" type="text" placeholder="Наименование работ">' +
-            (voiceSupported ? '<button type="button" class="voice-btn" data-sid="' + sec.id + '" data-role="add" aria-label="Голосовой ввод">🎤</button>' : '<span></span>') +
-            '<select class="f-input item-add-unit" data-sid="' + sec.id + '">' + unitOptionsHTML() + '</select>' +
-            '<input class="f-input item-add-qty" data-sid="' + sec.id + '" type="number" min="0" step="0.1" placeholder="Кол-во">' +
-            '<button type="button" class="qty-calc-btn" data-sid="' + sec.id + '" data-role="add" aria-label="Калькулятор количества" title="Калькулятор количества">🧮</button>' +
-            '<input class="f-input item-add-price" data-sid="' + sec.id + '" type="number" min="0" step="1" placeholder="Работа/ед.">' +
-            '<input class="f-input item-add-material" data-sid="' + sec.id + '" type="number" min="0" step="1" placeholder="Материал">' +
-            '<button type="button" class="item-add-btn" data-sid="' + sec.id + '" aria-label="Добавить позицию">' +
-              '<svg viewBox="0 0 24 24" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
-            '</button>' +
+            '<div class="ir-head">' +
+              '<input class="f-input item-add-name" data-sid="' + sec.id + '" type="text" placeholder="Новая позиция — наименование работ">' +
+              (voiceSupported ? '<button type="button" class="voice-btn" data-sid="' + sec.id + '" data-role="add" aria-label="Голосовой ввод">🎤</button>' : '') +
+            '</div>' +
+            '<div class="ir-fields">' +
+              '<label class="ir-f"><span>Кол-во</span><input class="f-input item-add-qty" data-sid="' + sec.id + '" type="number" min="0" step="0.1" placeholder="0"></label>' +
+              '<label class="ir-f"><span>Ед. изм.</span><select class="f-input item-add-unit" data-sid="' + sec.id + '">' + unitOptionsHTML() + '</select></label>' +
+              '<label class="ir-f"><span>Работа, ₽/ед.</span><input class="f-input item-add-price" data-sid="' + sec.id + '" type="number" min="0" step="1" placeholder="0"></label>' +
+              '<label class="ir-f"><span>Материал, ₽</span><input class="f-input item-add-material" data-sid="' + sec.id + '" type="number" min="0" step="1" placeholder="0"></label>' +
+              '<label class="ir-f ir-f--cost"><span>Себест-ть, ₽</span><input class="f-input item-add-cost" data-sid="' + sec.id + '" type="number" min="0" step="1" placeholder="0"></label>' +
+            '</div>' +
+            '<div class="ir-add-actions">' +
+              '<button type="button" class="qty-calc-btn" data-sid="' + sec.id + '" data-role="add" aria-label="Калькулятор количества" title="Калькулятор количества">🧮</button>' +
+              '<button type="button" class="item-add-btn" data-sid="' + sec.id + '" aria-label="Добавить позицию">' +
+                '<svg viewBox="0 0 24 24" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+                'Добавить позицию' +
+              '</button>' +
+            '</div>' +
           '</div>' +
         '</div>' +
         (freqOptions ? (
@@ -3791,18 +4155,27 @@
     // placeholder <span> holds that grid column instead of removing it outright, so
     // every row keeps identical column widths and nothing ever shifts or wraps
     return (
-      '<div class="item-row" data-sid="' + sec.id + '" data-idx="' + i + '">' +
-        '<span class="drag-handle item-drag-handle" draggable="true" title="Перетащить позицию">⠿</span>' +
-        '<input class="f-input item-edit-name" data-sid="' + sec.id + '" data-idx="' + i + '" type="text" value="' + escAttr(it.name) + '" placeholder="Наименование работ">' +
-        (voiceSupported ? '<button type="button" class="voice-btn" data-sid="' + sec.id + '" data-role="edit" data-idx="' + i + '" aria-label="Голосовой ввод">🎤</button>' : '<span></span>') +
-        '<select class="f-input item-edit-unit" data-sid="' + sec.id + '" data-idx="' + i + '">' + unitOptionsHTML(it.unit) + '</select>' +
-        '<input class="f-input item-edit-qty" data-sid="' + sec.id + '" data-idx="' + i + '" type="number" min="0" step="0.1" value="' + (isFix ? "" : (it.qty || "")) + '" ' + (isFix ? "disabled" : "") + ' placeholder="' + (isFix ? "—" : "Кол-во") + '">' +
-        (isFix ? '<span></span>' : '<button type="button" class="qty-calc-btn" data-sid="' + sec.id + '" data-role="edit" data-idx="' + i + '" aria-label="Калькулятор количества" title="Калькулятор количества">🧮</button>') +
-        '<input class="f-input item-edit-price" data-sid="' + sec.id + '" data-idx="' + i + '" type="number" min="0" step="1" value="' + (it.priceWork || "") + '" placeholder="Работа/ед.">' +
-        '<input class="f-input item-edit-material" data-sid="' + sec.id + '" data-idx="' + i + '" type="number" min="0" step="1" value="' + (it.priceMaterial || "") + '" placeholder="Материал">' +
-        '<span class="item-edit-sum" data-sid="' + sec.id + '" data-idx="' + i + '">' + fmtMoney(itemSum(it), currency) + '</span>' +
-        '<button type="button" class="item-dup" data-sid="' + sec.id + '" data-idx="' + i + '" aria-label="Дублировать позицию" title="Дублировать позицию">⧉</button>' +
+      '<div class="item-row' + (itemTier(it) === "add" ? " tier-add" : "") + '" data-sid="' + sec.id + '" data-idx="' + i + '">' +
+        '<div class="ir-head">' +
+          '<input class="f-input item-edit-name" data-sid="' + sec.id + '" data-idx="' + i + '" type="text" value="' + escAttr(it.name) + '" placeholder="Наименование работ">' +
+        '</div>' +
+        '<div class="ir-fields">' +
+          '<label class="ir-f"><span>Кол-во</span><input class="f-input item-edit-qty" data-sid="' + sec.id + '" data-idx="' + i + '" type="number" min="0" step="0.1" value="' + (isFix ? "" : (it.qty || "")) + '" ' + (isFix ? "disabled" : "") + ' placeholder="' + (isFix ? "—" : "0") + '"></label>' +
+          '<label class="ir-f"><span>Ед. изм.</span><select class="f-input item-edit-unit" data-sid="' + sec.id + '" data-idx="' + i + '">' + unitOptionsHTML(it.unit) + '</select></label>' +
+          '<label class="ir-f"><span>Работа, ₽/ед.</span><input class="f-input item-edit-price" data-sid="' + sec.id + '" data-idx="' + i + '" type="number" min="0" step="1" value="' + (it.priceWork || "") + '" placeholder="0"></label>' +
+          '<label class="ir-f"><span>Материал, ₽</span><input class="f-input item-edit-material" data-sid="' + sec.id + '" data-idx="' + i + '" type="number" min="0" step="1" value="' + (it.priceMaterial || "") + '" placeholder="0"></label>' +
+          '<label class="ir-f ir-f--cost"><span>Себест-ть, ₽</span><input class="f-input item-edit-cost" data-sid="' + sec.id + '" data-idx="' + i + '" type="number" min="0" step="1" value="' + (it.cost || "") + '" placeholder="0"></label>' +
+        '</div>' +
+        '<div class="ir-actions">' +
+          '<span class="drag-handle item-drag-handle" draggable="true" title="Перетащить позицию">⠿</span>' +
+          (voiceSupported ? '<button type="button" class="voice-btn" data-sid="' + sec.id + '" data-role="edit" data-idx="' + i + '" aria-label="Голосовой ввод">🎤</button>' : '') +
+          (isFix ? '' : '<button type="button" class="qty-calc-btn" data-sid="' + sec.id + '" data-role="edit" data-idx="' + i + '" aria-label="Калькулятор количества" title="Калькулятор количества">🧮</button>') +
+          '<span class="ir-spacer"></span>' +
+          '<span class="item-edit-sum" data-sid="' + sec.id + '" data-idx="' + i + '">' + fmtMoney(itemSum(it), currency) + '</span>' +
+          '<button type="button" class="tier-btn" data-sid="' + sec.id + '" data-idx="' + i + '" data-tier="' + itemTier(it) + '" title="' + escAttr(TIER_TITLE) + '">' + TIER_LABEL[itemTier(it)] + '</button>' +
+          '<button type="button" class="item-dup" data-sid="' + sec.id + '" data-idx="' + i + '" aria-label="Дублировать позицию" title="Дублировать позицию">⧉</button>' +
         '<button type="button" class="item-del" data-sid="' + sec.id + '" data-idx="' + i + '" aria-label="Удалить позицию">×</button>' +
+        '</div>' +
       '</div>'
     );
   }
@@ -4081,6 +4454,10 @@
       it.priceMaterial = parseFloat(e.target.value) || 0;
       saveEstimates();
       refreshItemRowUI(sid, idx);
+    } else if (e.target.classList.contains("item-edit-cost")){
+      it.cost = parseFloat(e.target.value) || 0;
+      saveEstimates();
+      renderTotals();
     }
   });
 
@@ -5421,88 +5798,391 @@
   document.getElementById("manualSearch").addEventListener("input", e => renderManualPanel(e.target.value));
 
   /* =====================================================================
-     ГРАФИК РАБОТ — из текущей сметы или с нуля, с материалами по этапам.
+     ГРАФИК РАБОТ v2 — рабочие дни и праздники, связи между этапами,
+     критический путь, факт выполнения, вехи, поставки, ресурсы, платежи.
      ===================================================================== */
   let scheduleMode = "fromEstimate";
-  let currentSchedule = { stages: [] }; // { title, days, materials, startOffset }
+  let currentSchedule = { stages: [], workWeek: 5, holidays: true };
 
-  // каждый этап хранит явное «начало, день от старта» (startOffset) вместо жёсткой
-  // последовательной цепочки — так можно поставить двум этапам одинаковое начало,
-  // чтобы показать, что они идут параллельно/смежно
-  function computeScheduleDates(){
-    const start = document.getElementById("schedStartDate").value || todayISO();
-    const startDate = new Date(start);
-    return currentSchedule.stages.map(st => {
-      const offset = Math.max(0, parseInt(st.startOffset, 10) || 0);
-      const days = Math.max(1, parseInt(st.days, 10) || 1);
-      const from = new Date(startDate); from.setDate(from.getDate() + offset);
-      const to = new Date(from); to.setDate(to.getDate() + days - 1);
-      return Object.assign({}, st, { offset, days, from: from.toISOString().slice(0,10), to: to.toISOString().slice(0,10) });
+  // нерабочие праздничные дни РФ (месяц-день); переносы выходных не учитываем
+  var RU_HOLIDAYS = ["01-01","01-02","01-03","01-04","01-05","01-06","01-07","01-08",
+                     "02-23","03-08","05-01","05-09","06-12","11-04"];
+  function dISO(d){ return d.toISOString().slice(0, 10); }
+  function dParse(s){ var p = (s || todayISO()).split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function mmdd(d){
+    var m = String(d.getMonth() + 1).padStart(2, "0"), dd = String(d.getDate()).padStart(2, "0");
+    return m + "-" + dd;
+  }
+  function isWorkDay(d){
+    var wd = d.getDay();
+    if (currentSchedule.workWeek === 5 && (wd === 0 || wd === 6)) return false;
+    if (currentSchedule.workWeek === 6 && wd === 0) return false;
+    if (currentSchedule.holidays && RU_HOLIDAYS.indexOf(mmdd(d)) >= 0) return false;
+    return true;
+  }
+  function nextWorkDay(d){
+    var x = new Date(d), guard = 0;
+    while (!isWorkDay(x) && guard++ < 400){ x.setDate(x.getDate() + 1); }
+    return x;
+  }
+  function addWorkDays(start, n){
+    var d = new Date(start), count = 1, guard = 0;
+    while (count < n && guard++ < 4000){
+      d.setDate(d.getDate() + 1);
+      if (isWorkDay(d)) count++;
+    }
+    return d;
+  }
+  function prevWorkDay(d){
+    var x = new Date(d), guard = 0;
+    while (!isWorkDay(x) && guard++ < 400){ x.setDate(x.getDate() - 1); }
+    return x;
+  }
+  function daysBetween(a, b){ return Math.round((dParse(b) - dParse(a)) / 86400000); }
+  /* дата завоза материалов: за N календарных дней до старта этапа, но не в выходной */
+  function deliveryDateFor(r){
+    var d = dParse(r.from);
+    d.setDate(d.getDate() - (parseInt(r.delivery, 10) || 0));
+    return dISO(prevWorkDay(d));
+  }
+  /* запас считаем В РАБОЧИХ днях: выходные между этапами запасом не являются */
+  function workDaysBetween(a, b){
+    if (b <= a) return 0;
+    var d = dParse(a), end = dParse(b), n = 0, guard = 0;
+    while (d < end && guard++ < 4000){
+      d.setDate(d.getDate() + 1);
+      if (isWorkDay(d)) n++;
+    }
+    return n;
+  }
+  function schedStartDate(){
+    var v = document.getElementById("schedStartDate").value || todayISO();
+    return nextWorkDay(dParse(v));
+  }
+  function newStage(patch){
+    return Object.assign({
+      id: uid(), title: "Новый этап", days: 3, after: null, lag: 0, crew: 2,
+      progress: 0, milestone: false, delivery: 0, materials: "", pay: 0
+    }, patch || {});
+  }
+
+  /* --- прямой и обратный проход: даты, критический путь, нагрузка --- */
+  function computeSchedule(){
+    var stages = currentSchedule.stages;
+    var byId = {}; stages.forEach(function(s){ byId[s.id] = s; });
+    var start0 = schedStartDate();
+    var calc = {}, guard = 0;
+    while (Object.keys(calc).length < stages.length && guard++ < 200){
+      stages.forEach(function(s){
+        if (calc[s.id]) return;
+        var st;
+        if (!s.after || !byId[s.after] || s.after === s.id){
+          st = new Date(start0);
+        } else {
+          var p = calc[s.after];
+          if (!p) return;
+          st = dParse(p.to);
+          st.setDate(st.getDate() + 1 + (parseInt(s.lag, 10) || 0));
+          st = nextWorkDay(st);
+        }
+        var days = s.milestone ? 0 : Math.max(1, parseInt(s.days, 10) || 1);
+        var fin = s.milestone ? new Date(st) : addWorkDays(st, days);
+        calc[s.id] = { from: dISO(st), to: dISO(fin), days: days };
+      });
+    }
+    // этапы с неразрешимой связью (цикл) считаем от старта
+    stages.forEach(function(s){
+      if (!calc[s.id]){
+        var days = s.milestone ? 0 : Math.max(1, parseInt(s.days, 10) || 1);
+        calc[s.id] = { from: dISO(start0), to: dISO(s.milestone ? start0 : addWorkDays(start0, days)), days: days };
+      }
     });
+
+    var rows = stages.map(function(s){ return Object.assign({}, s, calc[s.id]); });
+    if (!rows.length) return { rows: [], from: dISO(start0), to: dISO(start0), span: 1, load: {}, payments: [], keydates: [] };
+
+    var projTo = rows.reduce(function(m, r){ return r.to > m ? r.to : m; }, rows[0].to);
+    var projFrom = rows.reduce(function(m, r){ return r.from < m ? r.from : m; }, rows[0].from);
+
+    // обратный проход: поздний финиш и запас
+    var succ = {};
+    rows.forEach(function(r){ if (r.after) (succ[r.after] = succ[r.after] || []).push(r); });
+    var order = rows.slice().sort(function(a, b){ return a.to === b.to ? (a.from < b.from ? 1 : -1) : (a.to < b.to ? 1 : -1); });
+    var late = {};
+    order.forEach(function(r){
+      var ss = succ[r.id] || [];
+      if (!ss.length){ late[r.id] = projTo; return; }
+      var m = null;
+      ss.forEach(function(x){
+        var lf = daysBetween(projFrom, x.from) - 1 - (parseInt(x.lag, 10) || 0);
+        if (m === null || lf < m) m = lf;
+      });
+      var d = dParse(projFrom); d.setDate(d.getDate() + m);
+      late[r.id] = dISO(prevWorkDay(d));
+    });
+    var today = todayISO();
+    rows.forEach(function(r){
+      r.slack = workDaysBetween(r.to, late[r.id] || projTo);
+      r.critical = r.slack <= 0;
+      r.late = (r.to < today) && ((parseInt(r.progress, 10) || 0) < 100);
+    });
+
+    // нагрузка по людям
+    var limit = Math.max(1, parseInt((document.getElementById("schedCrew") || {}).value, 10) || 4);
+    var span = daysBetween(projFrom, projTo) + 1;
+    var maxLoad = 0, overDays = 0, peakDate = "";
+    for (var i = 0; i < span; i++){
+      var d = dParse(projFrom); d.setDate(d.getDate() + i);
+      if (!isWorkDay(d)) continue;
+      var iso = dISO(d), load = 0;
+      rows.forEach(function(r){ if (!r.milestone && r.from <= iso && iso <= r.to) load += Math.max(0, parseInt(r.crew, 10) || 0); });
+      if (load > maxLoad){ maxLoad = load; peakDate = iso; }
+      if (load > limit) overDays++;
+    }
+
+    // платежи и ключевые даты
+    var payments = rows.filter(function(r){ return (parseFloat(r.pay) || 0) > 0; })
+      .map(function(r){ return { title: r.title, date: r.to, sum: parseFloat(r.pay) || 0 }; })
+      .sort(function(a, b){ return a.date < b.date ? -1 : 1; });
+    var keydates = [];
+    rows.forEach(function(r){
+      if (r.milestone) keydates.push({ type: "ms", title: r.title, date: r.from });
+      if ((parseInt(r.delivery, 10) || 0) > 0){
+        keydates.push({ type: "delivery", title: "Завоз: " + (r.materials || r.title), date: deliveryDateFor(r), stage: r.title });
+      }
+    });
+    keydates.sort(function(a, b){ return a.date < b.date ? -1 : 1; });
+
+    var workDays = 0;
+    for (var k = 0; k < span; k++){
+      var dd = dParse(projFrom); dd.setDate(dd.getDate() + k);
+      if (isWorkDay(dd)) workDays++;
+    }
+    var doneW = 0, totalW = 0;
+    rows.forEach(function(r){
+      if (r.milestone) return;
+      totalW += r.days; doneW += r.days * (Math.min(100, Math.max(0, parseInt(r.progress, 10) || 0)) / 100);
+    });
+
+    return {
+      rows: rows, from: projFrom, to: projTo, span: span, workDays: workDays,
+      calDays: span, progress: totalW ? Math.round(doneW / totalW * 100) : 0,
+      load: { max: maxLoad, limit: limit, overDays: overDays, peakDate: peakDate },
+      payments: payments, keydates: keydates
+    };
+  }
+
+  /* --- диаграмма со шкалой времени --- */
+  function renderGanttHTML(plan, print){
+    if (!plan.rows.length) return '<div class="obj-empty">Этапов пока нет</div>';
+    var C = print
+      ? { bar: "#8FA8BD", crit: "#E8890C", late: "#C0574A", track: "#EFEFEF", ink: "#1A1A1A", muted: "#8A8A8A", line: "#DDDDDD", ms: "#1A1A1A" }
+      : null;
+    var span = Math.max(1, plan.span);
+    var pos = function(iso){ return daysBetween(plan.from, iso) / span * 100; };
+    var wide = span > 70;
+    var ticks = [];
+    var d = dParse(plan.from);
+    if (wide){
+      d.setDate(1);
+      if (dISO(d) < plan.from) { d.setMonth(d.getMonth() + 1); }
+      while (dISO(d) <= plan.to){
+        ticks.push({ p: pos(dISO(d)), label: d.toLocaleDateString("ru-RU", { month: "short", year: "2-digit" }) });
+        d.setMonth(d.getMonth() + 1);
+      }
+    } else {
+      while (d.getDay() !== 1) d.setDate(d.getDate() + 1);
+      while (dISO(d) <= plan.to){
+        ticks.push({ p: pos(dISO(d)), label: formatDateRu(dISO(d)).slice(0, 5) });
+        d.setDate(d.getDate() + 7);
+      }
+    }
+    var today = todayISO();
+    var todayP = (today >= plan.from && today <= plan.to) ? pos(today) : null;
+
+    var axis = '<div class="gx-axis"' + (print ? ' style="border-bottom:1px solid ' + C.line + ';"' : '') + '>' +
+      ticks.map(function(t){
+        var flip = t.p > 86;
+        var sp = 'style="' + (flip ? 'position:absolute;right:4px;bottom:1px;' : '') + (print ? 'color:' + C.muted + ';' : '') + '"';
+        return '<div class="gx-tick" style="left:' + t.p.toFixed(2) + '%;' + (print ? 'border-left:1px dashed ' + C.line + ';' : '') + '">' +
+          '<span ' + sp + '>' + esc(t.label) + '</span></div>';
+      }).join("") + '</div>';
+
+    var rows = plan.rows.map(function(r){
+      var left = pos(r.from);
+      var width = Math.max(1.2, (daysBetween(r.from, r.to) + 1) / span * 100);
+      var prog = Math.min(100, Math.max(0, parseInt(r.progress, 10) || 0));
+      var cls = r.late ? "is-late" : (r.critical ? "is-critical" : "");
+      var barColor = print ? (r.late ? C.late : (r.critical ? C.crit : C.bar)) : "";
+      var body = r.milestone
+        ? '<div class="gx-ms" style="left:calc(' + left.toFixed(2) + '% - 7px);' + (print ? 'background:' + C.ms + ';' : '') + '"></div>'
+        : '<div class="gx-bar ' + cls + '" style="left:' + left.toFixed(2) + '%;width:' + width.toFixed(2) + '%;' + (print ? 'background:' + barColor + ';' : '') + '">' +
+            (prog > 0 ? '<i style="width:' + prog + '%;"></i>' : '') + '</div>';
+      return '<div class="gx-row">' +
+        '<div class="gx-label"' + (print ? ' style="color:' + C.ink + ';"' : '') + '>' + esc(r.title || "Этап") + '</div>' +
+        '<div class="gx-track"' + (print ? ' style="background:' + C.track + ';"' : '') + '>' + body + '</div>' +
+        '</div>';
+    }).join("");
+
+    var todayLine = (todayP !== null && !print)
+      ? '<div class="gx-today" style="left:calc(118px + (100% - 118px) * ' + (todayP / 100).toFixed(4) + ');"></div>' : '';
+
+    var legend = '<div class="gx-legend"' + (print ? ' style="color:' + C.muted + ';"' : '') + '>' +
+      '<span><i style="background:' + (print ? C.crit : "var(--accent)") + ';"></i>критический путь</span>' +
+      '<span><i style="background:' + (print ? C.bar : "#8FA8BD") + ';"></i>есть запас по срокам</span>' +
+      '<span><i style="background:' + (print ? C.late : "#C0574A") + ';"></i>просрочено</span>' +
+      '<span><i style="background:' + (print ? C.ms : "var(--ink)") + ';transform:rotate(45deg);"></i>веха</span>' +
+      '<span><i style="background:' + (print ? C.crit : "var(--accent)") + ';position:relative;overflow:hidden;">' +
+        '<b style="display:block;width:60%;height:100%;background:rgba(0,0,0,0.28);"></b></i>выполненная часть</span>' +
+      '</div>';
+
+    return axis + '<div class="gx-rows" style="position:relative;">' + todayLine + rows + '</div>' + legend;
+  }
+
+  /* --- сводка, предупреждения, ключевые даты --- */
+  function renderScheduleSummary(plan){
+    var el = document.getElementById("gxSummary");
+    if (!el) return;
+    if (!plan.rows.length){ el.innerHTML = ""; document.getElementById("gxWarn").innerHTML = ""; return; }
+    el.innerHTML =
+      '<div class="gx-stat"><b>' + plan.workDays + '</b><span>рабочих дней</span></div>' +
+      '<div class="gx-stat"><b>' + plan.calDays + '</b><span>календарных</span></div>' +
+      '<div class="gx-stat"><b>' + esc(formatDateRu(plan.to)) + '</b><span>окончание</span></div>' +
+      '<div class="gx-stat"><b>' + plan.progress + '%</b><span>выполнено</span></div>';
+    var warns = [];
+    if (plan.load.max > plan.load.limit){
+      warns.push("В пик нужно <b>" + plan.load.max + " чел.</b> одновременно (" + esc(formatDateRu(plan.load.peakDate)) +
+        "), а бригада — " + plan.load.limit + ". Перегрузка держится " + plan.load.overDays + " дн.: либо добавьте людей, либо разведите этапы.");
+    }
+    var lateRows = plan.rows.filter(function(r){ return r.late; });
+    if (lateRows.length){
+      warns.push("Просрочено этапов: <b>" + lateRows.length + "</b> — " + esc(lateRows.map(function(r){ return r.title; }).slice(0, 3).join(", ")) + ".");
+    }
+    document.getElementById("gxWarn").innerHTML = warns.length ? '<div class="gx-warn">' + warns.join("<br>") + '</div>' : "";
+
+    var kd = document.getElementById("gxKeyDates");
+    if (kd){
+      var items = plan.keydates.slice();
+      plan.payments.forEach(function(p){ items.push({ type: "pay", title: "Платёж: " + p.title, date: p.date, sum: p.sum }); });
+      items.sort(function(a, b){ return a.date < b.date ? -1 : 1; });
+      kd.innerHTML = items.length ? items.map(function(k){
+        var icon = k.type === "ms" ? "◆" : (k.type === "delivery" ? "🚚" : "₽");
+        var right = k.type === "pay" ? fmtMoney(k.sum, getActive().currency) : formatDateRu(k.date);
+        return '<div class="gx-key"><span>' + icon + " " + esc(k.title) + (k.type === "pay" ? " · " + esc(formatDateRu(k.date)) : "") + '</span><b>' + esc(right) + '</b></div>';
+      }).join("") : '<div class="ct-hint">Пока пусто. Отметьте этап вехой или укажите, за сколько дней до этапа завозить материалы — даты появятся здесь.</div>';
+    }
+  }
+
+  /* --- карточки этапов --- */
+  function renderSchedulePanel(){
+    var plan = computeSchedule();
+    document.getElementById("schedGanttChart").innerHTML = renderGanttHTML(plan, false);
+    renderScheduleSummary(plan);
+    var opts = function(st){
+      return '<option value="">— от старта —</option>' + currentSchedule.stages
+        .filter(function(x){ return x.id !== st.id; })
+        .map(function(x){ return '<option value="' + escAttr(x.id) + '"' + (st.after === x.id ? " selected" : "") + '>' + esc(x.title || "Этап") + '</option>'; })
+        .join("");
+    };
+    /* когда блок свёрнут — коротко напоминаем, что в нём заполнено */
+    var scSummaryChips = function(r){
+      var p = [];
+      if ((parseInt(r.lag, 10) || 0) > 0) p.push("пауза " + r.lag + " дн.");
+      if ((parseFloat(r.pay) || 0) > 0) p.push("платёж " + fmtMoney(parseFloat(r.pay), getActive().currency));
+      if ((parseInt(r.delivery, 10) || 0) > 0) p.push("завоз за " + r.delivery + " дн.");
+      return p.join(" · ");
+    };
+    document.getElementById("schedStagesList").innerHTML = plan.rows.map(function(r, i){
+      var st = currentSchedule.stages[i];
+      return '<div class="sc-card' + (r.critical ? " is-critical" : "") + (r.milestone ? " is-ms" : "") + '" data-idx="' + i + '">' +
+        '<div class="sc-head">' +
+          '<input class="sc-title" data-idx="' + i + '" type="text" value="' + escAttr(r.title) + '" placeholder="Этап работ">' +
+          '<span class="sc-dates">' + esc(r.milestone ? formatDateRu(r.from) : (formatDateRu(r.from) + " — " + formatDateRu(r.to))) + '</span>' +
+        '</div>' +
+        /* наверху — то, что трогают каждый день; остальное под «Ещё», чтобы карточка не превращалась в анкету */
+        '<div class="sc-fields">' +
+          (r.milestone ? "" :
+            '<label class="sc-f"><span>Раб. дней</span><input class="f-input sc-days" data-idx="' + i + '" type="number" min="1" value="' + (r.days || 1) + '"></label>') +
+          '<label class="sc-f"><span>После этапа</span><select class="f-input sc-after" data-idx="' + i + '">' + opts(st) + '</select></label>' +
+          (r.milestone ? "" :
+            '<label class="sc-f"><span>Людей</span><input class="f-input sc-crew" data-idx="' + i + '" type="number" min="0" value="' + (parseInt(r.crew, 10) || 0) + '"></label>') +
+          (r.milestone ? "" :
+            '<label class="sc-f"><span>Выполнено, %</span><input class="f-input sc-progress" data-idx="' + i + '" type="number" min="0" max="100" step="5" value="' + (parseInt(r.progress, 10) || 0) + '"></label>') +
+        '</div>' +
+        '<div class="sc-fields sc-extra"' + (st.more ? "" : " hidden") + '>' +
+          '<label class="sc-f"><span>Перерыв, дн</span><input class="f-input sc-lag" data-idx="' + i + '" type="number" min="0" value="' + (parseInt(r.lag, 10) || 0) + '"></label>' +
+          '<label class="sc-f"><span>Платёж, ₽</span><input class="f-input sc-pay" data-idx="' + i + '" type="number" min="0" value="' + (parseFloat(r.pay) || "") + '" placeholder="0"></label>' +
+          (r.milestone ? "" :
+            '<label class="sc-f"><span>Завоз за, дн</span><input class="f-input sc-delivery" data-idx="' + i + '" type="number" min="0" value="' + (parseInt(r.delivery, 10) || 0) + '"></label>') +
+          (r.milestone ? "" :
+            '<label class="sc-f sc-f--wide"><span>Материалы на этап</span><input class="f-input sc-materials" data-idx="' + i + '" type="text" value="' + escAttr(r.materials || "") + '" placeholder="что завозим"></label>') +
+        '</div>' +
+        '<div class="sc-foot">' +
+          (r.critical ? '<span class="sc-badge">Критический путь</span>' : (r.slack > 0 ? '<span class="sc-badge" style="background:var(--surface-2);color:var(--muted);">Запас ' + r.slack + ' дн.</span>' : "")) +
+          (r.late ? '<span class="sc-badge sc-badge--late">Просрочен</span>' : "") +
+          (!st.more && scSummaryChips(r) ? '<span class="sc-badge sc-badge--soft">' + esc(scSummaryChips(r)) + '</span>' : "") +
+          '<span class="sc-spacer"></span>' +
+          '<button type="button" class="sc-btn sc-more-btn" data-idx="' + i + '">' + (st.more ? "Свернуть" : "Пауза, платёж, завоз") + '</button>' +
+          '<button type="button" class="sc-btn sc-ms-btn" data-idx="' + i + '">' + (r.milestone ? "Сделать этапом" : "◆ Веха") + '</button>' +
+          '<button type="button" class="sc-btn sc-del-btn" data-idx="' + i + '">Удалить</button>' +
+        '</div>' +
+      '</div>';
+    }).join("") || '<div class="obj-empty">Добавьте первый этап работ</div>';
+    saveScheduleLocal();
+  }
+
+  function saveScheduleLocal(){
+    try {
+      currentSchedule.mode = scheduleMode;
+      var sd = document.getElementById("schedStartDate");
+      currentSchedule.start = sd ? sd.value : "";
+      localStorage.setItem("smeta_sched_v2_" + getActive().id, JSON.stringify(currentSchedule));
+    } catch(e){}
+  }
+
+  /* График живёт вместе со сметой: при открытии восстанавливаем сохранённый,
+     а не пересобираем из разделов — иначе теряются правки, вехи и проценты. */
+  function initSchedule(){
+    var restored = loadScheduleLocal();
+    if (!restored){
+      currentSchedule = { stages: [], workWeek: 5, holidays: true };
+      buildStagesFromActiveEstimate();
+      scheduleMode = "fromEstimate";
+    } else {
+      scheduleMode = currentSchedule.mode || "manual";
+    }
+    document.getElementById("schedModeFromEstBtn").classList.toggle("active", scheduleMode === "fromEstimate");
+    document.getElementById("schedModeManualBtn").classList.toggle("active", scheduleMode === "manual");
+    var week = parseInt(currentSchedule.workWeek, 10) || 5;
+    currentSchedule.workWeek = week;
+    Array.prototype.forEach.call(document.getElementById("gxWeekSeg").querySelectorAll("button"), function(x){
+      x.classList.toggle("on", parseInt(x.dataset.week, 10) === week);
+    });
+    currentSchedule.holidays = currentSchedule.holidays !== false;
+    document.getElementById("gxHolidays").checked = currentSchedule.holidays;
+    document.getElementById("schedStartDate").value =
+      currentSchedule.start || getActive().client.date || todayISO();
+    renderSchedulePanel();
+  }
+  function loadScheduleLocal(){
+    try {
+      var raw = localStorage.getItem("smeta_sched_v2_" + getActive().id);
+      if (raw){ var s = JSON.parse(raw); if (s && s.stages) { currentSchedule = s; return true; } }
+    } catch(e){}
+    return false;
   }
 
   function buildStagesFromActiveEstimate(){
-    const est = getActive();
-    let cursor = 0;
-    currentSchedule.stages = est.sections.filter(s => s.items.length).map(sec => {
-      const days = Math.max(1, Math.round(sec.items.length * 1.5));
-      const stage = {
-        title: sec.title,
-        days,
-        startOffset: cursor,
-        materials: sec.items.filter(it => it.priceMaterial > 0).map(it => it.name).join(", ")
-      };
-      cursor += days;
-      return stage;
+    var est = getActive(), prev = null;
+    currentSchedule.stages = est.sections.filter(function(s){ return s.items.length; }).map(function(sec){
+      var st = newStage({ title: sec.title, days: Math.max(1, Math.round(sec.items.length * 1.5)), after: prev,
+        materials: sec.items.filter(function(it){ return it.priceMaterial > 0; }).map(function(it){ return it.name; }).join(", ") });
+      prev = st.id;
+      return st;
     });
-    if (!document.getElementById("schedStartDate").value) document.getElementById("schedStartDate").value = est.client.date || todayISO();
-  }
-
-  // общая отрисовка диаграммы — используется и на экране (цвета через var(--...)),
-  // и в PDF (передаются обычные hex-цвета, т.к. print-sheet не завязан на тему)
-  function renderGanttHTML(dated, colors){
-    if (!dated.length) return '<div class="obj-empty">Добавьте хотя бы один этап работ</div>';
-    const minOffset = Math.min(...dated.map(s => s.offset));
-    const maxEnd = Math.max(...dated.map(s => s.offset + s.days));
-    const span = Math.max(1, maxEnd - minOffset);
-    const rows = dated.map(s => {
-      const leftPct = (s.offset - minOffset) / span * 100;
-      const widthPct = Math.max(3, s.days / span * 100);
-      return (
-        '<div class="gantt-row">' +
-          '<div class="gantt-label" style="color:' + colors.label + ';">' + esc(s.title) + '</div>' +
-          '<div class="gantt-track" style="background:' + colors.track + ';">' +
-            '<div class="gantt-bar" style="left:' + leftPct.toFixed(2) + '%;width:' + widthPct.toFixed(2) + '%;background:' + colors.bar + ';"></div>' +
-          '</div>' +
-          '<div class="gantt-dates" style="color:' + colors.muted + ';">' + esc(formatDateRu(s.from)) + ' – ' + esc(formatDateRu(s.to)) + '</div>' +
-        '</div>'
-      );
-    }).join("");
-    return '<div class="gantt-chart">' + rows + '</div>';
-  }
-  function renderScreenGantt(dated){
-    document.getElementById("schedGanttChart").innerHTML = renderGanttHTML(dated, {
-      label: "var(--ink)", track: "var(--surface-2)", bar: "var(--accent)", muted: "var(--muted)"
-    });
-  }
-
-  function renderSchedulePanel(){
-    const dated = computeScheduleDates();
-    renderScreenGantt(dated);
-    const addBtn = document.getElementById("schedAddStageBtn");
-    addBtn.hidden = scheduleMode !== "manual";
-    document.getElementById("schedStagesList").innerHTML = dated.map((st, i) => (
-      '<div class="sched-stage-row" data-idx="' + i + '">' +
-        (scheduleMode === "manual" ? '<button type="button" class="sched-stage-del" data-idx="' + i + '">✕ убрать</button>' : '') +
-        '<div class="sched-stage-grid">' +
-          '<label class="f-field f-field--wide"><span class="f-label">Этап / вид работ</span><input class="f-input sched-title" data-idx="' + i + '" type="text" value="' + escAttr(st.title) + '"' + (scheduleMode !== "manual" ? " disabled" : "") + '></label>' +
-          '<label class="f-field sched-offset-field"><span class="f-label">Начало, день от старта</span><input class="f-input sched-offset" data-idx="' + i + '" type="number" min="0" value="' + (st.offset || 0) + '"></label>' +
-          '<label class="f-field"><span class="f-label">Дней</span><input class="f-input sched-days" data-idx="' + i + '" type="number" min="1" value="' + (st.days || 1) + '"></label>' +
-          '<label class="f-field f-field--wide"><span class="f-label">Материалы на этот этап</span><input class="f-input sched-materials" data-idx="' + i + '" type="text" value="' + escAttr(st.materials || "") + '" placeholder="какие материалы нужны к началу этапа"></label>' +
-        '</div>' +
-        '<div class="sched-stage-dates">' + formatDateRu(st.from) + ' — ' + formatDateRu(st.to) + '</div>' +
-      '</div>'
-    )).join("") || '<div class="obj-empty">Добавьте этап работ</div>';
+    if (!document.getElementById("schedStartDate").value){
+      document.getElementById("schedStartDate").value = est.client.date || todayISO();
+    }
   }
 
   function switchScheduleMode(mode){
@@ -5510,50 +6190,183 @@
     document.getElementById("schedModeFromEstBtn").classList.toggle("active", mode === "fromEstimate");
     document.getElementById("schedModeManualBtn").classList.toggle("active", mode === "manual");
     if (mode === "fromEstimate"){ buildStagesFromActiveEstimate(); }
-    else if (!currentSchedule.stages.length){ currentSchedule.stages = [{ title: "Новый этап", days: 3, startOffset: 0, materials: "" }]; }
+    else if (!currentSchedule.stages.length){ currentSchedule.stages = [newStage()]; }
     renderSchedulePanel();
   }
-  document.getElementById("schedModeFromEstBtn").addEventListener("click", () => switchScheduleMode("fromEstimate"));
-  document.getElementById("schedModeManualBtn").addEventListener("click", () => switchScheduleMode("manual"));
+  document.getElementById("schedModeFromEstBtn").addEventListener("click", function(){ switchScheduleMode("fromEstimate"); });
+  document.getElementById("schedModeManualBtn").addEventListener("click", function(){ switchScheduleMode("manual"); });
   document.getElementById("schedStartDate").addEventListener("change", renderSchedulePanel);
-  document.getElementById("schedAddStageBtn").addEventListener("click", () => {
-    const lastEnd = currentSchedule.stages.reduce((m, st) => Math.max(m, (st.startOffset || 0) + (st.days || 1)), 0);
-    currentSchedule.stages.push({ title: "Новый этап", days: 3, startOffset: lastEnd, materials: "" });
+  document.getElementById("gxWeekSeg").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-week]");
+    if (!b) return;
+    currentSchedule.workWeek = parseInt(b.dataset.week, 10) || 5;
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function(x){ x.classList.toggle("on", x === b); });
     renderSchedulePanel();
   });
-  document.getElementById("schedStagesList").addEventListener("input", e => {
-    const idx = e.target.dataset.idx;
+  document.getElementById("gxHolidays").addEventListener("change", function(){
+    currentSchedule.holidays = this.checked;
+    renderSchedulePanel();
+  });
+  document.getElementById("schedAddStageBtn").addEventListener("click", function(){
+    var last = currentSchedule.stages[currentSchedule.stages.length - 1];
+    currentSchedule.stages.push(newStage({ after: last ? last.id : null }));
+    renderSchedulePanel();
+  });
+  document.getElementById("schedAddMilestoneBtn").addEventListener("click", function(){
+    var last = currentSchedule.stages[currentSchedule.stages.length - 1];
+    currentSchedule.stages.push(newStage({ title: "Контрольная точка", milestone: true, days: 0, crew: 0, after: last ? last.id : null }));
+    renderSchedulePanel();
+  });
+  document.getElementById("schedStagesList").addEventListener("input", function(e){
+    var idx = e.target.dataset.idx;
     if (idx == null) return;
-    const st = currentSchedule.stages[idx];
+    var st = currentSchedule.stages[idx];
     if (!st) return;
-    if (e.target.classList.contains("sched-title")) st.title = e.target.value;
-    if (e.target.classList.contains("sched-days")) st.days = parseInt(e.target.value, 10) || 1;
-    if (e.target.classList.contains("sched-offset")) st.startOffset = Math.max(0, parseInt(e.target.value, 10) || 0);
-    if (e.target.classList.contains("sched-materials")) st.materials = e.target.value;
+    var cl = e.target.classList;
+    if (cl.contains("sc-title")) st.title = e.target.value;
+    else if (cl.contains("sc-days")) st.days = Math.max(1, parseInt(e.target.value, 10) || 1);
+    else if (cl.contains("sc-lag")) st.lag = Math.max(0, parseInt(e.target.value, 10) || 0);
+    else if (cl.contains("sc-crew")) st.crew = Math.max(0, parseInt(e.target.value, 10) || 0);
+    else if (cl.contains("sc-progress")) st.progress = Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0));
+    else if (cl.contains("sc-pay")) st.pay = Math.max(0, parseFloat(e.target.value) || 0);
+    else if (cl.contains("sc-delivery")) st.delivery = Math.max(0, parseInt(e.target.value, 10) || 0);
+    else if (cl.contains("sc-materials")) st.materials = e.target.value;
+    else return;
+    var focusCls = cl.contains("sc-title") ? "sc-title" : null;
+    if (focusCls){ saveScheduleLocal(); return; } // название не перерисовываем, чтобы не терять курсор
     renderSchedulePanel();
   });
-  document.getElementById("schedStagesList").addEventListener("click", e => {
-    const delBtn = e.target.closest(".sched-stage-del");
-    if (delBtn){
-      currentSchedule.stages.splice(parseInt(delBtn.dataset.idx, 10), 1);
+  document.getElementById("schedStagesList").addEventListener("change", function(e){
+    var cl = e.target.classList;
+    if (!cl.contains("sc-after") && !cl.contains("sc-title")) return;
+    var st = currentSchedule.stages[e.target.dataset.idx];
+    if (!st) return;
+    // название перерисовываем только по потере фокуса — иначе курсор убегает при каждой букве
+    if (cl.contains("sc-after")) st.after = e.target.value || null;
+    else st.title = e.target.value;
+    renderSchedulePanel();
+  });
+  document.getElementById("schedStagesList").addEventListener("click", function(e){
+    var del = e.target.closest(".sc-del-btn"), ms = e.target.closest(".sc-ms-btn"), mr = e.target.closest(".sc-more-btn");
+    if (mr){
+      var s3 = currentSchedule.stages[parseInt(mr.dataset.idx, 10)];
+      if (s3){ s3.more = !s3.more; renderSchedulePanel(); }
+    } else if (del){
+      var i = parseInt(del.dataset.idx, 10);
+      var gone = currentSchedule.stages[i];
+      currentSchedule.stages.splice(i, 1);
+      currentSchedule.stages.forEach(function(s){ if (gone && s.after === gone.id) s.after = gone.after || null; });
+      renderSchedulePanel();
+    } else if (ms){
+      var s2 = currentSchedule.stages[parseInt(ms.dataset.idx, 10)];
+      if (!s2) return;
+      s2.milestone = !s2.milestone;
+      if (s2.milestone){ s2.days = 0; s2.crew = 0; s2.progress = 0; }
+      else { s2.days = 3; s2.crew = 2; }
       renderSchedulePanel();
     }
   });
 
   function buildScheduleBodyHTML(){
-    const dated = computeScheduleDates();
-    const ganttHTML = renderGanttHTML(dated, { label: "#1A1A1A", track: "#EFEFEF", bar: "#E8890C", muted: "#8A8A8A" });
-    return (
-      '<div class="ps-section">' + ganttHTML + '</div>' +
+    var plan = computeSchedule();
+    var est = getActive();
+    var ganttHTML = renderGanttHTML(plan, true);
+    var table =
       '<div class="ps-section">' +
         psTable2ColHeaderHTML("Этап / вид работ", "Сроки") +
-        dated.map(st => (
-          '<div class="ps-table-row"><span class="ps-col-name">' + esc(st.title) + (st.materials ? '<br><span style="font-size:10.5px;color:#8A8A8A;">Материалы: ' + esc(st.materials) + '</span>' : '') + '</span>' +
-            '<span class="ps-col-sum">' + esc(formatDateRu(st.from)) + ' — ' + esc(formatDateRu(st.to)) + '</span></div>'
-        )).join("") +
-      '</div>'
-    );
+        plan.rows.map(function(r){
+          var extra = [];
+          if (!r.milestone) extra.push(r.days + " раб. дн." + (r.crew ? ", " + r.crew + " чел." : ""));
+          if (r.critical && !r.milestone) extra.push("критический путь");
+          if (r.progress) extra.push("выполнено " + r.progress + "%");
+          if (r.materials) extra.push("материалы: " + r.materials);
+          return '<div class="ps-table-row"><span class="ps-col-name">' + (r.milestone ? "◆ " : "") + esc(r.title) +
+            (extra.length ? '<br><span style="font-size:10.5px;color:#8A8A8A;">' + esc(extra.join(" · ")) + '</span>' : "") + '</span>' +
+            '<span class="ps-col-sum">' + esc(r.milestone ? formatDateRu(r.from) : (formatDateRu(r.from) + " — " + formatDateRu(r.to))) + '</span></div>';
+        }).join("") +
+      '</div>';
+    var keys = plan.keydates.length ?
+      '<div class="ps-section">' +
+        '<div class="ps-section-title">Ключевые даты</div>' +
+        plan.keydates.map(function(k){
+          return '<div class="ps-table-row"><span class="ps-col-name">' + (k.type === "ms" ? "◆ " : "") + esc(k.title) + '</span>' +
+            '<span class="ps-col-sum">' + esc(formatDateRu(k.date)) + '</span></div>';
+        }).join("") +
+      '</div>' : "";
+    var pays = plan.payments.length ?
+      '<div class="ps-section">' +
+        '<div class="ps-section-title">График платежей</div>' +
+        plan.payments.map(function(p){
+          return '<div class="ps-table-row"><span class="ps-col-name">' + esc(p.title) + '</span>' +
+            '<span class="ps-col-sum">' + esc(formatDateRu(p.date)) + " · " + fmtMoney(p.sum, est.currency) + '</span></div>';
+        }).join("") +
+      '</div>' : "";
+    var head = '<div class="ps-section"><div class="ps-terms-row">Срок работ: ' + plan.workDays + ' рабочих дней (' + plan.calDays +
+      ' календарных), с ' + esc(formatDateRu(plan.from)) + ' по ' + esc(formatDateRu(plan.to)) +
+      '. Рабочая неделя: ' + currentSchedule.workWeek + ' дн.' + (currentSchedule.holidays ? ", праздники РФ учтены" : "") + '.</div></div>';
+    return head + '<div class="ps-section">' + ganttHTML + '</div>' + table + keys + pays;
   }
+
+  async function exportScheduleXLSX(){
+    if (!window.ExcelJS){ notify("Модуль Excel не загрузился — проверьте интернет"); return; }
+    var plan = computeSchedule(), est = getActive();
+    var wb = new ExcelJS.Workbook();
+    wb.creator = "Умная смета";
+    var ws = wb.addWorksheet("График работ");
+    ws.columns = [
+      { header: "Этап", key: "t", width: 38 },
+      { header: "Начало", key: "f", width: 13 },
+      { header: "Окончание", key: "e", width: 13 },
+      { header: "Раб. дней", key: "d", width: 11 },
+      { header: "Людей", key: "c", width: 9 },
+      { header: "Выполнено, %", key: "p", width: 14 },
+      { header: "Критический путь", key: "k", width: 18 },
+      { header: "Запас, дн", key: "sl", width: 11 },
+      { header: "Завоз материалов", key: "dv", width: 17 },
+      { header: "Платёж, ₽", key: "m", width: 14 },
+      { header: "Материалы", key: "mt", width: 40 }
+    ];
+    ws.getRow(1).font = { bold: true };
+    plan.rows.forEach(function(r){
+      ws.addRow({
+        t: (r.milestone ? "◆ " : "") + (r.title || "Этап"),
+        f: formatDateRu(r.from), e: r.milestone ? "" : formatDateRu(r.to),
+        d: r.milestone ? "" : r.days, c: r.milestone ? "" : (parseInt(r.crew, 10) || 0),
+        p: r.milestone ? "" : (parseInt(r.progress, 10) || 0),
+        k: r.critical ? "да" : "", sl: (r.milestone || r.critical) ? "" : (r.slack || 0),
+        dv: (!r.milestone && (parseInt(r.delivery, 10) || 0) > 0) ? formatDateRu(deliveryDateFor(r)) : "",
+        m: parseFloat(r.pay) || "", mt: r.materials || ""
+      });
+    });
+    ws.addRow({});
+    ws.addRow({ t: "Итого", f: formatDateRu(plan.from), e: formatDateRu(plan.to), d: plan.workDays }).font = { bold: true };
+
+    // отдельный лист для прораба и снабженца: что и когда везти, когда платить
+    var ks = wb.addWorksheet("Ключевые даты");
+    ks.columns = [
+      { header: "Дата", key: "d", width: 13 },
+      { header: "Событие", key: "t", width: 52 },
+      { header: "Сумма, ₽", key: "s", width: 14 }
+    ];
+    ks.getRow(1).font = { bold: true };
+    var events = plan.keydates.map(function(k){
+      return { date: k.date, title: (k.type === "ms" ? "◆ " : "") + k.title, sum: "" };
+    }).concat(plan.payments.map(function(p){
+      return { date: p.date, title: "Платёж по этапу: " + p.title, sum: p.sum };
+    })).sort(function(a, b){ return a.date < b.date ? -1 : 1; });
+    events.forEach(function(e){ ks.addRow({ d: formatDateRu(e.date), t: e.title, s: e.sum }); });
+    if (!events.length) ks.addRow({ d: "", t: "Вехи и завоз материалов пока не заданы", s: "" });
+    var buf = await wb.xlsx.writeBuffer();
+    var blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = sanitizeFilename("График работ — " + (est.client.object || est.name || "объект")) + ".xlsx";
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    notify("График выгружен в Excel");
+  }
+  document.getElementById("schedGenerateXlsx").addEventListener("click", exportScheduleXLSX);
   document.getElementById("schedGeneratePdf").addEventListener("click", () => exportPDF("schedule", "download"));
 
   /* =====================================================================
@@ -5798,12 +6611,12 @@
   renderObjectsPanel();
   renderAcceptChecklist();
   renderManualPanel("");
-  buildStagesFromActiveEstimate();
-  renderSchedulePanel();
+  initSchedule();
 
   /* ======================================================================
      ГРАФИК ПО НОРМАТИВАМ: объёмы из сметы × нормы выработки × бригада,
-     технологические перерывы между стадиями, режим «уложить в срок».
+     технологические перерывы; результат ложится в модель графика v2
+     (связи между этапами + людей на этап).
      ====================================================================== */
   const WORK_NORMS = {
 "Демонтажные работы": {
@@ -6427,25 +7240,21 @@
       for (var i = 0; i < keys.length; i++){ if (t.indexOf(keys[i].toLowerCase().split(":")[0]) !== -1) return WORK_NORMS[keys[i]]; }
       return DEFAULT_NORM;
     }
-    // трудоёмкость раздела в человеко-днях по объёмам позиций
     function laborDays(sec){
       var nrm = normFor(sec.title), sum = 0;
       (sec.items || []).forEach(function(it){
-        var q = parseFloat(it.qty) || 0;
-        var u = it.unit;
+        var q = parseFloat(it.qty) || 0, u = it.unit;
         if (u === "fix"){ sum += (nrm.fix != null ? nrm.fix : 1); return; }
         if (u === "hr"){ sum += q / 8; return; }
         if (u === "day"){ sum += q; return; }
         if (!q) return;
-        var prod = nrm[u] || DEFAULT_NORM[u] || 5;
-        sum += q / prod;
+        sum += q / (nrm[u] || DEFAULT_NORM[u] || 5);
       });
       return sum;
     }
     function sourceStages(){
       if (scheduleMode === "fromEstimate"){
-        var est = getActive();
-        return est.sections.filter(function(s){ return s.items.length; }).map(function(sec){
+        return getActive().sections.filter(function(s){ return s.items.length; }).map(function(sec){
           var nrm = normFor(sec.title);
           return {
             title: sec.title, labor: laborDays(sec), pause: nrm.pause || 0, pauseLabel: nrm.pauseLabel || "",
@@ -6454,103 +7263,1206 @@
           };
         });
       }
-      return currentSchedule.stages.map(function(st){
+      return currentSchedule.stages.filter(function(s){ return !s.milestone; }).map(function(st){
         var nrm = normFor(st.title || "");
-        return { title: st.title, labor: Math.max(1, parseInt(st.days, 10) || 1) * 4, pause: nrm.pause || 0, pauseLabel: nrm.pauseLabel || "", maxCrew: nrm.maxCrew || 6, materials: st.materials || "" };
+        return { title: st.title, labor: Math.max(1, parseInt(st.days, 10) || 1) * Math.max(1, parseInt(st.crew, 10) || 1),
+                 pause: parseInt(st.lag, 10) || nrm.pause || 0, pauseLabel: nrm.pauseLabel || "", maxCrew: nrm.maxCrew || 6,
+                 materials: st.materials || "" };
       });
     }
-    // реальная длительность этапа при бригаде crew: не больше людей, чем реально помещается на этапе
-    function stageDays(st, crew){
-      var eff = Math.max(1, Math.min(crew, st.maxCrew));
-      return Math.max(1, Math.ceil(st.labor / eff));
+    function crewSize(){ return Math.max(1, parseInt(document.getElementById("schedCrew").value, 10) || 4); }
+    function stageDays(s, crew){
+      var eff = Math.max(1, Math.min(crew, s.maxCrew));
+      return Math.max(1, Math.ceil(s.labor / eff));
     }
-    // раскладка по стадиям: внутри стадии параллельно, стадии друг за другом; перерыв — после самого долгого этапа стадии
-    function layout(stages, daysOf, mode){
-      var result = [], pauses = [];
+    // раскладываем в цепочку связей: внутри стадии этапы стартуют от одного предшественника
+    function buildStages(stages, daysOf, mode, crew){
+      var out = [], pauses = [];
       if (mode === "sequential"){
-        var cursor = 0;
+        var prev = null;
         stages.forEach(function(s){
-          var d = daysOf(s);
-          result.push({ title: s.title, days: d, startOffset: cursor, materials: s.materials, phase: phaseOf(s.title).label });
-          cursor += d;
-          if (s.pause){ pauses.push({ title: s.title, days: s.pause, label: s.pauseLabel }); cursor += s.pause; }
+          var st = newStage({ title: s.title, days: daysOf(s), after: prev, lag: s.pause || 0,
+            crew: Math.max(1, Math.min(crew, s.maxCrew)), materials: s.materials });
+          if (s.pause) pauses.push({ title: s.title, days: s.pause, label: s.pauseLabel });
+          out.push(st);
+          prev = st.id;
         });
-        return { stages: result, total: cursor, pauses: pauses };
+        return { stages: out, pauses: pauses };
       }
       var groups = {};
       stages.forEach(function(s){ var ph = phaseOf(s.title); (groups[ph.key] = groups[ph.key] || { phase: ph, items: [] }).items.push(s); });
       var keys = Object.keys(groups).map(Number).sort(function(a, b){ return a - b; });
-      var start = 0;
+      var anchor = null;
       keys.forEach(function(k){
-        var g = groups[k], phaseLen = 0, phasePause = 0, pauseSrc = null;
+        var g = groups[k], longest = null, longestLen = -1, made = [];
         g.items.forEach(function(s){
           var d = daysOf(s);
-          result.push({ title: s.title, days: d, startOffset: start, materials: s.materials, phase: g.phase.label });
-          if (d + (s.pause || 0) > phaseLen + phasePause){ phaseLen = d; phasePause = s.pause || 0; pauseSrc = s; }
+          var st = newStage({ title: s.title, days: d, after: anchor, lag: 0,
+            crew: Math.max(1, Math.min(crew, s.maxCrew)), materials: s.materials });
+          made.push({ st: st, src: s, len: d + (s.pause || 0) });
+          out.push(st);
         });
-        if (phasePause && pauseSrc) pauses.push({ title: pauseSrc.title, days: phasePause, label: pauseSrc.pauseLabel });
-        start += phaseLen + phasePause;
+        made.forEach(function(m){ if (m.len > longestLen){ longestLen = m.len; longest = m; } });
+        if (longest){
+          longest.st.lag = 0;
+          if (longest.src.pause){
+            pauses.push({ title: longest.src.title, days: longest.src.pause, label: longest.src.pauseLabel });
+          }
+          anchor = longest.st.id;
+          // технологический перерыв стадии переносим на первый этап следующей стадии
+          groups[k].pauseDays = longest.src.pause || 0;
+        }
       });
-      return { stages: result, total: start, pauses: pauses };
+      // проставляем лаг первым этапам каждой следующей стадии
+      var prevPause = 0;
+      keys.forEach(function(k){
+        var g = groups[k];
+        out.forEach(function(st){
+          if (g.items.some(function(s){ return s.title === st.title; }) && prevPause){
+            if (st.lag === 0) st.lag = prevPause;
+          }
+        });
+        prevPause = g.pauseDays || 0;
+      });
+      return { stages: out, pauses: pauses };
     }
-    function crew(){ return Math.max(1, parseInt(document.getElementById("schedCrew").value, 10) || 4); }
-    function mode(){ return document.getElementById("schedFitMode").value; }
-    function apply(res, extraHtml){
-      currentSchedule.stages = res.stages;
+    function apply(built, note){
+      currentSchedule.stages = built.stages;
       if (!document.getElementById("schedStartDate").value) document.getElementById("schedStartDate").value = todayISO();
       renderSchedulePanel();
-      var dated = computeScheduleDates();
-      var end = dated.reduce(function(m, s){ return s.to > m ? s.to : m; }, dated[0] ? dated[0].to : "");
-      var pauseDays = res.pauses.reduce(function(a, p){ return a + p.days; }, 0);
-      var html = "Этапов: <b>" + res.stages.length + "</b>, общий срок <b>" + res.total + " дн.</b>" +
-        (end ? ", окончание <b>" + esc(formatDateRu(end)) + "</b>" : "") +
-        (pauseDays ? ", из них технологические перерывы — <b>" + pauseDays + " дн.</b>" : "") + ". " + (extraHtml || "");
-      if (res.pauses.length){
-        html += '<ul class="sched-pause-list">' + res.pauses.map(function(p){
+      var plan = computeSchedule();
+      var pauseDays = built.pauses.reduce(function(a, p){ return a + p.days; }, 0);
+      var html = "Этапов: <b>" + built.stages.length + "</b>, срок <b>" + plan.workDays + " раб. дн.</b> (" + plan.calDays +
+        " календарных), окончание <b>" + esc(formatDateRu(plan.to)) + "</b>" +
+        (pauseDays ? ", технологические перерывы — <b>" + pauseDays + " дн.</b>" : "") + ". " + (note || "");
+      if (built.pauses.length){
+        html += '<ul class="sched-pause-list">' + built.pauses.map(function(p){
           return "<li>" + esc(p.title) + ": +" + p.days + " дн." + (p.label ? " — " + esc(p.label) : "") + "</li>";
-        }).join("") + "</ul>";
+        }).join("") + '</ul>';
       }
       var summary = document.getElementById("schedFitSummary");
       summary.innerHTML = html;
       summary.classList.add("show");
       haptic("medium");
     }
-    // 1) реальный срок по нормативам
     function calcNormative(){
       var stages = sourceStages();
-      if (!stages.length){ notify("Сначала добавьте разделы и объёмы в смету — график считается по ним"); return; }
-      var c = crew();
-      var res = layout(stages, function(s){ return stageDays(s, c); }, mode());
-      apply(res, "Бригада — " + c + " чел.");
+      if (!stages.length){ notify("Сначала добавьте разделы и объёмы в смету"); return; }
+      var c = crewSize();
+      apply(buildStages(stages, function(s){ return stageDays(s, c); }, document.getElementById("schedFitMode").value, c),
+            "Бригада — " + c + " чел.");
     }
-    // 2) уложить в срок: перерывы не сжимаются, рабочие дни масштабируем; если не хватает — считаем нужную бригаду
     function calcFit(){
       var stages = sourceStages();
-      if (!stages.length){ notify("Сначала добавьте разделы и объёмы в смету — график считается по ним"); return; }
+      if (!stages.length){ notify("Сначала добавьте разделы и объёмы в смету"); return; }
       var target = toDays(document.getElementById("schedFitValue").value, document.getElementById("schedFitUnit").value);
-      var c = crew(), m = mode();
-      var base = layout(stages, function(s){ return stageDays(s, c); }, m);
+      var c = crewSize(), m = document.getElementById("schedFitMode").value;
+      var base = buildStages(stages, function(s){ return stageDays(s, c); }, m, c);
+      currentSchedule.stages = base.stages;
+      var basePlan = computeSchedule();
       var pauseDays = base.pauses.reduce(function(a, p){ return a + p.days; }, 0);
       if (target <= pauseDays){
-        notify("Срок меньше суммы технологических перерывов (" + pauseDays + " дн.) — его нельзя выполнить физически");
+        notify("Срок меньше суммы технологических перерывов (" + pauseDays + " дн.) — физически невозможно");
+        renderSchedulePanel();
         return;
       }
-      var workBase = base.total - pauseDays;
-      var scale = (target - pauseDays) / Math.max(1, workBase);
-      var res = layout(stages, function(s){ return Math.max(1, Math.round(stageDays(s, c) * scale)); }, m);
+      var scale = (target - pauseDays) / Math.max(1, basePlan.calDays - pauseDays);
+      var built = buildStages(stages, function(s){ return Math.max(1, Math.round(stageDays(s, c) * scale)); }, m, c);
       var note;
       if (scale < 0.999){
         var needCrew = Math.ceil(c / scale);
-        note = '<span class="sched-fit-warn">По нормативам при ' + c + ' чел. нужно ' + base.total + ' дн. Чтобы уложиться в ' + target +
-          ' дн., бригада нужна примерно ' + needCrew + ' чел. (или параллельные субподряды).</span>';
+        note = '<span class="sched-fit-warn">По нормативам при ' + c + ' чел. нужно ' + basePlan.calDays + ' дн. Чтобы уложиться в ' +
+          target + ' дн., бригада нужна примерно ' + needCrew + ' чел. (или параллельные субподряды).</span>';
       } else {
-        note = "По нормативам при " + c + " чел. работы заняли бы " + base.total + " дн. — запас по сроку есть, этапы растянуты равномерно.";
+        note = "По нормативам при " + c + " чел. работы заняли бы " + basePlan.calDays + " дн. — запас по сроку есть.";
       }
-      apply(res, note);
+      apply(built, note);
     }
     var b1 = document.getElementById("schedNormBtn"); if (b1) b1.addEventListener("click", calcNormative);
     var b2 = document.getElementById("schedFitBtn"); if (b2) b2.addEventListener("click", calcFit);
   })();
+
+
+  /* ======================================================================
+     ВОЛНА 1 — «продающая смета»:
+     пакеты Базовый/Оптимальный/Премиум, опции для заказчика, коэффициенты
+     сложности объекта, проверка «что забыли заложить», себестоимость и маржа
+     (режим прораба), срок действия сметы, мастер объекта.
+     ====================================================================== */
+  /* константы пакетов объявлены выше, до первой отрисовки */
+
+  /* --- опции не входят в основной итог: оборачиваем базовые суммы --- */
+  var _origSectionTotal = sectionTotal;
+  sectionTotal = function(sec){
+    return sec.items.reduce(function(s, it){ return s + (isAddOn(it) ? 0 : itemSum(it)); }, 0);
+  };
+  var _origWorkSubtotal = estimateWorkSubtotal;
+  estimateWorkSubtotal = function(est){
+    return est.sections.reduce(function(s, sec){
+      return s + sec.items.reduce(function(a, it){ return a + (isAddOn(it) ? 0 : itemWorkAmount(it)); }, 0);
+    }, 0);
+  };
+  var _origMatSubtotal = estimateMaterialSubtotal;
+  estimateMaterialSubtotal = function(est){
+    return est.sections.reduce(function(s, sec){
+      return s + sec.items.reduce(function(a, it){ return a + (isAddOn(it) ? 0 : itemMaterialAmount(it)); }, 0);
+    }, 0);
+  };
+
+  /* --- коэффициенты сложности: надбавка на работы --- */
+  var COMPLEXITY = [
+    { key: "lift",    label: "Без лифта", note: "выше 3 этажа", pct: 7, icon: "stairs", base: "work" },
+    { key: "living",  label: "Жилая квартира", note: "заказчик живёт на объекте", pct: 10, base: "work", icon: "people" },
+    { key: "winter",  label: "Зима", note: "минусовые температуры", pct: 8, base: "work", icon: "snow" },
+    { key: "night",   label: "Ночные смены", note: "и работа в выходные", pct: 15, base: "work", icon: "moon" },
+    { key: "pass",    label: "Пропускной режим", note: "центр, охрана, согласования", pct: 5, base: "work", icon: "badge" },
+    { key: "high",    label: "Высокие потолки", note: "выше 3,2 м, нужны леса", pct: 10, base: "work", icon: "ruler" },
+    { key: "far",     label: "Дальний объект", note: "дальше 50 км", pct: 7, base: "work", icon: "truck" }
+  ];
+  /* свои условия хранятся на устройстве и доступны во всех сметах */
+  var LS_CX_CUSTOM = "smeta_cx_custom_v1";
+  var cxCustom = [];
+  try { cxCustom = JSON.parse(localStorage.getItem(LS_CX_CUSTOM) || "[]") || []; } catch(e){ cxCustom = []; }
+  function saveCxCustom(){ try { localStorage.setItem(LS_CX_CUSTOM, JSON.stringify(cxCustom)); } catch(e){} }
+  function allComplexity(){ return COMPLEXITY.concat(cxCustom); }
+  function cxSelected(est){
+    var keys = est.complexity || [];
+    return allComplexity().filter(function(c){ return keys.indexOf(c.key) >= 0; });
+  }
+  function complexityPercent(est){
+    return cxSelected(est).reduce(function(s, c){ return s + (parseFloat(c.pct) || 0); }, 0);
+  }
+  function complexityWorkPercent(est){
+    return cxSelected(est).reduce(function(s, c){ return s + ((c.base === "all") ? 0 : (parseFloat(c.pct) || 0)); }, 0);
+  }
+  function complexityAllPercent(est){
+    return cxSelected(est).reduce(function(s, c){ return s + ((c.base === "all") ? (parseFloat(c.pct) || 0) : 0); }, 0);
+  }
+  // надбавка «на работы» ложится на работы; надбавка «на всю смету» распределяется
+  // пропорционально между работами и материалами, чтобы итоговый раздел «Работы / Материалы» оставался честным
+  function complexityWorkAmount(est){
+    return estimateWorkSubtotal(est) * (complexityWorkPercent(est) + complexityAllPercent(est)) / 100;
+  }
+  function complexityMaterialAmount(est){
+    return estimateMaterialSubtotal(est) * complexityAllPercent(est) / 100;
+  }
+  function complexityAmount(est){ return complexityWorkAmount(est) + complexityMaterialAmount(est); }
+  var _origWorkAfterDiscount = estimateWorkAfterDiscount;
+  estimateWorkAfterDiscount = function(est){ return _origWorkAfterDiscount(est) + complexityWorkAmount(est); };
+  var _origMaterialAfterDiscount = estimateMaterialAfterDiscount;
+  estimateMaterialAfterDiscount = function(est){ return _origMaterialAfterDiscount(est) + complexityMaterialAmount(est); };
+
+  /* --- пакеты --- */
+  function estForTiers(est, tiers){
+    return Object.assign({}, est, {
+      sections: est.sections.map(function(sec){
+        return Object.assign({}, sec, { items: sec.items.filter(function(it){ return tiers.indexOf(itemTier(it)) >= 0; }) });
+      })
+    });
+  }
+  function packageTotals(est){
+    return {
+      base: estimateGrandTotal(estForTiers(est, ["base"])),
+      opt: estimateGrandTotal(estForTiers(est, ["base", "opt"])),
+      prem: estimateGrandTotal(estForTiers(est, ["base", "opt", "prem"]))
+    };
+  }
+  function addOnItems(est){
+    var out = [];
+    est.sections.forEach(function(sec){
+      sec.items.forEach(function(it){ if (isAddOn(it)) out.push(it); });
+    });
+    return out;
+  }
+  function addOnsTotal(est){
+    return addOnItems(est).reduce(function(s, it){ return s + itemSum(it); }, 0);
+  }
+  function usesPackages(est){
+    return est.sections.some(function(sec){
+      return sec.items.some(function(it){ return itemTier(it) === "opt" || itemTier(it) === "prem"; });
+    });
+  }
+
+  /* --- себестоимость и маржа --- */
+  function estimateCost(est){
+    return est.sections.reduce(function(s, sec){
+      return s + sec.items.reduce(function(a, it){ return a + (isAddOn(it) ? 0 : (it.cost || 0)); }, 0);
+    }, 0);
+  }
+  var proMode = false;
+  try { proMode = localStorage.getItem("smeta_pro_mode") === "1"; } catch(e){}
+
+  /* --- переключение пакета по клику --- */
+  document.getElementById("sectionsList").addEventListener("click", function(e){
+    var btn = e.target.closest(".tier-btn");
+    if (!btn) return;
+    var sec = getActive().sections.find(function(s){ return s.id === btn.dataset.sid; });
+    var it = sec && sec.items[Number(btn.dataset.idx)];
+    if (!it) return;
+    var next = TIER_ORDER[(TIER_ORDER.indexOf(itemTier(it)) + 1) % TIER_ORDER.length];
+    it.tier = next;
+    saveEstimates();
+    btn.dataset.tier = next;
+    btn.textContent = TIER_LABEL[next];
+    var row = btn.closest(".item-row");
+    if (row) row.classList.toggle("tier-add", next === "add");
+    renderTotals();
+    notify(TIER_NAME[next]);
+    haptic("light");
+  });
+
+  /* --- блоки интерфейса: пакеты, сложность, проверка, мастер --- */
+  var totalsSection = document.querySelector("section.totals");
+  var totalBar = document.querySelector(".total-bar");
+
+  var pkCard = document.createElement("div");
+  pkCard.className = "pk-card";
+  pkCard.id = "pkCard";
+  pkCard.hidden = true;
+  totalsSection.insertBefore(pkCard, totalBar);
+
+  var addonCard = document.createElement("div");
+  addonCard.className = "addon-card";
+  addonCard.id = "addonCard";
+  addonCard.hidden = true;
+  totalsSection.insertBefore(addonCard, totalBar);
+
+  var marginCard = document.createElement("div");
+  marginCard.className = "pk-card";
+  marginCard.id = "marginCard";
+  marginCard.hidden = true;
+  totalsSection.insertBefore(marginCard, totalBar);
+
+  var settingsEl = document.querySelector(".totals-settings");
+  var cxWrap = document.createElement("div");
+  cxWrap.className = "w1-field";
+  cxWrap.style.width = "100%";
+  cxWrap.innerHTML = '<span>Условия на объекте — надбавка к смете</span>' +
+    '<div class="pick-grid" id="cxChips"></div>' +
+    '<div class="cx-editor" id="cxEditor" hidden>' +
+      '<div class="cx-editor-grid">' +
+        '<label class="wz-param cx-wide"><span>Название условия</span><input id="cxName" type="text" placeholder="Газовое оборудование"></label>' +
+        '<label class="wz-param cx-wide"><span>Пояснение, необязательно</span><input id="cxNote" type="text" placeholder="нужен допуск СРО"></label>' +
+        '<label class="wz-param"><span>Надбавка, %</span><input id="cxPct" type="number" min="0" max="300" step="1" placeholder="10"></label>' +
+      '</div>' +
+      '<div class="cx-seg" id="cxBaseSeg">' +
+        '<button type="button" class="on" data-base="work">На работы</button>' +
+        '<button type="button" data-base="all">На всю смету</button>' +
+      '</div>' +
+      '<div class="cx-editor-actions">' +
+        '<button type="button" class="wz-btn" id="cxCancel">Отмена</button>' +
+        '<button type="button" class="wz-btn wz-btn--primary" id="cxSave">Добавить условие</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="cx-sum" id="cxSum"></div>';
+  settingsEl.parentNode.insertBefore(cxWrap, settingsEl.nextSibling);
+
+  var extraWrap = document.createElement("div");
+  extraWrap.className = "w1-field";
+  extraWrap.innerHTML =
+    '<span>Смета действительна, дней</span>' +
+    '<input id="validDaysInput" class="f-input" type="number" min="0" max="180" step="1" placeholder="0 — не указывать">' +
+    '<label class="w1-switch"><input type="checkbox" id="proModeToggle"> Режим прораба: себестоимость и маржа (в документы не попадает)</label>';
+  cxWrap.parentNode.insertBefore(extraWrap, cxWrap.nextSibling);
+
+  function renderComplexityChips(){
+    var est = getActive();
+    var keys = est.complexity || (est.complexity = []);
+    var mine = cxCustom.map(function(c){ return c.key; });
+    document.getElementById("cxChips").innerHTML = allComplexity().map(function(c){
+      var on = keys.indexOf(c.key) >= 0;
+      var own = mine.indexOf(c.key) >= 0;
+      var note = c.note || (c.base === "all" ? "на всю смету" : "своё условие");
+      return '<button type="button" class="pick-card cx-chip' + (on ? " on" : "") + '" data-cx="' + escAttr(c.key) + '">' +
+        pickIcon(own ? "star" : c.icon) +
+        '<span class="pick-title">' + esc(c.label) + '</span>' +
+        '<span class="pick-meta">' + esc(note) + (c.base === "all" && c.note ? " · на всю смету" : "") + '</span>' +
+        '<span class="pick-badge' + (on ? " with-check" : "") + '">+' + c.pct + '%</span>' +
+        (on ? '<span class="pick-check"></span>' : '') +
+        (own ? '<span class="cx-del" data-cx-del="' + escAttr(c.key) + '" role="button" aria-label="Удалить условие">×</span>' : '') +
+        '</button>';
+    }).join("") +
+    '<button type="button" class="pick-card pick-card--new" id="cxNewBtn">' +
+      pickIcon("plus") + '<span class="pick-title">Своё условие</span>' +
+      '<span class="pick-meta">с вашим процентом</span>' +
+    '</button>';
+    var sum = document.getElementById("cxSum");
+    if (sum){
+      var wp = complexityWorkPercent(est), ap = complexityAllPercent(est), n = cxSelected(est).length;
+      if (!n){
+        sum.innerHTML = '<span>Обычные условия — надбавки нет</span><b>0%</b>';
+      } else {
+        var parts = [];
+        if (wp > 0) parts.push("+" + wp + "% к работам");
+        if (ap > 0) parts.push("+" + ap + "% ко всей смете");
+        sum.innerHTML = '<span>Выбрано условий: ' + n + '</span><b>' + parts.join(" · ") + '</b>';
+      }
+    }
+  }
+  document.getElementById("cxChips").addEventListener("click", function(e){
+    var del = e.target.closest("[data-cx-del]");
+    if (del){
+      e.stopPropagation();
+      var dk = del.getAttribute("data-cx-del");
+      cxCustom = cxCustom.filter(function(c){ return c.key !== dk; });
+      saveCxCustom();
+      var est0 = getActive();
+      est0.complexity = (est0.complexity || []).filter(function(k){ return k !== dk; });
+      saveEstimates();
+      renderComplexityChips();
+      renderTotals();
+      notify("Условие удалено");
+      return;
+    }
+    if (e.target.closest("#cxNewBtn")){
+      var ed = document.getElementById("cxEditor");
+      ed.hidden = !ed.hidden;
+      if (!ed.hidden){ document.getElementById("cxName").focus(); }
+      return;
+    }
+    var chip = e.target.closest(".cx-chip");
+    if (!chip) return;
+    var est = getActive();
+    est.complexity = est.complexity || [];
+    var i = est.complexity.indexOf(chip.dataset.cx);
+    if (i >= 0) est.complexity.splice(i, 1); else est.complexity.push(chip.dataset.cx);
+    saveEstimates();
+    renderComplexityChips();
+    renderTotals();
+    haptic("light");
+  });
+
+  var cxBase = "work";
+  document.getElementById("cxBaseSeg").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-base]");
+    if (!b) return;
+    cxBase = b.dataset.base;
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function(x){
+      x.classList.toggle("on", x === b);
+    });
+  });
+  document.getElementById("cxCancel").addEventListener("click", function(){
+    document.getElementById("cxEditor").hidden = true;
+  });
+  document.getElementById("cxSave").addEventListener("click", function(){
+    var nameEl = document.getElementById("cxName");
+    var pctEl = document.getElementById("cxPct");
+    var name = (nameEl.value || "").trim();
+    var pct = parseFloat(pctEl.value) || 0;
+    if (!name){ notify("Введите название условия"); nameEl.focus(); return; }
+    if (pct <= 0){ notify("Укажите процент надбавки"); pctEl.focus(); return; }
+    var key = "cx_" + uid();
+    cxCustom.push({ key: key, label: name, note: (document.getElementById("cxNote").value || "").trim(), pct: pct, base: cxBase, icon: "star" });
+    saveCxCustom();
+    var est = getActive();
+    est.complexity = est.complexity || [];
+    est.complexity.push(key);
+    saveEstimates();
+    nameEl.value = ""; pctEl.value = ""; document.getElementById("cxNote").value = "";
+    document.getElementById("cxEditor").hidden = true;
+    renderComplexityChips();
+    renderTotals();
+    notify("Условие «" + name + "» добавлено");
+    haptic("medium");
+  });
+
+  var validDaysEl = document.getElementById("validDaysInput");
+  validDaysEl.addEventListener("input", function(){
+    getActive().validDays = parseInt(validDaysEl.value, 10) || 0;
+    saveEstimates();
+  });
+
+  var proToggle = document.getElementById("proModeToggle");
+  proToggle.checked = proMode;
+  document.body.classList.toggle("pro-mode", proMode);
+  proToggle.addEventListener("change", function(){
+    proMode = proToggle.checked;
+    try { localStorage.setItem("smeta_pro_mode", proMode ? "1" : "0"); } catch(e){}
+    document.body.classList.toggle("pro-mode", proMode);
+    renderTotals();
+  });
+
+  /* --- проверка «что забыли заложить» --- */
+  var CHECK_RULES = [
+    { when: /демонтаж|снос|разбор/i, need: /вывоз|мусор|контейнер/i,
+      title: "Не заложен вывоз мусора", why: "В смете есть демонтаж, но нет вывоза строительного мусора и контейнера — это всегда реальные деньги.",
+      add: { name: "Вывоз строительного мусора (контейнер)", unit: "fix" } },
+    { when: /плитк|керамогранит|мозаик/i, need: /грунт/i,
+      title: "Нет грунтовки под плитку", why: "Перед укладкой плитки основание грунтуется — без этого позиция в смете не закрыта.",
+      add: { name: "Грунтование основания под плитку", unit: "m2" } },
+    { when: /плитк|керамогранит/i, need: /затирк|фуг/i,
+      title: "Нет затирки швов", why: "Плитка есть, затирки нет — а это материал и отдельная работа.",
+      add: { name: "Затирка швов плитки", unit: "m2" } },
+    { when: /санузел|ванн|душев/i, need: /гидроизоляц/i,
+      title: "Нет гидроизоляции в мокрой зоне", why: "Санузел без гидроизоляции — самая дорогая переделка из возможных.",
+      add: { name: "Гидроизоляция пола и стен санузла", unit: "m2" } },
+    { when: /стяжк|наливной пол/i, need: /демпфер|кромочн/i,
+      title: "Нет демпферной ленты по стяжке", why: "Без демпферной ленты стяжка трескается по периметру.",
+      add: { name: "Демпферная лента по периметру", unit: "lm" } },
+    { when: /ламинат|паркет|инженерн.*доск/i, need: /подлож/i,
+      title: "Нет подложки под покрытие", why: "Ламинат и инженерная доска укладываются на подложку — её часто забывают в смете.",
+      add: { name: "Подложка под напольное покрытие", unit: "m2" } },
+    { when: /ламинат|паркет|линолеум|кварцвинил/i, need: /плинтус/i,
+      title: "Нет напольного плинтуса", why: "Покрытие заложено, а плинтус и его монтаж — нет.",
+      add: { name: "Монтаж напольного плинтуса", unit: "lm" } },
+    { when: /покрас|окраск|малярн/i, need: /грунт/i,
+      title: "Нет грунтовки под покраску", why: "Грунт под краску — обязательный слой, а в смете его нет.",
+      add: { name: "Грунтование стен под покраску", unit: "m2" } },
+    { when: /обои/i, need: /грунт/i,
+      title: "Нет грунтовки под обои", why: "Стены под обои грунтуются, иначе клей впитывается в основание.",
+      add: { name: "Грунтование стен под обои", unit: "m2" } },
+    { when: /штукатур/i, need: /маяк/i,
+      title: "Нет маяков под штукатурку", why: "Штукатурка по маякам — маяки это и материал, и работа.",
+      add: { name: "Установка штукатурных маяков", unit: "lm" } },
+    { when: /натяжн.*потол/i, need: /закладн/i,
+      title: "Нет закладных под светильники", why: "Под натяжной потолок нужны закладные платформы под каждый светильник и карниз.",
+      add: { name: "Закладные под светильники и карниз", unit: "pcs" } },
+    { when: /розетк|выключател|кабел|электромонтаж/i, need: /штроб/i,
+      title: "Нет штробления под электрику", why: "Кабель заложен, а штробление стен под него — нет.",
+      add: { name: "Штробление стен под кабель", unit: "lm" } },
+    { when: /тёплый пол|теплый пол/i, need: /терморегулятор|термостат/i,
+      title: "Нет терморегулятора для тёплого пола", why: "Тёплый пол без терморегулятора не работает, а в смете его нет.",
+      add: { name: "Монтаж терморегулятора тёплого пола", unit: "pcs" } },
+    { when: /водоснабж|канализац|сантехник/i, need: /опрессовк|испытан/i,
+      title: "Нет опрессовки системы", why: "Смонтированные трубы проверяются опрессовкой — это отдельный этап и время.",
+      add: { name: "Опрессовка и испытание системы", unit: "fix" } },
+    { when: /./, need: /доставк|подъём|подъем/i,
+      title: "Нет доставки и подъёма материалов", why: "Доставка на объект и подъём на этаж — деньги, которые подрядчик чаще всего платит из своей маржи.",
+      add: { name: "Доставка материалов и подъём на этаж", unit: "fix" } },
+    { when: /./, need: /уборк|клининг/i,
+      title: "Нет уборки после работ", why: "Объект сдаётся убранным — эта работа тоже стоит денег.",
+      add: { name: "Уборка помещения после работ", unit: "fix" } },
+    { when: /./, need: /непредвиден|резерв/i,
+      title: "Нет резерва на непредвиденные работы", why: "На каждом втором объекте вскрывается то, чего не было видно. Резерв 5–10% защищает вашу маржу.",
+      add: { name: "Резерв на непредвиденные работы (5–10%)", unit: "fix" } }
+  ];
+  function runCheck(){
+    var est = getActive();
+    var all = [];
+    est.sections.forEach(function(sec){
+      all.push(sec.title || "");
+      sec.items.forEach(function(it){ all.push(it.name || ""); });
+    });
+    var blob = all.join(" | ");
+    if (!blob.replace(/[\s|]/g, "")){ return []; }
+    return CHECK_RULES.filter(function(r){ return r.when.test(blob) && !r.need.test(blob); });
+  }
+  var chkBtn = document.createElement("button");
+  chkBtn.type = "button";
+  chkBtn.className = "chk-btn";
+  chkBtn.id = "chkBtn";
+  chkBtn.textContent = "Проверить смету — что забыли заложить";
+  var chkList = document.createElement("div");
+  chkList.className = "chk-list";
+  chkList.id = "chkList";
+  chkList.hidden = true;
+  totalsSection.insertBefore(chkBtn, totalsSection.firstChild);
+  totalsSection.insertBefore(chkList, chkBtn.nextSibling);
+
+  var matBtn = document.createElement("button");
+  matBtn.type = "button";
+  matBtn.className = "chk-btn";
+  matBtn.id = "matBtn";
+  matBtn.textContent = "Расход материалов — что купить";
+  var matPanel = document.createElement("div");
+  matPanel.className = "addon-card";
+  matPanel.id = "matPanel";
+  matPanel.hidden = true;
+  totalsSection.insertBefore(matBtn, chkList.nextSibling);
+  totalsSection.insertBefore(matPanel, matBtn.nextSibling);
+
+  function renderMaterials(){
+    var est = getActive();
+    var list = calcMaterials(est);
+    var head =
+      '<div class="pk-title">Расход материалов по объёмам сметы</div>' +
+      '<div class="mat-params">' +
+        '<label class="wz-param"><span>Штукатурка, мм</span><input id="matPlaster" type="number" min="5" max="60" step="1" value="' + matThick.plaster + '"></label>' +
+        '<label class="wz-param"><span>Стяжка, мм</span><input id="matScreed" type="number" min="10" max="150" step="5" value="' + matThick.screed + '"></label>' +
+        '<label class="wz-param"><span>Наливной пол, мм</span><input id="matLevel" type="number" min="2" max="30" step="1" value="' + matThick.level + '"></label>' +
+      '</div>';
+    if (!list.length){
+      matPanel.innerHTML = head +
+        '<div class="mat-empty">Пока считать нечего: расход берётся из позиций, у которых заполнено количество. Заполните объёмы — например «Штукатурка стен, 42 м²» — и список соберётся сам.</div>';
+      return;
+    }
+    matPanel.innerHTML = head +
+      '<div class="mat-grid">' +
+        list.map(function(m){
+          return '<div class="mat-card">' +
+            '<div class="mat-main">' +
+              '<div class="mat-name">' + esc(m.name) + '</div>' +
+              '<div class="mat-src">' + esc(m.src.slice(0, 2).join(" · ")) + (m.src.length > 2 ? " и ещё " + (m.src.length - 2) : "") + '</div>' +
+            '</div>' +
+            '<div class="mat-qty"><b>' + fmtNum(m.amount) + " " + esc(m.unit) + '</b>' +
+              (matPacks(m) ? '<span>' + esc(matPacks(m)) + '</span>' : '') + '</div>' +
+          '</div>';
+        }).join("") +
+      '</div>' +
+      '<div class="mat-actions">' +
+        '<button type="button" class="wz-btn" id="matCopy">Скопировать список</button>' +
+        '<button type="button" class="wz-btn wz-btn--primary" id="matToEstimate">Добавить разделом в смету</button>' +
+      '</div>' +
+      '<div class="pk-hint">Нормы усреднённые, по упаковкам производителей: клей 5 кг/м², штукатурка 0,9 кг на каждый мм слоя, краска 0,25 л/м² в два слоя, плитка с запасом 10% на подрезку. Точный расход смотрите на упаковке конкретной смеси.</div>';
+  }
+  matPanel.addEventListener("input", function(e){
+    var id = e.target.id;
+    if (id !== "matPlaster" && id !== "matScreed" && id !== "matLevel") return;
+    if (id === "matPlaster") matThick.plaster = parseFloat(e.target.value) || 15;
+    if (id === "matScreed") matThick.screed = parseFloat(e.target.value) || 50;
+    if (id === "matLevel") matThick.level = parseFloat(e.target.value) || 5;
+    try { localStorage.setItem("smeta_mat_thick", JSON.stringify(matThick)); } catch(err){}
+    var focusId = id, pos = e.target.selectionStart;
+    renderMaterials();
+    var el = document.getElementById(focusId);
+    if (el){ el.focus(); try { el.setSelectionRange(pos, pos); } catch(err){} }
+  });
+  matPanel.addEventListener("click", function(e){
+    var est = getActive();
+    if (e.target.id === "matCopy"){
+      var txt = materialsText(calcMaterials(est));
+      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
+        .then(function(){ notify("Список материалов скопирован"); })
+        .catch(function(){ notify("Не удалось скопировать"); });
+    } else if (e.target.id === "matToEstimate"){
+      var list = calcMaterials(est);
+      if (!list.length){ notify("Список пуст"); return; }
+      snapshotEstimate(est);
+      var items = list.map(function(m){
+        var packs = m.pack ? Math.ceil(m.amount / m.pack - 0.0001) : 0;
+        return packs
+          ? { name: m.name + " (" + (m.packLabel || m.pack + " " + m.unit) + ")", unit: "pcs", qty: packs, priceWork: 0, priceMaterial: 0 }
+          : { name: m.name, unit: (m.unit === "м²" ? "m2" : (m.unit === "м" ? "lm" : "pcs")),
+              qty: (m.unit === "м²" || m.unit === "м") ? Math.ceil(m.amount * 10) / 10 : Math.ceil(m.amount),
+              priceWork: 0, priceMaterial: 0 };
+      });
+      est.sections.push({ id: uid(), title: "Материалы по расчёту", items: items });
+      saveEstimates();
+      renderSections();
+      renderTotals();
+      notify("Добавлено материалов: " + items.length);
+      haptic("medium");
+    }
+  });
+  matBtn.addEventListener("click", function(){
+    matPanel.hidden = !matPanel.hidden;
+    if (!matPanel.hidden){ renderMaterials(); matPanel.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+  });
+
+  chkBtn.addEventListener("click", function(){
+    var found = runCheck();
+    chkList.hidden = false;
+    if (!found.length){
+      chkList.innerHTML = '<div class="chk-item ok"><h4>Всё на месте</h4><p>Типовых пропусков не нашлось — доставка, вывоз мусора, грунтовки и резерв учтены.</p></div>';
+      haptic("light");
+      return;
+    }
+    chkList.innerHTML = found.map(function(r, i){
+      return '<div class="chk-item"><h4>' + esc(r.title) + '</h4><p>' + esc(r.why) + '</p>' +
+        '<button type="button" data-chk-add="' + i + '">Добавить позицию в смету</button></div>';
+    }).join("");
+    chkList._found = found;
+    notify("Нашлось пропусков: " + found.length);
+    haptic("medium");
+  });
+  chkList.addEventListener("click", function(e){
+    var btn = e.target.closest("[data-chk-add]");
+    if (!btn || !chkList._found) return;
+    var rule = chkList._found[Number(btn.getAttribute("data-chk-add"))];
+    if (!rule) return;
+    var est = getActive();
+    snapshotEstimate(est);
+    var sec = est.sections.find(function(s){ return /прочие|дополнительн/i.test(s.title || ""); });
+    if (!sec){
+      sec = { id: uid(), title: "Прочие работы и затраты", items: [] };
+      est.sections.push(sec);
+    }
+    sec.items.push({ name: rule.add.name, unit: rule.add.unit, qty: rule.add.unit === "fix" ? 0 : 0, priceWork: 0, priceMaterial: 0 });
+    saveEstimates();
+    renderSections();
+    renderTotals();
+    btn.parentNode.classList.add("ok");
+    btn.remove();
+    notify("Позиция добавлена в раздел «Прочие работы и затраты»");
+  });
+
+  /* ======================================================================
+     РАСХОД МАТЕРИАЛОВ: по объёмам позиций считаем, что и сколько купить.
+     Нормы — усреднённые по рынку и упаковкам производителей; толщина слоёв задаётся.
+     ====================================================================== */
+  var matThick = { plaster: 15, screed: 50, level: 5 };
+  try {
+    var savedThick = JSON.parse(localStorage.getItem("smeta_mat_thick") || "null");
+    if (savedThick) matThick = Object.assign(matThick, savedThick);
+  } catch(e){}
+
+  var MAT_NORMS = [
+    { when: /плитк|керамогранит|мозаик/i, units: ["m2"], mats: [
+      { name: "Плитка (с запасом 10% на подрезку)", per: 1.1, unit: "м²" },
+      { name: "Клей плиточный", per: 5, unit: "кг", pack: 25, packLabel: "мешок 25 кг" },
+      { name: "Грунтовка глубокого проникновения", per: 0.15, unit: "л", pack: 10, packLabel: "канистра 10 л" },
+      { name: "Затирка для швов", per: 0.5, unit: "кг", pack: 2, packLabel: "упак. 2 кг" },
+      { name: "Система выравнивания плитки (СВП)", per: 12, unit: "шт", pack: 250, packLabel: "упак. 250 шт" }
+    ]},
+    { when: /штукатур/i, units: ["m2"], mats: [
+      { name: "Штукатурка гипсовая", perMm: 0.9, thick: "plaster", unit: "кг", pack: 30, packLabel: "мешок 30 кг" },
+      { name: "Грунтовка", per: 0.15, unit: "л", pack: 10, packLabel: "канистра 10 л" },
+      { name: "Маяк штукатурный 6 мм", per: 1.2, unit: "м" },
+      { name: "Уголок перфорированный", per: 0.35, unit: "м" }
+    ]},
+    { when: /шпакл|шпатл/i, units: ["m2"], mats: [
+      { name: "Шпаклёвка стартовая", per: 1.2, unit: "кг", pack: 20, packLabel: "мешок 20 кг" },
+      { name: "Шпаклёвка финишная", per: 0.9, unit: "кг", pack: 20, packLabel: "мешок 20 кг" },
+      { name: "Грунтовка", per: 0.12, unit: "л", pack: 10, packLabel: "канистра 10 л" },
+      { name: "Стеклохолст / серпянка", per: 1.05, unit: "м²" },
+      { name: "Абразивная сетка / шкурка", per: 0.12, unit: "шт" }
+    ]},
+    { when: /стяжк/i, units: ["m2"], mats: [
+      { name: "Смесь для стяжки (ЦПС)", perMm: 2.0, thick: "screed", unit: "кг", pack: 25, packLabel: "мешок 25 кг" },
+      { name: "Грунтовка", per: 0.2, unit: "л", pack: 10, packLabel: "канистра 10 л" },
+      { name: "Демпферная лента", per: 0.9, unit: "м", pack: 25, packLabel: "рулон 25 м" },
+      { name: "Фибра полипропиленовая", per: 0.09, unit: "кг", pack: 1, packLabel: "упак. 1 кг" }
+    ]},
+    { when: /наливной пол|самовыравнив|ровнител/i, units: ["m2"], mats: [
+      { name: "Наливной пол (самовыравнивающийся)", perMm: 1.5, thick: "level", unit: "кг", pack: 25, packLabel: "мешок 25 кг" },
+      { name: "Грунтовка", per: 0.2, unit: "л", pack: 10, packLabel: "канистра 10 л" }
+    ]},
+    { when: /покрас|окраск|малярн|краск/i, units: ["m2"], mats: [
+      { name: "Краска (2 слоя)", per: 0.25, unit: "л", pack: 9, packLabel: "ведро 9 л" },
+      { name: "Грунтовка под покраску", per: 0.12, unit: "л", pack: 10, packLabel: "канистра 10 л" },
+      { name: "Малярная лента", per: 0.4, unit: "м", pack: 50, packLabel: "рулон 50 м" }
+    ]},
+    { when: /обои/i, units: ["m2"], mats: [
+      { name: "Обои (рулон 10,05 × 0,53 м)", per: 0.24, unit: "рул." },
+      { name: "Клей обойный", per: 0.05, unit: "кг", pack: 0.3, packLabel: "пачка 300 г" },
+      { name: "Грунтовка", per: 0.12, unit: "л", pack: 10, packLabel: "канистра 10 л" }
+    ]},
+    { when: /ламинат|кварцвинил|винил|spc|паркетн|инженерн/i, units: ["m2"], mats: [
+      { name: "Покрытие (с запасом 7%)", per: 1.07, unit: "м²" },
+      { name: "Подложка", per: 1.05, unit: "м²" },
+      { name: "Плёнка пароизоляционная", per: 1.1, unit: "м²" }
+    ]},
+    { when: /гипсокартон|гкл|перегородк.*гипс/i, units: ["m2"], mats: [
+      { name: "Лист ГКЛ 1200 × 2500 мм", per: 0.38, unit: "лист" },
+      { name: "Профиль стоечный ПС 50/75", per: 2.0, unit: "м" },
+      { name: "Профиль направляющий ПН", per: 0.8, unit: "м" },
+      { name: "Саморезы по металлу 25 мм", per: 25, unit: "шт", pack: 1000, packLabel: "упак. 1000 шт" },
+      { name: "Лента для швов + шпаклёвка", per: 0.5, unit: "кг", pack: 20, packLabel: "мешок 20 кг" }
+    ]},
+    { when: /утеплен|теплоизоляц|минерал|пенопласт|пенопл|базальт/i, units: ["m2"], mats: [
+      { name: "Утеплитель (плиты, с запасом 5%)", per: 1.05, unit: "м²" },
+      { name: "Дюбель тарельчатый", per: 5, unit: "шт", pack: 200, packLabel: "упак. 200 шт" },
+      { name: "Клей для утеплителя", per: 5, unit: "кг", pack: 25, packLabel: "мешок 25 кг" }
+    ]},
+    { when: /кладк|кирпич|блок/i, units: ["m2"], mats: [
+      { name: "Кирпич одинарный (кладка в полкирпича)", per: 51, unit: "шт" },
+      { name: "Кладочный раствор", per: 40, unit: "кг", pack: 25, packLabel: "мешок 25 кг" },
+      { name: "Сетка кладочная", per: 0.4, unit: "м²" }
+    ]},
+    { when: /тёплый пол|теплый пол/i, units: ["m2"], mats: [
+      { name: "Труба тёплого пола (шаг 200 мм)", per: 5, unit: "м", pack: 100, packLabel: "бухта 100 м" },
+      { name: "Мат/подложка с бобышками", per: 1.05, unit: "м²" },
+      { name: "Лента демпферная", per: 0.9, unit: "м", pack: 25, packLabel: "рулон 25 м" }
+    ]},
+    { when: /кровл|профнастил|металлочерепиц|фальц/i, units: ["m2"], mats: [
+      { name: "Кровельное покрытие (с запасом 12%)", per: 1.12, unit: "м²" },
+      { name: "Саморезы кровельные", per: 8, unit: "шт", pack: 250, packLabel: "упак. 250 шт" },
+      { name: "Гидроизоляционная мембрана", per: 1.15, unit: "м²" }
+    ]},
+    { when: /гидроизоляц/i, units: ["m2"], mats: [
+      { name: "Гидроизоляция обмазочная (2 слоя)", per: 1.6, unit: "кг", pack: 20, packLabel: "ведро 20 кг" },
+      { name: "Лента гидроизоляционная угловая", per: 0.8, unit: "м", pack: 10, packLabel: "рулон 10 м" }
+    ]},
+    { when: /кабел|электромонтаж|штроб|провод/i, units: ["lm"], mats: [
+      { name: "Кабель ВВГнг (с запасом 15%)", per: 1.15, unit: "м", pack: 100, packLabel: "бухта 100 м" },
+      { name: "Гофра/труба ПВХ", per: 1.05, unit: "м", pack: 50, packLabel: "бухта 50 м" }
+    ]},
+    { when: /розетк|выключател|подрозетник/i, units: ["pcs"], mats: [
+      { name: "Подрозетник", per: 1, unit: "шт", pack: 100, packLabel: "упак. 100 шт" },
+      { name: "Механизм + рамка", per: 1, unit: "компл." }
+    ]},
+    { when: /плинтус/i, units: ["lm"], mats: [
+      { name: "Плинтус (с запасом 7%)", per: 1.07, unit: "м" },
+      { name: "Соединители, углы, заглушки", per: 0.3, unit: "шт" },
+      { name: "Крепёж / клей монтажный", per: 0.05, unit: "шт" }
+    ]},
+    { when: /труб|водоснабж|канализац/i, units: ["lm"], mats: [
+      { name: "Труба (с запасом 10%)", per: 1.1, unit: "м" },
+      { name: "Фитинги и крепёж", per: 0.6, unit: "шт" }
+    ]}
+  ];
+
+  function matNormFor(item){
+    for (var i = 0; i < MAT_NORMS.length; i++){
+      var n = MAT_NORMS[i];
+      if (n.when.test(item.name || "") && n.units.indexOf(item.unit) >= 0) return n;
+    }
+    return null;
+  }
+  function calcMaterials(est){
+    var map = {};
+    est.sections.forEach(function(sec){
+      sec.items.forEach(function(it){
+        var qty = parseFloat(it.qty) || 0;
+        if (!qty) return;
+        var norm = matNormFor(it);
+        if (!norm) return;
+        norm.mats.forEach(function(m){
+          var per = m.perMm ? (m.perMm * (matThick[m.thick] || 10)) : m.per;
+          var amount = qty * per;
+          var key = m.name + "|" + m.unit;
+          if (!map[key]) map[key] = { name: m.name, unit: m.unit, pack: m.pack, packLabel: m.packLabel, amount: 0, src: [] };
+          map[key].amount += amount;
+          var label = (it.name || "позиция") + " — " + fmtNum(qty) + " " + UNIT_SHORT_RU(it.unit);
+          if (map[key].src.indexOf(label) < 0) map[key].src.push(label);
+        });
+      });
+    });
+    return Object.keys(map).map(function(k){ return map[k]; })
+      .sort(function(a, b){ return a.name.localeCompare(b.name, "ru"); });
+  }
+  function UNIT_SHORT_RU(u){
+    return ({ m2: "м²", lm: "пог.м", pcs: "шт", m3: "м³", fix: "", hr: "ч", day: "дн." })[u] || "";
+  }
+  function matPacks(m){
+    if (!m.pack) return "";
+    var n = Math.ceil(m.amount / m.pack - 0.0001);
+    return "≈ " + n + " × " + (m.packLabel || (m.pack + " " + m.unit));
+  }
+  function materialsText(list){
+    return "ЛИСТ ЗАКУПКИ МАТЕРИАЛОВ\n\n" + list.map(function(m){
+      return "— " + m.name + ": " + fmtNum(m.amount) + " " + m.unit + (matPacks(m) ? " (" + matPacks(m) + ")" : "");
+    }).join("\n") + "\n\nРассчитано в «Умной смете», EA GROUP";
+  }
+
+  /* --- иконки для карточек выбора --- */
+  var PICK_ICONS = {
+    flat: '<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="8" y2="7.01"/><line x1="12" y1="7" x2="12" y2="7.01"/><line x1="16" y1="7" x2="16" y2="7.01"/><line x1="8" y1="11" x2="8" y2="11.01"/><line x1="12" y1="11" x2="12" y2="11.01"/><line x1="16" y1="11" x2="16" y2="11.01"/><path d="M10 21v-4h4v4"/>',
+    brush: '<path d="M4 20c2 0 3-1 3-3 0-1.3 1-2 2-2s2 .9 2 2c0 2.5-2.5 3-7 3z"/><path d="M11 15l8-8a2 2 0 0 0-3-3l-8 8"/>',
+    drop: '<path d="M12 3s6 6.5 6 10.5A6 6 0 0 1 6 13.5C6 9.5 12 3 12 3z"/>',
+    home: '<path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/>',
+    facade: '<rect x="3" y="4" width="18" height="16" rx="1.5"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="4" x2="9" y2="10"/><line x1="15" y1="15" x2="15" y2="20"/>',
+    box: '<path d="M3 8l9-4 9 4v9l-9 4-9-4z"/><path d="M3 8l9 4 9-4"/><line x1="12" y1="12" x2="12" y2="21"/>',
+    roof: '<path d="M2 13L12 4l10 9"/><path d="M5 12v8h14v-8"/><line x1="9" y1="20" x2="9" y2="15"/>',
+    crane: '<path d="M4 20h16"/><path d="M6 20V6h12"/><line x1="6" y1="6" x2="14" y2="14"/><path d="M16 6v4l3-2z"/>',
+    office: '<rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M8 7V4h8v3"/><line x1="3" y1="12" x2="21" y2="12"/>',
+    tree: '<path d="M12 3l5 7h-3l4 6H6l4-6H7z"/><line x1="12" y1="16" x2="12" y2="21"/>',
+    bolt: '<path d="M13 2L5 13h6l-1 9 8-11h-6z"/>',
+    waves: '<path d="M3 8c2.5-2 4.5-2 7 0s4.5 2 7 0"/><path d="M3 13c2.5-2 4.5-2 7 0s4.5 2 7 0"/><path d="M3 18c2.5-2 4.5-2 7 0s4.5 2 7 0"/>',
+    plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+    star: '<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9L6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>',
+    stairs: '<path d="M4 20h4v-4h4v-4h4V8h4"/><line x1="4" y1="20" x2="4" y2="16"/>',
+    people: '<path d="M4 20v-1a4 4 0 0 1 4-4h2"/><circle cx="9" cy="8" r="3"/><path d="M14 20v-1a4 4 0 0 1 4-4"/><circle cx="17" cy="9" r="2.4"/>',
+    snow: '<line x1="12" y1="3" x2="12" y2="21"/><line x1="4" y1="7.5" x2="20" y2="16.5"/><line x1="4" y1="16.5" x2="20" y2="7.5"/><path d="M9 5l3-2 3 2"/><path d="M9 19l3 2 3-2"/>',
+    moon: '<path d="M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10z"/>',
+    badge: '<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="12" cy="10" r="2.4"/><path d="M8 17c1-2 2.5-3 4-3s3 1 4 3"/>',
+    ruler: '<path d="M12 3v18"/><path d="M8 5l4-3 4 3"/><path d="M8 19l4 3 4-3"/><line x1="15" y1="9" x2="19" y2="9"/><line x1="15" y1="13" x2="19" y2="13"/>',
+    truck: '<rect x="2" y="7" width="12" height="9" rx="1"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="6.5" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>'
+  };
+  function pickIcon(name){
+    return '<span class="pick-ico"><svg viewBox="0 0 24 24">' + (PICK_ICONS[name] || PICK_ICONS.star) + '</svg></span>';
+  }
+
+  /* --- мастер объекта: тип + площадь → готовая смета с объёмами --- */
+  var WZ_TYPES = [
+    { key: "flat_full", icon: "flat", label: "Квартира под ключ",
+      sections: ["Демонтажные работы","Черновые работы","Электромонтаж: кабельные линии и разводка","Сантехника: водоснабжение и разводка","Гипсокартоновые работы","Отделка стен","Отделка потолков","Отделка полов","Плитка: полы","Плитка: стены, мозаика и декор","Окна и двери","Малярные работы","Клининг после ремонта"] },
+    { key: "cosmetic", icon: "brush", label: "Косметический ремонт",
+      sections: ["Отделка стен","Отделка потолков","Отделка полов","Малярные работы","Клининг после ремонта"] },
+    { key: "bath", icon: "drop", label: "Санузел под ключ",
+      sections: ["Демонтажные работы","Черновые работы","Гидроизоляция","Сантехника: водоснабжение и разводка","Сантехника: канализация, приборы и оборудование","Плитка: полы","Плитка: стены, мозаика и декор","Клининг после ремонта"] },
+    { key: "house", icon: "home", label: "Дом под ключ",
+      sections: ["Фундаментные работы","Кладочные работы","Кровля: стропильная система и обрешётка","Кровля: покрытие (черепица, профнастил, фальц, мембрана)","Окна и двери","Черновые работы","Электромонтаж: кабельные линии и разводка","Сантехника: водоснабжение и разводка","Отопление и вентиляция","Отделка стен","Отделка полов","Фасад: мокрый (штукатурный) с утеплением"] },
+    { key: "facade", icon: "facade", label: "Фасад дома",
+      sections: ["Фасад: мокрый (штукатурный) с утеплением","Утепление и теплоизоляция","Клининг после ремонта"] },
+    { key: "warehouse", icon: "box", label: "Склад: реконструкция",
+      sections: ["Демонтажные работы","Сварочные работы и металлоконструкции","Кровля: покрытие (черепица, профнастил, фальц, мембрана)","Промышленные и наливные полы","Электромонтаж: кабельные линии и разводка","Фасад: вентилируемый и навесные системы","Клининг после ремонта"] }
+    ,
+    { key: "roof", icon: "roof", label: "Крыша под ключ",
+      sections: ["Демонтажные работы","Кровля: стропильная система и обрешётка","Кровля: покрытие (черепица, профнастил, фальц, мембрана)","Кровля: утепление, водостоки и доборные элементы","Мансардные конструкции и кровельные окна","Утепление и теплоизоляция","Клининг после ремонта"] },
+    { key: "reconstruction", icon: "crane", label: "Реконструкция здания",
+      sections: ["Обследование и техническая экспертиза зданий","Демонтажные работы","Фундаментные работы","Кладочные работы","Сварочные работы и металлоконструкции","Гидроизоляция","Кровля: покрытие (черепица, профнастил, фальц, мембрана)","Фасад: мокрый (штукатурный) с утеплением","Окна и двери","Черновые работы","Электромонтаж: кабельные линии и разводка","Сантехника: водоснабжение и разводка","Отопление и вентиляция","Клининг после ремонта"] },
+    { key: "office", icon: "office", label: "Офис и коммерческое помещение",
+      sections: ["Демонтажные работы","Черновые работы","Гипсокартоновые работы","Электромонтаж: кабельные линии и разводка","Слаботочные системы и умный дом","Пожарная безопасность и сигнализация","Отопление и вентиляция","Отделка стен","Отделка потолков","Отделка полов","Окна и двери","Клининг после ремонта"] },
+    { key: "plot", icon: "tree", label: "Участок и благоустройство",
+      sections: ["Земляные и бетонные работы","Наружные инженерные сети","Благоустройство территории","Ландшафтный дизайн и озеленение","Заборы, ворота и ограждения","Автоматика ворот и шлагбаумов"] },
+    { key: "engineering", icon: "bolt", label: "Инженерные системы",
+      sections: ["Электромонтаж: кабельные линии и разводка","Электромонтаж: щиты, автоматика и электроустановочные изделия","Сантехника: водоснабжение и разводка","Сантехника: канализация, приборы и оборудование","Отопление и вентиляция","Тёплый пол (водяной и электрический)","Слаботочные системы и умный дом","Пожарная безопасность и сигнализация"] },
+    { key: "spa", icon: "waves", label: "Баня, бассейн, СПА",
+      sections: ["Земляные и бетонные работы","Гидроизоляция","Бассейны, бани и сауны","Сантехника: водоснабжение и разводка","Отопление и вентиляция","Плитка: полы","Плитка: стены, мозаика и декор","Клининг после ремонта"] }
+  ];
+
+  /* --- свои наборы разделов «под ключ»: хранятся на устройстве --- */
+  var LS_WZ_PRESETS = "smeta_obj_presets_v1";
+  var wzPresets = [];
+  try { wzPresets = JSON.parse(localStorage.getItem(LS_WZ_PRESETS) || "[]") || []; } catch(e){ wzPresets = []; }
+  function saveWzPresets(){ try { localStorage.setItem(LS_WZ_PRESETS, JSON.stringify(wzPresets)); } catch(e){} }
+  function wzAllTypes(){ return WZ_TYPES.concat(wzPresets); }
+  var wzType = "flat_full";
+
+  var wzCard = document.createElement("div");
+  wzCard.className = "wz-card";
+  wzCard.innerHTML =
+    '<div class="wz-head" id="wzHead">' +
+      '<div class="pk-title" style="margin-bottom:0;">Смета по параметрам — быстрый старт</div>' +
+      '<button type="button" class="wz-toggle" id="wzToggle">Свернуть</button>' +
+    '</div>' +
+    '<div class="wz-body" id="wzBody">' +
+    '<div class="pk-hint" style="margin-top:8px;margin-bottom:10px;">Необязательный помощник: собирает разделы с готовыми объёмами. Обычная смета составляется как раньше — разделы и позиции ниже, вручную или из шаблонов.</div>' +
+    '<div class="wz-types" id="wzTypes"></div>' +
+    '<div class="wz-grid">' +
+      '<label class="wz-param"><span>Площадь, м²</span><input id="wzArea" type="number" min="1" step="1" placeholder="54"></label>' +
+      '<label class="wz-param"><span>Потолки, м</span><input id="wzHeight" type="number" min="2" step="0.1" placeholder="2,7"></label>' +
+      '<label class="wz-param"><span>Комнат</span><input id="wzRooms" type="number" min="1" step="1" placeholder="2"></label>' +
+      '<label class="wz-param"><span>Санузлов</span><input id="wzBaths" type="number" min="0" step="1" placeholder="1"></label>' +
+    '</div>' +
+    '<button type="button" class="chk-btn" id="wzBuild" style="margin-top:12px;margin-bottom:0;">Собрать смету с объёмами</button>' +
+    '<div class="pk-hint">Приложение посчитает площади пола, стен и потолка, периметр, количество розеток и дверей и подставит объёмы в позиции выбранных разделов. Разделы добавляются к текущей смете, ничего не стирая. Цены останутся пустыми — подставьте свои.</div>' +
+    '<div class="wz-editor" id="wzEditor" hidden>' +
+      '<label class="f-field"><span class="f-label">Название набора</span><input id="wzPresetName" class="f-input" type="text" placeholder="Например: Ремонт под ключ премиум"></label>' +
+      '<label class="f-field" style="margin-top:10px;"><span class="f-label">Поиск по разделам</span><input id="wzPresetSearch" class="f-input" type="text" placeholder="Кровля, плитка, электрика…"></label>' +
+      '<div class="wz-picklist" id="wzPickList"></div>' +
+      '<div class="wz-editor-actions">' +
+        '<button type="button" class="wz-btn" id="wzFromEstimate">Взять разделы из текущей сметы</button>' +
+        '<button type="button" class="wz-btn" id="wzClearPick">Снять все</button>' +
+        '<button type="button" class="wz-btn wz-btn--primary" id="wzSavePreset">Сохранить набор</button>' +
+      '</div>' +
+      '<div class="wz-saved" id="wzSaved"></div>' +
+    '</div>' +
+    '</div>';
+  var sectionsHead = document.querySelector(".sections-head");
+  sectionsHead.parentNode.insertBefore(wzCard, sectionsHead);
+
+  function renderWzTypes(){
+    var mine = wzPresets.map(function(p){ return p.key; });
+    document.getElementById("wzTypes").innerHTML =
+      wzAllTypes().map(function(t){
+        var isMine = mine.indexOf(t.key) >= 0;
+        var on = t.key === wzType;
+        var cls = "pick-card wz-type" + (on ? " on" : "") + (isMine ? " pick-card--mine" : "");
+        return '<button type="button" class="' + cls + '" data-wz="' + escAttr(t.key) + '">' +
+          pickIcon(isMine ? "star" : (t.icon || "home")) +
+          '<span class="pick-title">' + esc(t.label) + '</span>' +
+          '<span class="pick-meta">' + t.sections.length + ' разд.</span>' +
+          (on ? '<span class="pick-check"></span>' : '') +
+          '</button>';
+      }).join("") +
+      '<button type="button" class="pick-card pick-card--new wz-type" id="wzNewBtn">' +
+        pickIcon("plus") + '<span class="pick-title">Свой набор</span>' +
+        '<span class="pick-meta">собрать из разделов</span>' +
+      '</button>';
+  }
+  renderWzTypes();
+  document.getElementById("wzTypes").addEventListener("click", function(e){
+    if (e.target.closest("#wzNewBtn")){
+      var ed = document.getElementById("wzEditor");
+      ed.hidden = !ed.hidden;
+      if (!ed.hidden){ renderPickList(""); renderSavedPresets(); ed.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+      return;
+    }
+    var b = e.target.closest(".wz-type");
+    if (!b) return;
+    wzType = b.dataset.wz;
+    renderWzTypes();
+  });
+
+  /* --- сворачивание мастера --- */
+  var wzOpen = true;
+  try { wzOpen = localStorage.getItem("smeta_wz_open") !== "0"; } catch(e){}
+  function applyWzOpen(){
+    document.getElementById("wzBody").hidden = !wzOpen;
+    document.getElementById("wzToggle").textContent = wzOpen ? "Свернуть" : "Развернуть";
+  }
+  document.getElementById("wzHead").addEventListener("click", function(){
+    wzOpen = !wzOpen;
+    try { localStorage.setItem("smeta_wz_open", wzOpen ? "1" : "0"); } catch(e){}
+    applyWzOpen();
+  });
+  applyWzOpen();
+
+  /* --- редактор своих наборов --- */
+  var wzPicked = [];
+  function renderPickList(filter){
+    var q = (filter || "").trim().toLowerCase();
+    var titles = SECTION_TEMPLATES.map(function(s){ return s.title; })
+      .filter(function(t){ return !q || t.toLowerCase().indexOf(q) >= 0; })
+      .sort(function(a, b){ return a.localeCompare(b, "ru"); });
+    document.getElementById("wzPickList").innerHTML = titles.map(function(t){
+      return '<label class="wz-pick"><input type="checkbox" value="' + escAttr(t) + '"' +
+        (wzPicked.indexOf(t) >= 0 ? " checked" : "") + '><span>' + esc(t) + '</span></label>';
+    }).join("") || '<div class="empty-note">Ничего не найдено</div>';
+  }
+  document.getElementById("wzPickList").addEventListener("change", function(e){
+    if (e.target.type !== "checkbox") return;
+    var v = e.target.value, i = wzPicked.indexOf(v);
+    if (e.target.checked && i < 0) wzPicked.push(v);
+    if (!e.target.checked && i >= 0) wzPicked.splice(i, 1);
+  });
+  document.getElementById("wzPresetSearch").addEventListener("input", function(e){ renderPickList(e.target.value); });
+  document.getElementById("wzFromEstimate").addEventListener("click", function(){
+    var known = SECTION_TEMPLATES.map(function(s){ return s.title; });
+    wzPicked = getActive().sections.map(function(s){ return s.title; }).filter(function(t){ return known.indexOf(t) >= 0; });
+    renderPickList(document.getElementById("wzPresetSearch").value);
+    notify(wzPicked.length ? ("Отмечено разделов: " + wzPicked.length) : "В текущей смете нет разделов из каталога");
+  });
+  document.getElementById("wzClearPick").addEventListener("click", function(){
+    wzPicked = [];
+    renderPickList(document.getElementById("wzPresetSearch").value);
+  });
+  document.getElementById("wzSavePreset").addEventListener("click", function(){
+    var nameEl = document.getElementById("wzPresetName");
+    var name = (nameEl.value || "").trim();
+    if (!name){ notify("Введите название набора"); nameEl.focus(); return; }
+    if (!wzPicked.length){ notify("Отметьте хотя бы один раздел"); return; }
+    var key = "own_" + uid();
+    wzPresets.push({ key: key, label: name, sections: wzPicked.slice() });
+    saveWzPresets();
+    wzType = key;
+    wzPicked = [];
+    nameEl.value = "";
+    renderWzTypes();
+    renderPickList(document.getElementById("wzPresetSearch").value);
+    renderSavedPresets();
+    notify("Набор «" + name + "» сохранён");
+    haptic("medium");
+  });
+  function renderSavedPresets(){
+    var host = document.getElementById("wzSaved");
+    if (!wzPresets.length){
+      host.innerHTML = '<div class="pk-hint" style="margin-top:6px;">Своих наборов пока нет. Отметьте разделы и сохраните — набор появится рядом с готовыми и будет доступен на этом устройстве всегда.</div>';
+      return;
+    }
+    host.innerHTML = wzPresets.map(function(p){
+      return '<div class="wz-saved-row"><span>' + esc(p.label) + '<small>' + p.sections.length + ' разд.: ' +
+        esc(p.sections.slice(0, 3).join(", ")) + (p.sections.length > 3 ? "…" : "") + '</small></span>' +
+        '<button type="button" class="wz-del" data-del="' + escAttr(p.key) + '" aria-label="Удалить набор">×</button></div>';
+    }).join("");
+  }
+  document.getElementById("wzSaved").addEventListener("click", function(e){
+    var b = e.target.closest("[data-del]");
+    if (!b) return;
+    var key = b.getAttribute("data-del");
+    wzPresets = wzPresets.filter(function(p){ return p.key !== key; });
+    saveWzPresets();
+    if (wzType === key) wzType = "flat_full";
+    renderWzTypes();
+    renderSavedPresets();
+    notify("Набор удалён");
+  });
+  renderSavedPresets();
+
+  function wzQty(name, unit, m){
+    var n = (name || "").toLowerCase();
+    if (unit === "fix") return 0;
+    if (unit === "hr") return 8;
+    if (unit === "m3") return Math.round(m.floor * 0.12 * 10) / 10;
+    if (unit === "lm"){
+      if (/плинтус|периметр|штроб|лент|карниз/.test(n)) return Math.round(m.perimeter);
+      if (/труб|кабел|провод/.test(n)) return Math.round(m.floor * 1.6);
+      return Math.round(m.perimeter);
+    }
+    if (unit === "pcs"){
+      if (/розетк|выключател/.test(n)) return m.rooms * 5 + 6;
+      if (/дверь|двер/.test(n)) return m.rooms + m.baths + 1;
+      if (/окн/.test(n)) return Math.max(1, m.rooms);
+      if (/светильник|люстр|точечн/.test(n)) return m.rooms * 4;
+      if (/радиатор|батаре/.test(n)) return m.rooms + 1;
+      if (/унитаз|раковин|ванн|смесител|душев/.test(n)) return Math.max(1, m.baths);
+      return Math.max(1, m.rooms);
+    }
+    // m2
+    if (/потол/.test(n)) return Math.round(m.ceiling);
+    if (/стен|штукатур|обо|покрас|шпакл|плитка: стен|фасад|утеплен/.test(n)) return Math.round(m.walls);
+    if (/пол|стяжк|ламинат|паркет|линолеум|керамогранит|плитка: пол|наливн/.test(n)) return Math.round(m.floor);
+    if (/кровл|крыш/.test(n)) return Math.round(m.floor * 1.35);
+    return Math.round(m.floor);
+  }
+  document.getElementById("wzBuild").addEventListener("click", function(){
+    var area = parseFloat(document.getElementById("wzArea").value) || 0;
+    if (!area){ notify("Укажите площадь объекта"); return; }
+    var h = parseFloat(document.getElementById("wzHeight").value) || 2.7;
+    var rooms = parseInt(document.getElementById("wzRooms").value, 10) || 1;
+    var baths = parseInt(document.getElementById("wzBaths").value, 10);
+    if (isNaN(baths)) baths = 1;
+    var perimeter = 4 * Math.sqrt(area) * 1.15;
+    var openings = Math.max(1, rooms) * 2 + (rooms + baths + 1) * 1.7;
+    var m = {
+      floor: area,
+      ceiling: area,
+      perimeter: perimeter,
+      walls: Math.max(area, perimeter * h - openings),
+      rooms: rooms,
+      baths: baths
+    };
+    var type = wzAllTypes().find(function(t){ return t.key === wzType; });
+    if (!type){ notify("Выберите тип объекта"); return; }
+    var est = getActive();
+    snapshotEstimate(est);
+    var added = 0;
+    type.sections.forEach(function(title){
+      var tpl = SECTION_TEMPLATES.find(function(s){ return s.title === title; });
+      if (!tpl) return;
+      var items = tpl.items.slice(0, 12).map(function(it){
+        return {
+          name: it.name, unit: it.unit, group: it.group || null,
+          qty: wzQty(it.name, it.unit, m), priceWork: 0, priceMaterial: 0
+        };
+      });
+      added += items.length;
+      est.sections.push({ id: uid(), title: title, items: items });
+    });
+    if (!est.client.object) est.client.object = type.label + ", " + Math.round(area) + " м²";
+    saveEstimates();
+    renderSections();
+    renderTotals();
+    if (typeof renderRequisites === "function") renderRequisites();
+    notify("Добавлено разделов: " + type.sections.length + ", позиций: " + added);
+    haptic("medium");
+    document.querySelector(".sections-head").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  /* --- отрисовка пакетов и маржи под итогом --- */
+  var _origRenderTotals = renderTotals;
+  renderTotals = function(){
+    _origRenderTotals();
+    var est = getActive();
+    renderComplexityChips();
+    validDaysEl.value = est.validDays || "";
+
+    var addOns = addOnItems(est);
+    var showPk = usesPackages(est) || addOns.length > 0;
+    pkCard.hidden = !showPk;
+    if (showPk){
+      var p = packageTotals(est);
+      pkCard.innerHTML =
+        '<div class="pk-title">Варианты для заказчика</div>' +
+        '<div class="pk-row">' +
+          '<div class="pk-col"><span>Базовый</span><b>' + fmtMoney(p.base, est.currency) + '</b></div>' +
+          '<div class="pk-col is-best"><span>Оптимальный</span><b>' + fmtMoney(p.opt, est.currency) + '</b></div>' +
+          '<div class="pk-col"><span>Премиум</span><b>' + fmtMoney(p.prem, est.currency) + '</b></div>' +
+        '</div>' +
+        '<div class="pk-hint">Пакет позиции переключается кнопкой Б / О / П / + в её строке. «Итого по смете» считается по варианту «Премиум», опции в итог не входят.</div>';
+    }
+
+    addonCard.hidden = addOns.length === 0;
+    if (addOns.length){
+      addonCard.innerHTML =
+        '<div class="pk-title">Можно добавить по желанию</div>' +
+        addOns.map(function(it){
+          return '<div class="addon-row"><span>' + esc(it.name || "Позиция") + '</span><b>' +
+            fmtMoney(itemSum(it), est.currency) + '</b></div>';
+        }).join("") +
+        '<div class="addon-total"><span>Если заказчик возьмёт всё</span><b>+ ' + fmtMoney(addOnsTotal(est), est.currency) + '</b></div>' +
+        '<div class="pk-hint">Это позиции с меткой «+» в строке. В «Итого по смете» они не входят и в PDF идут отдельным блоком после сметы — заказчик видит основную цену и отдельно то, что можно добавить.</div>';
+    }
+
+    marginCard.hidden = !proMode;
+    if (proMode){
+      var cost = estimateCost(est);
+      var revenue = estimateAfterAdjustments(est);
+      var margin = revenue - cost;
+      var pct = revenue > 0 ? (margin / revenue * 100) : 0;
+      marginCard.innerHTML =
+        '<div class="pk-title">Режим прораба — только для вас</div>' +
+        '<div class="pk-row">' +
+          '<div class="pk-col"><span>Себестоимость</span><b>' + fmtMoney(cost, est.currency) + '</b></div>' +
+          '<div class="pk-col"><span>Маржа</span><b>' + fmtMoney(margin, est.currency) + '</b></div>' +
+          '<div class="pk-col' + (pct >= 20 ? ' is-best' : '') + '"><span>Маржинальность</span><b>' + fmtNum(pct) + ' %</b></div>' +
+        '</div>' +
+        '<div class="pk-hint">Себестоимость вводится в колонке «Себест-ть» в строке позиции и никогда не попадает ни в PDF, ни в Excel, ни в ссылку заказчику.</div>';
+    }
+  };
+
+  /* --- разбивка: строка надбавки за условия --- */
+  var _origPricingRows = buildPricingRows;
+  buildPricingRows = function(est, rowClass){
+    var html = _origPricingRows(est, rowClass);
+    var wp = complexityWorkPercent(est), ap = complexityAllPercent(est);
+    if (wp > 0 || ap > 0){
+      var label = [];
+      if (wp > 0) label.push("+" + wp + "% на работы");
+      if (ap > 0) label.push("+" + ap + "% на всю смету");
+      html += '<div class="' + rowClass + '"><span>Условия на объекте (' + label.join(", ") + ')</span><b>+' +
+        fmtMoney(complexityAmount(est), est.currency) + '</b></div>';
+    }
+    return html;
+  };
+
+  /* --- PDF: срок действия, варианты, опции --- */
+  var _origPopulate = populatePrintSheet;
+  populatePrintSheet = function(kind){
+    _origPopulate(kind);
+    kind = kind || "smeta";
+    var est = getActive();
+    if (kind !== "smeta") return;
+
+    if (est.validDays > 0){
+      var until = new Date(est.client.date || todayISO());
+      until.setDate(until.getDate() + est.validDays);
+      var metaEl = document.getElementById("psMeta");
+      metaEl.innerHTML = (metaEl.innerHTML ? metaEl.innerHTML + " &nbsp;·&nbsp; " : "") +
+        "<b>Цены действительны до:</b> " + esc(formatDateRu(until.toISOString().slice(0, 10)));
+    }
+
+    var extra = "";
+    if (usesPackages(est)){
+      var p = packageTotals(est);
+      extra +=
+        '<div class="ps-section">' +
+          '<div class="ps-section-title">Варианты выполнения</div>' +
+          '<div class="ps-table-row"><span class="ps-col-name">Базовый — необходимый объём работ</span><span class="ps-col-sum">' + fmtMoney(p.base, est.currency) + '</span></div>' +
+          '<div class="ps-table-row"><span class="ps-col-name">Оптимальный — рекомендуем</span><span class="ps-col-sum">' + fmtMoney(p.opt, est.currency) + '</span></div>' +
+          '<div class="ps-table-row"><span class="ps-col-name">Премиум — максимальная комплектация</span><span class="ps-col-sum">' + fmtMoney(p.prem, est.currency) + '</span></div>' +
+        '</div>';
+    }
+    var addOns = addOnItems(est);
+    if (addOns.length){
+      extra +=
+        '<div class="ps-section">' +
+          '<div class="ps-section-title">Можно добавить по желанию</div>' +
+          addOns.map(function(it){
+            return '<div class="ps-table-row"><span class="ps-col-name">' + esc(it.name || "Позиция") + '</span>' +
+              '<span class="ps-col-sum">' + fmtMoney(itemSum(it), est.currency) + '</span></div>';
+          }).join("") +
+          '<div class="ps-subtotal">Итого опций: <b>' + fmtMoney(addOnsTotal(est), est.currency) + '</b> — в основную сумму сметы не входят</div>' +
+        '</div>';
+    }
+    if (extra){
+      var host = document.getElementById("psSections");
+      host.innerHTML = host.innerHTML + extra;
+    }
+  };
+
+  /* --- действия: одна главная кнопка, остальное под «Ещё» --- */
+  (function(){
+    var row = document.querySelector(".action-row");
+    var pdf = document.getElementById("pdfBtn");
+    if (!row || !pdf) return;
+    pdf.textContent = "Отправить заказчику — PDF";
+    var more = document.createElement("div");
+    more.className = "more-actions";
+    more.id = "moreActions";
+    more.hidden = true;
+    ["copyBtn", "shareBtn", "xlsxBtn"].forEach(function(id){
+      var b = document.getElementById(id);
+      if (b) more.appendChild(b);
+    });
+    var moreBtn = document.createElement("button");
+    moreBtn.type = "button";
+    moreBtn.className = "more-btn";
+    moreBtn.textContent = "Ещё";
+    moreBtn.setAttribute("aria-expanded", "false");
+    row.appendChild(moreBtn);
+    row.parentNode.insertBefore(more, row.nextSibling);
+    moreBtn.addEventListener("click", function(){
+      more.hidden = !more.hidden;
+      moreBtn.textContent = more.hidden ? "Ещё" : "Свернуть";
+      moreBtn.setAttribute("aria-expanded", String(!more.hidden));
+    });
+  })();
+
+  renderComplexityChips();
+  renderTotals();
 
   /* ======================================================================
      APP SHELL v2: переключение вкладок + живые цифры на главном экране
@@ -6639,7 +8551,6 @@
     Инструменты
   </button>
 </nav>
-
 
 <!-- отправка событий в GoatCounter: скачал PDF/Excel, создал смету (для отчёта в боте) -->
 <script>
